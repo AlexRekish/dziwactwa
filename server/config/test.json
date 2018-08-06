@@ -1,4 +1,4 @@
  {
-   "db": "mongodb://localhost:27017/Vidly_test",
+   "db": "mongodb://localhost:27017/test",
    "jwtSecret": ""
  }

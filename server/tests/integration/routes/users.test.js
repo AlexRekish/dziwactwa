@@ -1,7 +1,7 @@
 const request = require('supertest');
 const { User } = require('../../../models/user');
 
-describe('/api/users/', () => {
+describe('/api/users/me', () => {
   let server;
   describe('GET /', () => {
 
@@ -63,7 +63,7 @@ describe('/api/users/', () => {
     });
 
     it('should return 400 if password is too weak', async () => {
-      email = '1234567890';
+      password = '1234567890';
       const res = await exec();
       expect(res.status).toBe(400);
     });
@@ -73,6 +73,31 @@ describe('/api/users/', () => {
       await user.save();
       const res = await exec();
       expect(res.status).toBe(400);
+    });
+
+    it('should return 200 if name, email and password are valid', async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+    });
+
+    it('should save new user in DB', async () => {
+      const res = await exec();
+      const user = await User.findOne({ email });
+      expect(res.status).toBe(200);
+      expect(user).toHaveProperty('name', name);
+      expect(user).toHaveProperty('email', email);
+    });
+
+    it('should return jwt if user is successfully registered', async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+      expect(res.header).toHaveProperty('x-auth-token');
+    });
+
+    it('should return user _id if user is successfully registered', async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('_id');
     });
   });
 });
