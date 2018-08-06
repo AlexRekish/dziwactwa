@@ -1,0 +1,4 @@
+{
+  "db": "dziw_db",
+  "jwtSecret": "dziw_jwtSecret"
+}
