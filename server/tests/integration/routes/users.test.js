@@ -1,10 +1,38 @@
 const request = require('supertest');
 const { User } = require('../../../models/user');
 
-describe('/api/users/me', () => {
+describe('/api/users/', () => {
   let server;
-  describe('GET /', () => {
+  beforeEach(() => {
+    server = require('../../../index');
+  });
 
+  afterEach(async () => {
+    await server.close();
+    await User.remove({});
+  });
+
+  describe('GET /me', () => {
+    const user = new User({
+      email: '12345@gmail.com',
+      password: '1234567Aa!',
+      name: 'Alex',
+      isAdmin: true,
+    });
+    const token = user.generateAuthToken();
+
+    it('should return current user', async () => {
+      await user.save();
+      const res = await request(server)
+        .get('/api/users/me')
+        .set('x-auth-token', token)
+        .send();
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('email', user.email);
+      expect(res.body).toHaveProperty('name', user.name);
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('isAdmin', user.isAdmin);
+    });
   });
 
   describe('POST /', () => {
@@ -16,12 +44,6 @@ describe('/api/users/me', () => {
       email = '12345@gmail.com';
       password = '1234567Aa!';
       name = 'Alex';
-      server = require('../../../index');
-    });
-
-    afterEach(async () => {
-      await server.close();
-      await User.remove({});
     });
 
     const exec = () => request(server).post('/api/users').send({ name, email, password });

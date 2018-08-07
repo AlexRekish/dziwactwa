@@ -2,8 +2,14 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const validator = require('../middleware/validate');
 const { validate, validatePassword, User } = require('../models/user');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
+
+router.get('/me', auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select({ password: 0 });
+  return res.send(user);
+});
 
 router.post('/', validator(validate), async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
