@@ -12,6 +12,8 @@ const photoSchema = new mongoose.Schema({
   path: {
     type: String,
     required: true,
+    minlength: 5,
+    maxlength: 255,
   },
   date: {
     type: Date,
@@ -23,7 +25,7 @@ const validate = (photo) => {
   const schema = {
     title: Joi.string().min(3).max(100).required(),
     tags: Joi.array().items(Joi.string()).max(10),
-    path: Joi.string().required(),
+    path: Joi.string().min(5).max(255).required(),
   };
   return Joi.validate(photo, schema);
 };

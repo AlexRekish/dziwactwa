@@ -1,10 +1,14 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { BlogPost } = require('../../../models/blogpost');
+const { User } = require('../../../models/user');
 
 describe('/api/blog/posts', () => {
   let server;
+  let token;
   beforeEach(() => {
+    const user = { _id: new mongoose.Types.ObjectId().toHexString(), isAdmin: true };
+    token = new User(user).generateAuthToken();
     server = require('../../../index');
   });
 
@@ -76,6 +80,7 @@ describe('/api/blog/posts', () => {
 
     const exec = () => request(server)
       .post('/api/blog/posts')
+      .set('x-auth-token', token)
       .send({
         title,
         photo,
@@ -155,6 +160,7 @@ describe('/api/blog/posts', () => {
 
     const exec = () => request(server)
       .put(`/api/blog/posts/${blogpost._id}`)
+      .set('x-auth-token', token)
       .send({
         title,
         photo,
@@ -234,6 +240,7 @@ describe('/api/blog/posts', () => {
 
     const exec = () => request(server)
       .delete(`/api/blog/posts/${blogpost._id}`)
+      .set('x-auth-token', token)
       .send();
 
     it('should return 404 if blog post with passed id is not found', async () => {
