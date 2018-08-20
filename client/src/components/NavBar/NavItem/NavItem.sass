@@ -1,0 +1,26 @@
+@import '../../../vars.sass';
+
+.main-nav__item
+  display: flex
+  align-items: center
+  justify-content: center
+
+  padding: 0 10px
+  font-size: 24px
+  font-weight: bold
+  height: 100%
+
+.main-nav__link
+  display: block
+  text-align: center
+  min-width: 155px
+  text-decoration: none
+  color: $context
+  padding: 10px 20px
+  border-radius: 5px
+  transition: all 0.4s ease
+
+  &:hover,
+  &:active
+    background-color: rgba(#fff, 0.5)
+    color: $main
