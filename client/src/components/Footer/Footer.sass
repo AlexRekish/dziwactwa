@@ -4,9 +4,30 @@
   display: flex
   justify-content: center
   align-items: center
-  background-color: rgba($main, 0.5)
-  color: #fff
+  background-color: rgba($main, 0.7)
+  color: $context
 
   &__copyrights
     text-align: center
     font-weight: bold
+    position: relative
+
+    &::before
+      display: block
+      position: absolute
+      content: ""
+      bottom: 0
+      right: -10px
+      width: 20px
+      height: 2px
+      background-color: $context
+
+    &::after
+      display: block
+      position: absolute
+      content: ""
+      top: 7px
+      right: -5px
+      width: 2px
+      height: 20px
+      background-color: $context

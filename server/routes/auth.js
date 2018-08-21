@@ -8,13 +8,15 @@ const router = express.Router();
 
 const validate = (user) => {
   const schema = {
-    email: Joi
-      .string()
+    email: Joi.string()
       .min(5)
       .max(50)
       .required()
       .email(),
-    password: Joi.string().min(10).max(24).required(),
+    password: Joi.string()
+      .min(10)
+      .max(24)
+      .required(),
   };
   return Joi.validate(user, schema);
 };
@@ -27,7 +29,20 @@ router.post('/', validator(validate), async (req, res) => {
   if (!password) return res.status(400).send('Invalid email or password');
 
   const token = user.generateAuthToken();
-  return res.header('x-auth-token', token).send();
+  const refreshToken = user.refreshTokens[0]
+    ? user.refreshTokens[0]
+    : (async () => {
+      const rToken = user.generateRefreshToken();
+      user.refreshTokens.push(rToken);
+      await user.save();
+      return rToken;
+    })();
+
+  return res
+    .header('x-auth-token', token)
+    .header('x-refresh-token', refreshToken)
+    .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token'])
+    .send();
 });
 
 module.exports = router;

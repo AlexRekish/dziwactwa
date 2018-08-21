@@ -1,21 +1,21 @@
 @import '../../vars.sass';
-.home
+
+.auth
   display: flex
-  padding: 50px
   flex-direction: column
   justify-content: center
-  overflow: hidden
   height: 100%
   width: 100vw
+  padding: 50px
+  overflow: hidden
+  box-sizing: border-box
 
-
-.home__content-wrapper
+.auth__form
   display: block
   position: relative
   width: calc(100%/3)
   padding: 30px
-  color: rgba($main, 1)
-  background-color: rgba($context, 0.7)
+  background-color: rgba($main, 0.7)
   border-radius: 5px
 
   &::before
@@ -38,14 +38,13 @@
     width: 3px
     background-color: rgba($context, 0.7)
 
-.home__greetings
-  margin: 0
+.auth__header
   padding: 0
+  margin: 0
   font-size: 104px
+  color: $context
 
-.home__content
-  font-size: 20px
-
-.carrousel-wrapper
-  height: 100vh
-  width: 100vw
+.auth__buttons-wrapper
+  display: flex
+  justify-content: space-around
+  padding: 10px

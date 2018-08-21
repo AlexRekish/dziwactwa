@@ -4,6 +4,7 @@ const config = require('config');
 const helmet = require('helmet');
 const Joi = require('joi');
 const winston = require('winston');
+const cors = require('cors');
 Joi.objectId = require('joi-objectid')(Joi);
 const users = require('./routes/users');
 const auth = require('./routes/auth');
@@ -21,16 +22,20 @@ winston.exceptions.handle(
   new winston.transports.File({ filename: 'uncaughtExceptions.log' }),
 );
 
-winston.add(new winston.transports.Console({
-  colorize: true,
-  prettyPrint: true,
-  level: 'info',
-}));
-winston.add(new winston.transports.File({
-  filename: 'logfile.log',
-  handleExceptions: true,
-  level: 'warn',
-}));
+winston.add(
+  new winston.transports.Console({
+    colorize: true,
+    prettyPrint: true,
+    level: 'info',
+  }),
+);
+winston.add(
+  new winston.transports.File({
+    filename: 'logfile.log',
+    handleExceptions: true,
+    level: 'warn',
+  }),
+);
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -40,7 +45,11 @@ if (!config.get('jwtSecret')) {
   throw new Error('Fatal error. jwtSecret is not defined!');
 }
 
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true },
+  )
   .then(() => {
     winston.info('Connected to MongoDB...');
   });
@@ -49,12 +58,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
+app.use(cors());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/blog/posts', blogposts);
 app.use('/api/photos', photos);
 app.use(error);
-
 
 const server = app.listen(port, () => {
   winston.info(`Listening on ${port}...`);

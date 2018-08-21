@@ -6,9 +6,12 @@
   top: 50%
   transform: translateY(-50%)
   height: 50vh
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
   padding: 20px
-
-
+  z-index: 900
 
 .social__list
   margin: 0
@@ -17,6 +20,28 @@
   flex-direction: column
   justify-content: center
   align-items: center
+  position: relative
   list-style: none
   color: $context
-  height: 100%
+  background-color: rgba($main, 0.7)
+  border-radius: 5px
+
+  &::before
+    display: block
+    position: absolute
+    top: -50px
+    left: -20px
+    content: ""
+    width: 3px
+    height: calc(100% + 123px)
+    background-color: rgba($context, 0.7)
+
+  &::after
+    display: block
+    position: absolute
+    bottom: -20px
+    left: -73px
+    content: ""
+    width: calc(100% + 120px)
+    height: 3px
+    background-color: rgba($context, 0.7)

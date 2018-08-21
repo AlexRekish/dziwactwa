@@ -6,14 +6,19 @@ const jwt = require('jsonwebtoken');
 
 const validateUser = (user) => {
   const schema = {
-    name: Joi.string().min(3).max(50).required(),
-    email: Joi
-      .string()
+    name: Joi.string()
+      .min(3)
+      .max(50)
+      .required(),
+    email: Joi.string()
       .min(5)
       .max(50)
       .required()
       .email(),
-    password: Joi.string().min(10).max(24).required(),
+    password: Joi.string()
+      .min(10)
+      .max(24)
+      .required(),
   };
   return Joi.validate(user, schema);
 };
@@ -56,10 +61,18 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  refreshTokens: [String],
 });
 
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtSecret'), { expiresIn: '7d' });
+  return jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin, name: this.name },
+    config.get('jwtSecret'),
+    // { expiresIn: '1h' },
+  );
+};
+userSchema.methods.generateRefreshToken = function () {
+  return jwt.sign({ _id: this._id }, config.get('jwtSecret'), { expiresIn: '60d' });
 };
 
 const User = mongoose.model('User', userSchema);

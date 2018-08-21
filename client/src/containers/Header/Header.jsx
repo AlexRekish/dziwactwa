@@ -1,10 +1,10 @@
 import React from 'react';
 import './Header.sass';
-import NavBar from '../components/NavBar/NavBar';
+import NavBar from '../../components/NavBar/NavBar';
 
-const Header = () => (
+const Header = ({ user }) => (
   <header className="main-header">
-    <NavBar />
+    <NavBar user={user} />
   </header>
 );
 

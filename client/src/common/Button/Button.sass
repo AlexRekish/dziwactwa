@@ -1,0 +1,25 @@
+@import '../../vars.sass'
+.custom-button
+  display: block
+  position: relative
+  text-align: center
+  min-width: 160px
+  text-decoration: none
+  color: $main
+  font-size: 16px
+  font-weight: bold
+  background-color: rgba($context, 0.8)
+  border: none
+  padding: 10px 20px
+  border-radius: 5px
+  box-sizing: border-box
+  transition: all 0.4s ease
+  z-index: 1
+  cursor: pointer
+
+  &:hover
+    background-color: rgba($orange, 0.9)
+
+  &:disabled
+    background-color: rgba($context, 0.5)
+    cursor: default

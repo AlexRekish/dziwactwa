@@ -9,7 +9,7 @@ const links = [
   { path: '/about', label: 'About Me' }
 ];
 
-const NavBar = () => (
+const NavBar = ({ user }) => (
   <nav className="main-navigation">
     <ul className="main-navigation__list">
       {links.map(link => (
@@ -17,7 +17,8 @@ const NavBar = () => (
       ))}
     </ul>
     <ul className="main-navigation__login">
-      <NavItem path="/login" label="Sign In" />
+      {user && <NavItem path="/logout" label="Logout" />}
+      {!user && <NavItem path="/login" label="Sign In" />}
     </ul>
   </nav>
 );
