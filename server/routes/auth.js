@@ -42,7 +42,7 @@ router.post('/', validator(validate), async (req, res) => {
     .header('x-auth-token', token)
     .header('x-refresh-token', refreshToken)
     .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token'])
-    .send();
+    .send({ _id: user._id, name: user.name });
 });
 
 module.exports = router;
