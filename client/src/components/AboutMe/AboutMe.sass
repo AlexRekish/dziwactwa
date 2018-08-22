@@ -1,0 +1,52 @@
+@import '../../vars.sass';
+.about-me
+  display: grid
+  background-color: rgba($main, 0.4)
+  grid-template-columns: 2fr 3fr
+  padding: 50px
+  align-items: center
+  overflow: hidden
+  height: 100%
+  width: 100vw
+
+
+.about-me__content-wrapper
+  display: block
+  position: relative
+  padding: 30px
+  color: rgba($main, 1)
+  background-color: rgba($orange, 0.7)
+  border-radius: 5px
+
+  &::before
+    display: block
+    position: absolute
+    content: ""
+    top: -20px
+    left: -50px
+    height: 3px
+    width: calc(100% + 123px)
+    background-color: rgba($context, 0.7)
+
+  &::after
+    display: block
+    position: absolute
+    content: ""
+    top: -70px
+    right: -20px
+    height: calc(100% + 123px)
+    width: 3px
+    background-color: rgba($context, 0.7)
+
+.about-me__greetings
+  margin: 0
+  padding: 0
+  font-size: 104px
+
+.about-me__content
+  font-size: 20px
+
+
+.photo-wrapper
+  display: flex
+  justify-content: center

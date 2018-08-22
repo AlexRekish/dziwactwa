@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // eslint-disable-line no-unused-vars
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
 import Header from './containers/Header/Header';
@@ -12,8 +12,9 @@ import Home from './components/Home/Home';
 import Social from './common/Social/Social';
 import LoginForm from './containers/Auth/LoginForm/LoginForm';
 import RegisterForm from './containers/Auth/RegisterForm/RegisterForm';
-import { getCurrentUser } from './services/authService';
 import Logout from './components/Logout/Logout';
+import { Actions } from './store/actions/actions';
+import AboutMe from './components/AboutMe/AboutMe';
 
 library.add(fab, faTwitter, faInstagram, faVk, faFacebook);
 
@@ -21,12 +22,12 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    const user = getCurrentUser();
-    this.setState({ user });
+    const { logged, onLoginFromLocalStorage } = this.props;
+    if (!logged) onLoginFromLocalStorage();
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
     return (
       <Fragment>
         <ToastContainer
@@ -47,7 +48,7 @@ class App extends Component {
             {!user && <Route path="/register" component={RegisterForm} />}
             <Route path="/blog" />
             <Route path="/gallery" />
-            <Route path="/about" />
+            <Route path="/about" component={AboutMe} />
             <Route path="/" exact component={Home} />
             <Redirect to="/" />
           </AnimatedSwitch>
@@ -58,4 +59,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  user: state.user,
+  logged: state.logged
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLoginFromLocalStorage: () => dispatch(Actions.getUserFromLocalStorage())
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

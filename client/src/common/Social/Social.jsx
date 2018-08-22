@@ -3,10 +3,10 @@ import SocialItem from './SocialItem/SocialItem';
 import './Social.sass';
 
 const socialLinks = [
-  { link: '#', label: 'Twitter', content: 'twitter' },
-  { link: '#', label: 'VK', content: 'vk' },
-  { link: '#', label: 'Instagram', content: 'instagram' },
-  { link: '#', label: 'Facebook', content: 'facebook' }
+  { link: 'https://twitter.com/Alice_May_Cry', label: 'Twitter', content: 'twitter' },
+  { link: 'https://vk.com/alicemaycry', label: 'VK', content: 'vk' },
+  { link: 'https://www.instagram.com/alice_may_cry/', label: 'Instagram', content: 'instagram' },
+  { link: 'https://facebook.com/marikamaycry', label: 'Facebook', content: 'facebook' }
 ];
 
 const Social = () => (

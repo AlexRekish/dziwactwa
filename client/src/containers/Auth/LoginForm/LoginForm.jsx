@@ -1,8 +1,10 @@
 import React from 'react';
 import Joi from 'joi-browser';
+import { connect } from 'react-redux';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { login } from '../../../services/authService';
+import { Actions } from '../../../store/actions/actions';
 import '../Auth.sass';
 
 class LoginForm extends Form {
@@ -30,13 +32,17 @@ class LoginForm extends Form {
 
   onSubmitted = async () => {
     const { data } = this.state;
+    const { onLogin, history } = this.props;
     try {
-      await login(data.email, data.password);
-      window.location = '/';
+      const user = await login(data.email, data.password);
+      console.log(user);
+      onLogin(user);
+      history.push('/');
     } catch (err) {
       if (err.response && err.response.status === 400) {
         const { errors } = { ...this.state };
-        errors.username = err.response.data;
+        errors.email = err.response.data;
+        errors.password = err.response.data;
         this.setState({ errors });
       }
     }
@@ -69,4 +75,11 @@ class LoginForm extends Form {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = dispatch => ({
+  onLogin: user => dispatch(Actions.login(user))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginForm);

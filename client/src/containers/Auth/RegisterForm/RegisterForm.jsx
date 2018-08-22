@@ -1,10 +1,12 @@
 import React from 'react';
 import Joi from 'joi-browser';
+import { connect } from 'react-redux';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import register from '../../../services/usersService';
 import { loginWithJwt } from '../../../services/authService';
 import '../Auth.sass';
+import { Actions } from '../../../store/actions/actions';
 
 class RegisterForm extends Form {
   state = {
@@ -38,9 +40,11 @@ class RegisterForm extends Form {
   onSubmitted = async () => {
     try {
       const { data: user } = this.state;
+      const { onLogin, history } = this.props;
       const res = await register(user);
       loginWithJwt(res);
-      window.location = '/';
+      onLogin(res.data);
+      history.push('/');
     } catch (err) {
       if (err.response && err.response.status === 400) {
         const { errors } = { ...this.state };
@@ -78,4 +82,11 @@ class RegisterForm extends Form {
   }
 }
 
-export default RegisterForm;
+const mapDispatchToProps = dispatch => ({
+  onLogin: user => dispatch(Actions.login(user))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RegisterForm);
