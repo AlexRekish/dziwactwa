@@ -3,7 +3,7 @@
   display: block
   position: relative
   text-align: center
-  min-width: 160px
+  min-width: 110px
   text-decoration: none
   color: $main
   font-size: 16px
@@ -11,6 +11,7 @@
   background-color: rgba($context, 0.8)
   border: none
   padding: 10px 20px
+  margin: 5px 0
   border-radius: 5px
   box-sizing: border-box
   transition: all 0.4s ease
@@ -23,3 +24,6 @@
   &:disabled
     background-color: rgba($context, 0.5)
     cursor: default
+
+  &--danger:hover
+    background-color: rgba($danger, 0.9)

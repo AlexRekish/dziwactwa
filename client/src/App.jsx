@@ -15,6 +15,8 @@ import RegisterForm from './containers/Auth/RegisterForm/RegisterForm';
 import Logout from './components/Logout/Logout';
 import { Actions } from './store/actions/actions';
 import AboutMe from './components/AboutMe/AboutMe';
+import Blog from './containers/Blog/Blog';
+import BlogPost from './containers/Blog/BlogPost/BlogPost';
 
 library.add(fab, faTwitter, faInstagram, faVk, faFacebook);
 
@@ -46,7 +48,8 @@ class App extends Component {
             {user && <Route path="/logout" component={Logout} />}
             {!user && <Route path="/login" component={LoginForm} />}
             {!user && <Route path="/register" component={RegisterForm} />}
-            <Route path="/blog" />
+            <Route path="/blog/:id" component={BlogPost} />
+            <Route path="/blog" component={Blog} />
             <Route path="/gallery" />
             <Route path="/about" component={AboutMe} />
             <Route path="/" exact component={Home} />

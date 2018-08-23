@@ -1,0 +1,31 @@
+@import '../../vars.sass';
+.pagination
+  display: flex
+  flex-direction: column
+  justify-content: center
+  list-style: none
+  margin: 0
+  padding: 0
+
+.pagination__item
+  width: 100%
+
+.pagination__link
+  width: 50px
+  margin: 5px 0
+  padding: 10px
+  border: none
+  border-radius: 5px
+  background-color: rgba($context, 0.7)
+  font-weight: bold
+  color: $main
+  cursor: pointer
+  transition: all 0.4s ease
+
+  &:hover
+    background-color: rgba($orange, 0.7)
+
+  &--active
+    background-color: rgba($orange, 0.7)
+    cursor: default
+

@@ -16,6 +16,11 @@ require('express-async-errors');
 const app = express();
 const port = process.env.PORT || 3502;
 const db = config.get('db');
+const origin = new RegExp('^http://localhost', 'i');
+const corsOptions = {
+  origin,
+  optionsSuccessStatus: 200,
+};
 
 winston.exceptions.handle(
   new winston.transports.Console({ colorize: true, prettyPrint: true }),
@@ -58,7 +63,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/blog/posts', blogposts);
