@@ -35,7 +35,6 @@ class LoginForm extends Form {
     const { onLogin, history } = this.props;
     try {
       const user = await login(data.email, data.password);
-      console.log(user);
       onLogin(user);
       history.push('/');
     } catch (err) {

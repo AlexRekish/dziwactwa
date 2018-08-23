@@ -8,12 +8,12 @@ const validateObjectId = require('../middleware/validateObjectId');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const blogposts = await BlogPost.find().sort('date');
+  const blogposts = await BlogPost.find().sort({ date: -1 });
   return res.send(blogposts);
 });
 
 router.get('/:id', validateObjectId, async (req, res) => {
-  const blogpost = await BlogPost.findById(req.params.id);
+  const blogpost = await BlogPost.findById(req.params.id).sort();
   if (!blogpost) return res.status(404).send('Blog post not found');
   return res.send(blogpost);
 });
@@ -29,11 +29,15 @@ router.post('/', [auth, admin, validator(validate)], async (req, res) => {
 });
 
 router.put('/:id', [auth, admin, validateObjectId, validator(validate)], async (req, res) => {
-  const blogpost = await BlogPost.findByIdAndUpdate(req.params.id, {
-    title: req.body.title,
-    photo: req.body.photo,
-    text: req.body.text,
-  }, { new: true });
+  const blogpost = await BlogPost.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      photo: req.body.photo,
+      text: req.body.text,
+    },
+    { new: true },
+  );
   if (!blogpost) return res.status(404).send('Blog post with passed id not found');
   return res.send(blogpost);
 });

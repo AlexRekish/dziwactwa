@@ -3,7 +3,7 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {} from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
 import Header from './containers/Header/Header';
@@ -17,8 +17,10 @@ import { Actions } from './store/actions/actions';
 import AboutMe from './components/AboutMe/AboutMe';
 import Blog from './containers/Blog/Blog';
 import BlogPost from './containers/Blog/BlogPost/BlogPost';
+import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
+import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
 
-library.add(fab, faTwitter, faInstagram, faVk, faFacebook);
+library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faTimes);
 
 class App extends Component {
   state = {};
@@ -48,6 +50,8 @@ class App extends Component {
             {user && <Route path="/logout" component={Logout} />}
             {!user && <Route path="/login" component={LoginForm} />}
             {!user && <Route path="/register" component={RegisterForm} />}
+            {user && user.isAdmin && <Route path="/blog/new" component={BlogPostForm} />}
+            {user && user.isAdmin && <Route path="/blog/edit" component={BlogPostEditForm} />}
             <Route path="/blog/:id" component={BlogPost} />
             <Route path="/blog" component={Blog} />
             <Route path="/gallery" />

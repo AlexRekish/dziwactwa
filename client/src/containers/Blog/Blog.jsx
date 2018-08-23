@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { getPosts } from '../../services/blogService';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Pagination from '../../common/Pagination/Pagination';
 import './Blog.sass';
 import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
+import Button from '../../common/Button/Button';
 
 class Blog extends Component {
   state = {
@@ -16,7 +18,8 @@ class Blog extends Component {
 
   async componentDidMount() {
     const { data: posts } = await getPosts();
-    this.setState({ posts });
+    const sortedPosts = posts.sort((a, b) => Date.parse(a.date) < Date.parse(b.date));
+    this.setState({ posts: sortedPosts });
   }
 
   pageChangeHandler = page => {
@@ -29,8 +32,14 @@ class Blog extends Component {
     return { totalCount: posts.length, paginatedPosts };
   };
 
+  addPostHandler = () => {
+    const { history } = this.props;
+    history.push('/blog/new');
+  };
+
   render() {
     const { pageSize, currentPage } = this.state;
+    const { user } = this.props;
     const { totalCount, paginatedPosts: posts } = this.getPagedData();
     return posts ? (
       <section className="blog">
@@ -54,10 +63,16 @@ class Blog extends Component {
             onPageChanged={this.pageChangeHandler}
             currentPage={currentPage}
           />
+          {user &&
+            user.isAdmin && <Button type="button" label="Add post" clicked={this.addPostHandler} />}
         </ControlPanel>
       </section>
     ) : null;
   }
 }
 
-export default Blog;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(Blog);

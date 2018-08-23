@@ -27,9 +27,17 @@ const blogpostSchema = new mongoose.Schema({
 
 const validate = (blogPost) => {
   const schema = {
-    title: Joi.string().min(3).max(255).required(),
-    photo: Joi.string().min(5).max(255),
-    text: Joi.string().min(10).max(5000).required(),
+    title: Joi.string()
+      .min(3)
+      .max(255)
+      .required(),
+    photo: Joi.string()
+      .min(5)
+      .max(255),
+    text: Joi.string()
+      .min(10)
+      .max(5000)
+      .required(),
   };
   return Joi.validate(blogPost, schema);
 };

@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
-import { addNewPost } from '../../../services/blogService';
-import './BlogPostFrom.sass';
+import { editPost, getPost } from '../../../services/blogService';
+import '../BlogForm/BlogPostForm';
 
-class BlogPostForm extends Form {
+class BlogPostEditForm extends Form {
   state = {
     data: {
       title: '',
@@ -16,7 +16,13 @@ class BlogPostForm extends Form {
     errors: {}
   };
 
+  componentDidMount() {
+    this.populatePostData();
+  }
+
   schema = {
+    _id: Joi.string(),
+    date: Joi.date(),
     title: Joi.string()
       .min(3)
       .max(255)
@@ -31,11 +37,37 @@ class BlogPostForm extends Form {
       .required()
   };
 
+  populatePostData = async () => {
+    const { history } = this.props;
+    try {
+      const postId = history.location.state._id;
+
+      const { data: post } = await getPost(postId);
+      this.setState({ data: this.adaptPostToData(post) });
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        toast.error('Post not found!');
+        history.replace('/blog');
+      }
+    }
+  };
+
+  adaptPostToData = post => {
+    const { _id, title, photo, text, date } = post;
+    return {
+      _id,
+      title,
+      photo,
+      text,
+      date
+    };
+  };
+
   onSubmitted = async () => {
     const { data } = this.state;
     const { history } = this.props;
     try {
-      await addNewPost(data);
+      await editPost(data._id, data);
       toast.success('Post added!');
       history.push('/blog');
     } catch (err) {
@@ -54,7 +86,7 @@ class BlogPostForm extends Form {
     return (
       <section className="new-post">
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
-          <h1 className="new-post__header">New post</h1>
+          <h1 className="new-post__header">Edit post</h1>
           {this.renderInput('photo', 'Photo', 'Choose photo...')}
           {this.renderInput('title', 'Title', 'Enter title')}
           {this.renderTextArea('text', 'Text', 'Enter your exciting story!')}
@@ -65,7 +97,7 @@ class BlogPostForm extends Form {
               clicked={this.formSubmitHandler}
               disabled={this.validate()}
             />
-            <Button type="cancel" label="Cancel" clicked={this.cancelHandler} />
+            <Button type="button" label="Cancel" clicked={this.cancelHandler} />
           </div>
         </form>
       </section>
@@ -73,4 +105,4 @@ class BlogPostForm extends Form {
   }
 }
 
-export default BlogPostForm;
+export default BlogPostEditForm;

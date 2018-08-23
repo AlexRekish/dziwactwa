@@ -9,12 +9,13 @@ import img8 from './assets/10.jpg';
 import img9 from './assets/11.jpg';
 import img10 from './assets/12.jpg';
 import img11 from './assets/13.jpg';
+import img12 from './assets/14.jpg';
 
-const images = [img1, img2, img3, img4, img4, img5, img6, img7, img8, img9, img10, img11];
+const images = [img1, img2, img3, img4, img4, img5, img6, img7, img8, img9, img10, img11, img12];
 
 const randomBackground = () => {
   const body = document.querySelector('body');
-  body.style.backgroundImage = `url(${images[Math.floor(Math.random() * 11)]})`;
+  body.style.backgroundImage = `url(${images[Math.round(Math.random() * (12.5 - 1.5) + 0.5)]})`;
 };
 
 export default randomBackground;

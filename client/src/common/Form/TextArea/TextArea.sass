@@ -1,0 +1,42 @@
+@import '../../../vars.sass';
+.custom-text-area
+  display: block
+  width: 100%
+  max-width: 100%
+  padding: 10px
+  margin: 10px 0
+  border: 3px solid $context
+  border-radius: 5px
+  box-sizing: border-box
+  background-color: rgba($context, 0.5)
+  font-size: 14px
+  font-weight: bold
+  outline: none
+  resize: none
+  overflow: auto
+  font-family: "Ubuntu", "Arial", sans-serif
+
+  &:focus
+    background-color: rgba($context, 0.5)
+
+  &::placeholder
+    color: $main
+    font-size: 14px
+    font-weight: bold
+
+  &--invalid
+    border: 3px solid $danger
+
+.custom-text-area__error
+  color: salmon
+  font-size: 16px
+
+.custom-text-area__wrapper
+  width: 100%
+  padding: 15px 0
+  text-align: left
+  box-sizing: border-box
+
+.custom-text-area__label
+  color: $context
+  font-size: 20px

@@ -7,6 +7,7 @@ import ControlPanel from '../../../common/ControlPanel/ControlPanel';
 import parseStringToDate from '../../../utils/date';
 import './BlogPost.sass';
 import '../Blog.sass';
+import CloseIcon from '../../../common/CloseIcon/CloseIcon';
 
 class BlogPost extends Component {
   state = {
@@ -16,7 +17,7 @@ class BlogPost extends Component {
   async componentDidMount() {
     const { match, history } = this.props;
     try {
-      if (match.params.id === 'new') return;
+      if (match.params.id === 'new' || match.params.id === 'edit') return;
       const { data: post } = await getPost(match.params.id);
       this.setState({ post });
     } catch (err) {
@@ -28,7 +29,9 @@ class BlogPost extends Component {
   }
 
   editPostHandler = () => {
-    console.log('edit');
+    const { post } = this.state;
+    const { history } = this.props;
+    history.push('/blog/edit', post);
   };
 
   deletePostHandler = async () => {
@@ -50,7 +53,7 @@ class BlogPost extends Component {
 
   render() {
     const { post } = this.state;
-    const { user } = this.props;
+    const { user, history } = this.props;
     return (
       <section className="blog">
         <article className="post">
@@ -62,6 +65,7 @@ class BlogPost extends Component {
             <p className="post__date">{parseStringToDate(post.date)}</p>
             <p className="post__content">{post.text}</p>
           </div>
+          <CloseIcon history={history} />
         </article>
         {user &&
           user.isAdmin && (
