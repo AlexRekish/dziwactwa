@@ -1,25 +1,29 @@
 import React from 'react';
 import './AboutMe.sass';
-import placeholder from '../../assets/placeholder2.png';
+import placeholder from '../../assets/photo.jpg';
 
 const AboutMe = () => (
   <section className="about-me">
     <div className="about-me__content-wrapper">
       <h1 className="about-me__greetings">About Me</h1>
       <p className="about-me__content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias nihil exercitationem quis
-        voluptate voluptatem odio mollitia molestiae dicta adipisci impedit, ab asperiores nisi!
-        Dolores ex illum officia doloribus officiis obcaecati consequatur! Praesentium aliquam est
-        libero voluptatibus cum animi, modi ratione error? Similique repellendus veniam in non,
-        delectus temporibus quam neque eveniet. Similique animi illum soluta minus, veniam vero
-        impedit sit autem totam, deserunt temporibus in. Esse facere necessitatibus sunt nisi atque
-        voluptate blanditiis error, sit ad dolorum consequuntur eligendi temporibus illo illum
-        perferendis quibusdam nulla dolorem quod cumque aliquam accusantium voluptatem quasi dolores
-        repellendus? Officia itaque harum porro debitis ullam?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam molestias assumenda laborum
+        labore inventore consectetur minus quo, corporis illo dolorem tempore voluptatum qui aperiam
+        accusamus facere mollitia a ducimus eligendi excepturi reiciendis exercitationem esse! Est
+        ipsum tenetur recusandae nihil eius facilis blanditiis reiciendis. Quos, doloremque
+        provident minus earum voluptatum iste corrupti, quae perferendis eum, maiores animi nihil
+        hic vero ducimus pariatur asperiores a ad iure magnam quia modi? Odit fugit ut dignissimos
+        cupiditate quae vero possimus porro! Eius beatae non illum quae, laborum laudantium
+        repudiandae fuga deleniti cupiditate mollitia consectetur dolores porro sint inventore
+        incidunt ut, dolorem quibusdam, quis placeat nostrum quisquam. In corporis consequuntur
+        aliquam harum tenetur maxime quae hic odio neque quasi dolorem culpa, quidem voluptatum,
+        explicabo doloribus eos placeat illum. Incidunt laudantium molestias officia animi esse
+        quasi accusantium officiis sapiente aspernatur nihil nesciunt similique aliquam deserunt ea
+        dolor rem ratione, assumenda, error, possimus rerum adipisci! Illo, dolores?
       </p>
-    </div>
-    <div className="photo-wrapper">
-      <img src={placeholder} alt="placeholder" />
+      <div className="photo-wrapper">
+        <img src={placeholder} alt="placeholder" className="photo" />
+      </div>
     </div>
   </section>
 );

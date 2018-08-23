@@ -2,7 +2,7 @@
 .about-me
   display: grid
   background-color: rgba($main, 0.4)
-  grid-template-columns: 2fr 3fr
+  grid-template-columns: 2fr 2fr
   padding: 50px
   align-items: center
   overflow: hidden
@@ -48,5 +48,16 @@
 
 
 .photo-wrapper
+  position: absolute
+  right: -30px
+  top: -10px
   display: flex
   justify-content: center
+  transform: rotate(15deg)
+
+.photo
+  width: 200px
+  box-sizing: content-box
+  border-radius: 5px
+  opacity: 0.9
+
