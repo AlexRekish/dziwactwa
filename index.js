@@ -6,6 +6,7 @@ const Joi = require('joi');
 const winston = require('winston');
 const cors = require('cors');
 Joi.objectId = require('joi-objectid')(Joi);
+// const fileUpload = require('express-fileupload');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const blogposts = require('./routes/blogposts');
@@ -17,11 +18,11 @@ require('express-async-errors');
 const app = express();
 const port = process.env.PORT || 3502;
 const db = config.get('db');
-const origin = new RegExp('^http://localhost', 'i');
-const corsOptions = {
-  origin,
-  optionsSuccessStatus: 200
-};
+// const origin = new RegExp('^http://localhost', 'i');
+// const corsOptions = {
+//   origin,
+//   optionsSuccessStatus: 200
+// };
 
 winston.exceptions.handle(
   new winston.transports.Console({ colorize: true, prettyPrint: true }),
@@ -61,15 +62,16 @@ mongoose
   });
 
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-    type: ['application/x-www-form-urlencoded', 'image/jpeg', 'multipart/form-data']
-  })
-);
+// app.use(
+//   express.urlencoded({
+//     extended: true,
+//     type: ['application/x-www-form-urlencoded', 'image/jpeg', 'multipart/form-data']
+//   })
+// );
 app.use(express.static('public'));
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(fileUpload());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/blog/posts', blogposts);

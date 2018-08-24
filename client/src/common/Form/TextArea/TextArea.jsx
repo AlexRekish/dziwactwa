@@ -9,7 +9,7 @@ const Select = ({ name, label, error, onChange, value, placeholder }) => (
     <textarea
       name={name}
       id={name}
-      rows="8"
+      rows="6"
       onChange={onChange}
       value={value}
       placeholder={placeholder}

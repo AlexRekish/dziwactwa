@@ -54,7 +54,7 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderInput = (name, label, placeholder, type = 'text') => {
+  renderInput = (name, label, placeholder, type = 'text', readonly = false) => {
     const { data, errors } = this.state;
     return (
       <Input
@@ -65,6 +65,7 @@ class Form extends Component {
         value={data[name]}
         placeholder={placeholder}
         error={errors[name]}
+        readonly={readonly}
       />
     );
   };

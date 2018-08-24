@@ -1,7 +1,7 @@
 import React from 'react';
 import './Input.sass';
 
-const Input = ({ name, label, onChange, value, placeholder, type, error }) => (
+const Input = ({ name, label, onChange, value, placeholder, type, error, readonly }) => (
   <div className="custom-input__wrapper">
     <label htmlFor={name} className="custom-input__label">
       {label}
@@ -19,6 +19,7 @@ const Input = ({ name, label, onChange, value, placeholder, type, error }) => (
           ? { borderColor: 'rgb(213, 0, 0)', backgroundColor: 'rgba(250, 128, 114, 0.5)' }
           : null
       }
+      readOnly={readonly}
     />
     {error ? (
       <small className="custom-input__error">{error}</small>

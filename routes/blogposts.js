@@ -1,4 +1,8 @@
 const express = require('express');
+const winston = require('winston');
+const fs = require('fs');
+const { promisify } = require('util');
+const path = require('path');
 const validator = require('../middleware/validate');
 const { BlogPost, validate } = require('../models/blogpost');
 const auth = require('../middleware/auth');
@@ -40,7 +44,8 @@ router.put('/:id', [auth, admin, validateObjectId, validator(validate)], async (
     {
       title: req.body.title,
       photo: req.body.photo,
-      text: req.body.text
+      text: req.body.text,
+      date: req.body.date
     },
     { new: true }
   );
@@ -50,6 +55,16 @@ router.put('/:id', [auth, admin, validateObjectId, validator(validate)], async (
 
 router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
   const blogpost = await BlogPost.findByIdAndRemove(req.params.id);
+  if (blogpost) {
+    try {
+      const unlink = promisify(fs.unlink);
+      const imgNumber = blogpost.photo.split('img/');
+      await unlink(path.join(__dirname, `../Public/img/${imgNumber[1]}`));
+    } catch (err) {
+      winston.error(err);
+    }
+  }
+
   if (!blogpost) return res.status(404).send('Blog post with passed id not found');
   return res.send(blogpost);
 });

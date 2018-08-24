@@ -6,7 +6,6 @@ const tokenKey = 'token';
 const refreshKey = 'refreshToken';
 
 export const getJwt = () => localStorage.getItem(tokenKey);
-
 http.setJwt(getJwt());
 
 export const login = async (email, password) => {

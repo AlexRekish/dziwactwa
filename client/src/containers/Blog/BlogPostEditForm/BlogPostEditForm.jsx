@@ -4,6 +4,7 @@ import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { editPost, getPost } from '../../../services/blogService';
+import uploadImage from '../../../services/uploadImageService';
 import '../BlogForm/BlogPostForm';
 
 class BlogPostEditForm extends Form {
@@ -13,6 +14,7 @@ class BlogPostEditForm extends Form {
       photo: '',
       text: ''
     },
+    selectedImage: {},
     errors: {}
   };
 
@@ -65,6 +67,7 @@ class BlogPostEditForm extends Form {
 
   onSubmitted = async () => {
     const { data } = this.state;
+    console.log(data);
     const { history } = this.props;
     try {
       await editPost(data._id, data);
@@ -82,9 +85,65 @@ class BlogPostEditForm extends Form {
     history.goBack();
   };
 
+  uploadPreviewImageHandler = evt => {
+    const { data } = { ...this.state };
+    const selectedImage = evt.target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.setState({
+        data: {
+          ...data,
+          photo: reader.result
+        },
+        selectedImage
+      });
+    });
+    reader.readAsDataURL(evt.target.files[0]);
+  };
+
+  imageUploadHandler = async evt => {
+    evt.preventDefault();
+    const { data } = { ...this.state };
+    const { selectedImage } = this.state;
+    const { data: link } = await uploadImage(selectedImage);
+    this.setState({
+      data: {
+        ...data,
+        photo: link
+      }
+    });
+  };
+
+  clearImageUploadHandler = () => {
+    const { data } = { ...this.state };
+    this.setState({
+      data: {
+        ...data,
+        photo: ''
+      },
+      selectedImage: {}
+    });
+  };
+
   render() {
+    const { data } = this.state;
     return (
       <section className="new-post">
+        <form onSubmit={this.imageUploadHandler} className="new-post__form">
+          <div className="new-post__photo-wrapper">
+            <img src={data.photo} alt="" className="new-post__img-preview" />
+          </div>
+          <input
+            type="file"
+            onChange={this.uploadPreviewImageHandler}
+            name="image"
+            className="new-post__file-input"
+          />
+          <div className="new-post__buttons-wrapper">
+            <Button type="submit" label="Upload image" clicked={this.imageUploadHandler} />
+            <Button type="reset" label="Clear image" clicked={this.clearImageUploadHandler} />
+          </div>
+        </form>
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">Edit post</h1>
           {this.renderInput('photo', 'Photo:', 'Choose photo...')}
