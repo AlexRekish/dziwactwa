@@ -9,7 +9,13 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const blogposts = await BlogPost.find().sort({ date: -1 });
-  return res.send(blogposts);
+  const cuttedBlogposts = blogposts.map(post => ({
+    _id: post._id,
+    title: post.title,
+    photo: post.photo,
+    date: post.date,
+  }));
+  return res.send(cuttedBlogposts);
 });
 
 router.get('/:id', validateObjectId, async (req, res) => {

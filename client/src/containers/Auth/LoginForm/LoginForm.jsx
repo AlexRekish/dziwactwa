@@ -57,8 +57,8 @@ class LoginForm extends Form {
       <section className="auth">
         <form className="auth__form" onSubmit={this.formSubmitHandler}>
           <h1 className="auth__header">Login</h1>
-          {this.renderInput('email', 'Email', 'Enter your email', 'email')}
-          {this.renderInput('password', 'Password', 'Enter your password', 'password')}
+          {this.renderInput('email', 'Email:', 'Enter your email', 'email')}
+          {this.renderInput('password', 'Password:', 'Enter your password', 'password')}
           <div className="auth__buttons-wrapper">
             <Button
               type="submit"

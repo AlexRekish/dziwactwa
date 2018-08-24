@@ -31,7 +31,7 @@
   "scripts": {
     "eslint": "eslint ./",
     "test": "npm run eslint && jest --watchAll --verbose -i --coverage",
-    "start": "nodemon server.js && node ../client/scripts/start.js"
+    "start": "nodemon && node ../client/scripts/start.js"
   },
   "engines": {
     "node": "^10.6.0"

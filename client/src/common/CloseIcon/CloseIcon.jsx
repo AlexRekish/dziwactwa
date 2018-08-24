@@ -4,7 +4,8 @@ import './CloseIcon.sass';
 
 const CloseIcon = ({ history }) => (
   <button type="button" className="close-icon" onClick={() => history.goBack()}>
-    <FontAwesomeIcon icon="times" />
+    <FontAwesomeIcon icon="arrow-left" />
+    <p className="close-icon__description">Back</p>
   </button>
 );
 

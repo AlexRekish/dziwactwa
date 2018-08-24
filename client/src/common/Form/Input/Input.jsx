@@ -5,7 +5,6 @@ const Input = ({ name, label, onChange, value, placeholder, type, error }) => (
   <div className="custom-input__wrapper">
     <label htmlFor={name} className="custom-input__label">
       {label}
-      {':'}
     </label>
     <input
       type={type}

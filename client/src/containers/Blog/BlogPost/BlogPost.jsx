@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { getPost, deletePost } from '../../../services/blogService';
 import Button from '../../../common/Button/Button';
 import ControlPanel from '../../../common/ControlPanel/ControlPanel';
@@ -39,6 +40,7 @@ class BlogPost extends Component {
       const { post } = this.state;
       const { history } = this.props;
       await deletePost(post._id);
+      toast.success('Successful deleted');
       history.replace('/blog');
     } catch (err) {
       if (err.response) {
@@ -60,20 +62,29 @@ class BlogPost extends Component {
           <div className="post__photo-wrapper">
             <img src={post.photo} alt="" className="post__photo" />
           </div>
+
           <div className="post__content-wrapper">
             <h1 className="post__title">{post.title}</h1>
             <p className="post__date">{parseStringToDate(post.date)}</p>
-            <p className="post__content">{post.text}</p>
+            <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
+              <p className="post__content">{post.text}</p>
+            </Scrollbars>
           </div>
-          <CloseIcon history={history} />
         </article>
-        {user &&
-          user.isAdmin && (
-            <ControlPanel>
-              <Button type="button" label="Edit" clicked={this.editPostHandler} />
-              <Button type="button" label="Delete" clicked={this.deletePostHandler} danger />
-            </ControlPanel>
-          )}
+        {
+          <ControlPanel>
+            <div>
+              <CloseIcon history={history} />
+            </div>
+            {user &&
+              user.isAdmin && (
+                <div>
+                  <Button type="button" label="Edit" clicked={this.editPostHandler} />
+                  <Button type="button" label="Delete" clicked={this.deletePostHandler} danger />
+                </div>
+              )}
+          </ControlPanel>
+        }
       </section>
     );
   }

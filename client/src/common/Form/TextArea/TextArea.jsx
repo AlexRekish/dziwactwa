@@ -5,7 +5,6 @@ const Select = ({ name, label, error, onChange, value, placeholder }) => (
   <div className="custom-text-area__wrapper">
     <label htmlFor={name} className="custom-text-area__label">
       {label}
-      {':'}
     </label>
     <textarea
       name={name}

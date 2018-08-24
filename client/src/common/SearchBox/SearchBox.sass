@@ -1,0 +1,38 @@
+@import '../../vars.sass';
+
+.custom-search-box
+  position: absolute
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 0 10px
+  margin: 0
+  top: 40px
+  transform: translateY(-50%)
+  right: 200px
+  width: 340px
+  height: 60px
+  background-color: rgba($main, 0.4)
+  border-radius: 5px
+
+.custom-search-box__input
+  display: block
+  width: 100%
+  max-width: 100%
+  padding: 10px
+  margin: 10px 0
+  border: 3px solid $context
+  border-radius: 5px
+  box-sizing: border-box
+  background-color: rgba($context, 0.7)
+  font-size: 14px
+  font-weight: bold
+  outline: none
+
+  &:focus
+    background-color: rgba($context, 0.9)
+
+  &::placeholder
+    color: $main
+    font-size: 14px
+    font-weight: bold

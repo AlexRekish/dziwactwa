@@ -3,7 +3,7 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
 import Header from './containers/Header/Header';
@@ -20,7 +20,7 @@ import BlogPost from './containers/Blog/BlogPost/BlogPost';
 import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
 import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
 
-library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faTimes);
+library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft);
 
 class App extends Component {
   state = {};

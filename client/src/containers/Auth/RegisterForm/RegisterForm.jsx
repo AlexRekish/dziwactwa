@@ -64,9 +64,9 @@ class RegisterForm extends Form {
       <section className="auth">
         <form className="auth__form" onSubmit={this.formSubmitHandler}>
           <h1 className="auth__header">Register</h1>
-          {this.renderInput('name', 'Name', 'Enter your name')}
-          {this.renderInput('email', 'Email', 'Enter your email', 'email')}
-          {this.renderInput('password', 'Password', 'Enter your password', 'password')}
+          {this.renderInput('name', 'Name:', 'Enter your name')}
+          {this.renderInput('email', 'Email:', 'Enter your email', 'email')}
+          {this.renderInput('password', 'Password:', 'Enter your password', 'password')}
           <div className="auth__buttons-wrapper">
             <Button
               type="button"

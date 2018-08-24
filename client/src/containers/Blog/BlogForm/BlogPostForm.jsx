@@ -55,9 +55,9 @@ class BlogPostForm extends Form {
       <section className="new-post">
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">New post</h1>
-          {this.renderInput('photo', 'Photo', 'Choose photo...')}
-          {this.renderInput('title', 'Title', 'Enter title')}
-          {this.renderTextArea('text', 'Text', 'Enter your exciting story!')}
+          {this.renderInput('photo', 'Photo:', 'Choose photo...')}
+          {this.renderInput('title', 'Title:', 'Enter title')}
+          {this.renderTextArea('text', 'Text:', 'Enter your exciting story!')}
           <div className="new-post__buttons-wrapper">
             <Button
               type="submit"

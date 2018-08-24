@@ -8,18 +8,19 @@ import './Blog.sass';
 import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
 import Button from '../../common/Button/Button';
+import SearchBox from '../../common/SearchBox/SearchBox';
 
 class Blog extends Component {
   state = {
     posts: [],
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    searchString: ''
   };
 
   async componentDidMount() {
     const { data: posts } = await getPosts();
-    const sortedPosts = posts.sort((a, b) => Date.parse(a.date) < Date.parse(b.date));
-    this.setState({ posts: sortedPosts });
+    this.setState({ posts });
   }
 
   pageChangeHandler = page => {
@@ -27,8 +28,10 @@ class Blog extends Component {
   };
 
   getPagedData = () => {
-    const { posts, pageSize, currentPage } = this.state;
-    const paginatedPosts = paginate(posts, currentPage, pageSize);
+    const { posts, pageSize, currentPage, searchString } = this.state;
+    const paginatedPosts = searchString
+      ? paginate(this.filterPosts(posts, searchString), currentPage, pageSize)
+      : paginate(posts, currentPage, pageSize);
     return { totalCount: posts.length, paginatedPosts };
   };
 
@@ -37,8 +40,17 @@ class Blog extends Component {
     history.push('/blog/new');
   };
 
+  searchHandler = string => {
+    this.setState({ searchString: string, currentPage: 1 });
+  };
+
+  filterPosts = (posts, searchString) => {
+    const reg = new RegExp(`^${searchString}`, 'i');
+    return posts.filter(post => reg.test(post.title));
+  };
+
   render() {
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, searchString } = this.state;
     const { user } = this.props;
     const { totalCount, paginatedPosts: posts } = this.getPagedData();
     return posts ? (
@@ -66,6 +78,7 @@ class Blog extends Component {
           {user &&
             user.isAdmin && <Button type="button" label="Add post" clicked={this.addPostHandler} />}
         </ControlPanel>
+        <SearchBox value={searchString} onChange={this.searchHandler} />
       </section>
     ) : null;
   }
