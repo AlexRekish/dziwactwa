@@ -4,6 +4,7 @@ import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { addNewPost } from '../../../services/blogService';
+import uploadImage from '../../../services/uploadImageService';
 import './BlogPostFrom.sass';
 
 class BlogPostForm extends Form {
@@ -11,7 +12,8 @@ class BlogPostForm extends Form {
     data: {
       title: '',
       photo: '',
-      text: ''
+      text: '',
+      selectedImage: null
     },
     errors: {}
   };
@@ -50,12 +52,25 @@ class BlogPostForm extends Form {
     history.goBack();
   };
 
+  fileLoadHandler = evt => {
+    // const { data } = { ...this.state };
+    console.log(evt.target.files[0]);
+    uploadImage(evt.target.files[0]);
+    // this.setState({
+    //   data: {
+    //     ...data,
+    //     selectedImage: evt.target.files[0]
+    //   }
+    // });
+  };
+
   render() {
     return (
       <section className="new-post">
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">New post</h1>
           {this.renderInput('photo', 'Photo:', 'Choose photo...')}
+          {/* <input type="file" onChange={this.fileLoadHandler} /> */}
           {this.renderInput('title', 'Title:', 'Enter title')}
           {this.renderTextArea('text', 'Text:', 'Enter your exciting story!')}
           <div className="new-post__buttons-wrapper">

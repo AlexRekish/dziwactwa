@@ -10,6 +10,7 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const blogposts = require('./routes/blogposts');
 const photos = require('./routes/photos');
+const upload = require('./routes/upload');
 const error = require('./middleware/error');
 require('express-async-errors');
 
@@ -60,7 +61,12 @@ mongoose
   });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(
+  express.urlencoded({
+    extended: true,
+    type: ['application/x-www-form-urlencoded', 'image/jpeg', 'multipart/form-data']
+  })
+);
 app.use(express.static('public'));
 app.use(helmet());
 app.use(cors(corsOptions));
@@ -68,6 +74,7 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/blog/posts', blogposts);
 app.use('/api/photos', photos);
+app.use('/api/upload', upload);
 app.use(error);
 
 const server = app.listen(port, () => {
