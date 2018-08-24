@@ -1,0 +1,57 @@
+{
+  "name": "dziwactwa-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "config": "^2.0.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-async-errors": "^3.0.0",
+    "helmet": "^3.13.0",
+    "joi": "^13.5.2",
+    "joi-objectid": "^2.0.0",
+    "joi-password-complexity": "^2.0.1",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.6",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "babel-eslint": "^7.2.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.0",
+    "prettier": "^1.14.2",
+    "prettier-eslint": "^8.8.2",
+    "jest": "^22.0.0",
+    "supertest": "^3.1.0"
+  },
+  "scripts": {
+    "eslint": "eslint ./",
+    "test": "npm run eslint && jest --watchAll --verbose -i --coverage",
+    "start": "nodemon",
+    "seed": "node seed.js"
+  },
+  "engines": {
+    "node": "^10.9.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/client/"
+    ]
+  }
+}

@@ -1,7 +1,8 @@
-# Персональный сайт с блогом и галереей
+# Personal SPA with blog and gallery
 
-Бэкенд: MongoDB 4.0, node.js 10.6.0
+Backend: MongoDB 4.0, node.js 10.9.0
 
-Фронтенд: React ^16.*.* 
+Frontend: React ^16
 
-Для запуска сервера нужно добавить переменную окружения dziw_jwtSecret.
+For start the server you must to add the environment variable dziw_jwtSecret.
+For fast creating blog posts you can use npm run seed.
