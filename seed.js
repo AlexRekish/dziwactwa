@@ -11,67 +11,67 @@ const data = [
   },
   {
     title: 'Lorem ipsum dolor sit amet. 2',
-    photo: 'http://localhost:3502/img/2.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 3',
-    photo: 'http://localhost:3502/img/3.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 4',
-    photo: 'http://localhost:3502/img/4.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 5',
-    photo: 'http://localhost:3502/img/5.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 6',
-    photo: 'http://localhost:3502/img/6.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 7',
-    photo: 'http://localhost:3502/img/7.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 8',
-    photo: 'http://localhost:3502/img/8.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 9',
-    photo: 'http://localhost:3502/img/9.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 10',
-    photo: 'http://localhost:3502/img/10.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 11',
-    photo: 'http://localhost:3502/img/11.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   },
   {
     title: 'Lorem ipsum dolor sit amet. 12',
-    photo: 'http://localhost:3502/img/12.jpg',
+    photo: 'http://localhost:3502/img/1.jpg',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   }

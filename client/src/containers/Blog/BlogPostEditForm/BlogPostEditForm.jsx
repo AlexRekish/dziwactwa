@@ -14,6 +14,7 @@ class BlogPostEditForm extends Form {
       photo: '',
       text: ''
     },
+    postId: '',
     selectedImage: {},
     errors: {}
   };
@@ -23,8 +24,6 @@ class BlogPostEditForm extends Form {
   }
 
   schema = {
-    _id: Joi.string(),
-    date: Joi.date(),
     title: Joi.string()
       .min(3)
       .max(255)
@@ -43,9 +42,8 @@ class BlogPostEditForm extends Form {
     const { history } = this.props;
     try {
       const postId = history.location.state._id;
-
       const { data: post } = await getPost(postId);
-      this.setState({ data: this.adaptPostToData(post) });
+      this.setState({ data: this.adaptPostToData(post), postId });
     } catch (err) {
       if (err.response && err.response.status === 404) {
         toast.error('Post not found!');
@@ -55,23 +53,20 @@ class BlogPostEditForm extends Form {
   };
 
   adaptPostToData = post => {
-    const { _id, title, photo, text, date } = post;
+    const { title, photo, text } = post;
     return {
-      _id,
       title,
       photo,
-      text,
-      date
+      text
     };
   };
 
   onSubmitted = async () => {
-    const { data } = this.state;
-    console.log(data);
+    const { data, postId } = this.state;
     const { history } = this.props;
     try {
-      await editPost(data._id, data);
-      toast.success('Post added!');
+      await editPost(postId, data);
+      toast.success('Post succesfully changed!');
       history.push('/blog');
     } catch (err) {
       if (err.response && err.response.status === 400) {

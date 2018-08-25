@@ -45,7 +45,7 @@ router.put('/:id', [auth, admin, validateObjectId, validator(validate)], async (
       title: req.body.title,
       photo: req.body.photo,
       text: req.body.text,
-      date: req.body.date
+      date: new Date()
     },
     { new: true }
   );
@@ -59,7 +59,8 @@ router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
     try {
       const unlink = promisify(fs.unlink);
       const imgNumber = blogpost.photo.split('img/');
-      await unlink(path.join(__dirname, `../Public/img/${imgNumber[1]}`));
+      const samePhotos = await BlogPost.find({ photo: blogpost.photo });
+      if (!samePhotos.length) await unlink(path.join(__dirname, `../Public/img/${imgNumber[1]}`));
     } catch (err) {
       winston.error(err);
     }

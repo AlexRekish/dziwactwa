@@ -42,7 +42,7 @@
   "scripts": {
     "eslint": "eslint ./",
     "test": "npm run eslint && jest --watchAll --verbose -i --coverage",
-    "start": "nodemon",
+    "start": "nodemon --no-deprecation",
     "seed": "node seed.js"
   },
   "engines": {
