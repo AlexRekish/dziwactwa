@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPosts } from '../../services/blogService';
+import http from '../../services/httpService';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Pagination from '../../common/Pagination/Pagination';
 import './Blog.sass';
@@ -19,8 +20,12 @@ class Blog extends Component {
   };
 
   async componentDidMount() {
-    const { data: posts } = await getPosts();
-    this.setState({ posts });
+    try {
+      const { data: posts } = await getPosts();
+      this.setState({ posts });
+    } catch (err) {
+      http.error(err);
+    }
   }
 
   pageChangeHandler = page => {

@@ -60,7 +60,7 @@ router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
       const unlink = promisify(fs.unlink);
       const imgNumber = blogpost.photo.split('img/');
       const samePhotos = await BlogPost.find({ photo: blogpost.photo });
-      if (!samePhotos.length) await unlink(path.join(__dirname, `../Public/img/${imgNumber[1]}`));
+      if (!samePhotos.length) await unlink(path.join(__dirname, `../public/img/${imgNumber[1]}`));
     } catch (err) {
       winston.error(err);
     }

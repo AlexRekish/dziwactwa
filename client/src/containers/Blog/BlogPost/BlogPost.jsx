@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toast } from 'react-toastify';
 import { Scrollbars } from 'react-custom-scrollbars';
+import http from '../../../services/httpService';
 import { getPost, deletePost } from '../../../services/blogService';
 import Button from '../../../common/Button/Button';
 import ControlPanel from '../../../common/ControlPanel/ControlPanel';
@@ -23,9 +23,10 @@ class BlogPost extends Component {
       this.setState({ post });
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        toast.error(err.message);
+        http.error(err);
         return history.replace('/blog');
       }
+      return http.error(err);
     }
   }
 
@@ -36,19 +37,19 @@ class BlogPost extends Component {
   };
 
   deletePostHandler = async () => {
+    const { post } = this.state;
+    const { history } = this.props;
     try {
-      const { post } = this.state;
-      const { history } = this.props;
       await deletePost(post._id);
-      toast.success('Successful deleted');
+      http.success('Successful deleted');
       history.replace('/blog');
     } catch (err) {
       if (err.response) {
         if (err.response.status === 404) {
-          toast.error('Post already deleted');
-        } else {
-          toast.error(err.message);
+          http.error(err);
+          return history.replace('/blog');
         }
+        return http.error(err);
       }
     }
   };

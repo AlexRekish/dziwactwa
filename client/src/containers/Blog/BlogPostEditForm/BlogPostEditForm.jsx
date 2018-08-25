@@ -1,10 +1,10 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import Joi from 'joi-browser';
+import http from '../../../services/httpService';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { editPost, getPost } from '../../../services/blogService';
-import uploadImage from '../../../services/uploadImageService';
+import uploadImage, { validateFileType } from '../../../services/uploadImageService';
 import '../BlogForm/BlogPostForm';
 
 class BlogPostEditForm extends Form {
@@ -46,9 +46,10 @@ class BlogPostEditForm extends Form {
       this.setState({ data: this.adaptPostToData(post), postId });
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        toast.error('Post not found!');
-        history.replace('/blog');
+        http.error(err);
+        return history.replace('/blog');
       }
+      http.err(err);
     }
   };
 
@@ -66,12 +67,14 @@ class BlogPostEditForm extends Form {
     const { history } = this.props;
     try {
       await editPost(postId, data);
-      toast.success('Post succesfully changed!');
+      http.success('Post succesfully changed!');
       history.push('/blog');
     } catch (err) {
-      if (err.response && err.response.status === 400) {
-        toast.error(err.message);
+      if (err.response && err.response.status === 404) {
+        http.error(err);
+        return history.replace('/blog');
       }
+      http.error(err);
     }
   };
 
@@ -83,30 +86,37 @@ class BlogPostEditForm extends Form {
   uploadPreviewImageHandler = evt => {
     const { data } = { ...this.state };
     const selectedImage = evt.target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.setState({
-        data: {
-          ...data,
-          photo: reader.result
-        },
-        selectedImage
+    if (validateFileType(selectedImage)) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        this.setState({
+          data: {
+            ...data,
+            photo: reader.result
+          },
+          selectedImage
+        });
       });
-    });
-    reader.readAsDataURL(evt.target.files[0]);
+      reader.readAsDataURL(evt.target.files[0]);
+    } else return http.error(null, 'Wrong file type');
   };
 
   imageUploadHandler = async evt => {
     evt.preventDefault();
     const { data } = { ...this.state };
     const { selectedImage } = this.state;
-    const { data: link } = await uploadImage(selectedImage);
-    this.setState({
-      data: {
-        ...data,
-        photo: link
-      }
-    });
+    if (!validateFileType(selectedImage)) return;
+    try {
+      const { data: link } = await uploadImage(selectedImage);
+      this.setState({
+        data: {
+          ...data,
+          photo: link
+        }
+      });
+    } catch (err) {
+      http.error(err);
+    }
   };
 
   clearImageUploadHandler = () => {
@@ -121,7 +131,7 @@ class BlogPostEditForm extends Form {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, selectedImage } = this.state;
     return (
       <section className="new-post">
         <form onSubmit={this.imageUploadHandler} className="new-post__form">
@@ -135,7 +145,12 @@ class BlogPostEditForm extends Form {
             className="new-post__file-input"
           />
           <div className="new-post__buttons-wrapper">
-            <Button type="submit" label="Upload image" clicked={this.imageUploadHandler} />
+            <Button
+              type="submit"
+              label="Upload image"
+              clicked={this.imageUploadHandler}
+              disabled={!validateFileType(selectedImage)}
+            />
             <Button type="reset" label="Clear image" clicked={this.clearImageUploadHandler} />
           </div>
         </form>

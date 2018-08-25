@@ -1,10 +1,10 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { addNewPost } from '../../../services/blogService';
-import uploadImage from '../../../services/uploadImageService';
+import uploadImage, { validateFileType } from '../../../services/uploadImageService';
+import http from '../../../services/httpService';
 import './BlogPostFrom.sass';
 
 class BlogPostForm extends Form {
@@ -43,12 +43,10 @@ class BlogPostForm extends Form {
         photo: data.photo,
         text: data.text
       });
-      toast.success('Post added!');
+      http.success('Post added!');
       history.push('/blog');
     } catch (err) {
-      if (err.response && err.response.status === 400) {
-        toast.error(err.message);
-      }
+      http.error(err);
     }
   };
 
@@ -60,39 +58,37 @@ class BlogPostForm extends Form {
   uploadPreviewImageHandler = evt => {
     const { data } = { ...this.state };
     const selectedImage = evt.target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.setState({
-        data: {
-          ...data,
-          selectedImage,
-          photo: reader.result
-        }
+    if (validateFileType(selectedImage)) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        this.setState({
+          data: {
+            ...data,
+            photo: reader.result,
+            selectedImage
+          }
+        });
       });
-    });
-    reader.readAsDataURL(evt.target.files[0]);
-  };
-
-  checkUploadImage = () => {
-    const type = /^image.*/i;
-    const { selectedImage } = this.state.data;
-    if (!selectedImage) return;
-    return selectedImage && type.test(selectedImage.type);
+      reader.readAsDataURL(evt.target.files[0]);
+    } else return http.error(null, 'Wrong file type');
   };
 
   imageUploadHandler = async evt => {
     evt.preventDefault();
-    if (!this.checkUploadImage()) return;
     const { data } = { ...this.state };
     const { selectedImage } = data;
-    if (!selectedImage && !selectedImage.name) return;
-    const { data: link } = await uploadImage(selectedImage);
-    this.setState({
-      data: {
-        ...data,
-        photo: link
-      }
-    });
+    if (!validateFileType(selectedImage)) return;
+    try {
+      const { data: link } = await uploadImage(selectedImage);
+      this.setState({
+        data: {
+          ...data,
+          photo: link
+        }
+      });
+    } catch (err) {
+      http.error(err);
+    }
   };
 
   clearImageUploadHandler = () => {
@@ -125,7 +121,7 @@ class BlogPostForm extends Form {
               type="submit"
               label="Upload image"
               clicked={this.imageUploadHandler}
-              disabled={!this.checkUploadImage()}
+              disabled={!validateFileType(data.selectedImage)}
             />
             <Button type="reset" label="Clear image" clicked={this.clearImageUploadHandler} />
           </div>
