@@ -1,7 +1,7 @@
 import React from 'react';
 import './TextArea.sass';
 
-const Select = ({ name, label, error, onChange, value, placeholder }) => (
+const Select = ({ name, label, error, onChange, value, placeholder, rows }) => (
   <div className="custom-text-area__wrapper">
     <label htmlFor={name} className="custom-text-area__label">
       {label}
@@ -9,7 +9,7 @@ const Select = ({ name, label, error, onChange, value, placeholder }) => (
     <textarea
       name={name}
       id={name}
-      rows="6"
+      rows={rows}
       onChange={onChange}
       value={value}
       placeholder={placeholder}

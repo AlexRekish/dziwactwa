@@ -90,7 +90,7 @@ class Blog extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps)(Blog);

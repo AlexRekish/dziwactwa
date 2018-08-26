@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
 import Header from './containers/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -20,7 +21,7 @@ import BlogPost from './containers/Blog/BlogPost/BlogPost';
 import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
 import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
 
-library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft);
+library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft, faPlusSquare);
 
 class App extends Component {
   state = {};
@@ -67,8 +68,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  logged: state.logged
+  user: state.auth.user,
+  logged: state.auth.logged
 });
 
 const mapDispatchToProps = dispatch => ({

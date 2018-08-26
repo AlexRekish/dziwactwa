@@ -84,7 +84,7 @@ class Form extends Component {
     );
   };
 
-  renderTextArea = (name, label, placeholder) => {
+  renderTextArea = (name, label, placeholder, rows) => {
     const { data, errors } = this.state;
     return (
       <TextArea
@@ -94,6 +94,7 @@ class Form extends Component {
         onChange={this.inputChangeHandler}
         value={data[name]}
         error={errors[name]}
+        rows={rows}
       />
     );
   };

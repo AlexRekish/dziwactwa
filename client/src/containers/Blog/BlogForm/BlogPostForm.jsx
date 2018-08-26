@@ -1,19 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { addNewPost } from '../../../services/blogService';
-import uploadImage, { validateFileType } from '../../../services/uploadImageService';
 import http from '../../../services/httpService';
+import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
 import './BlogPostFrom.sass';
 
 class BlogPostForm extends Form {
   state = {
     data: {
       title: '',
-      photo: '',
-      text: '',
-      selectedImage: null
+      text: ''
     },
     errors: {}
   };
@@ -23,26 +22,27 @@ class BlogPostForm extends Form {
       .min(3)
       .max(255)
       .required(),
-    photo: Joi.string()
-      .min(5)
-      .max(255)
-      .required(),
     text: Joi.string()
       .min(10)
       .max(5000)
-      .required(),
-    selectedImage: Joi.object().required()
+      .required()
   };
 
   onSubmitted = async () => {
     const { data } = this.state;
-    const { history } = this.props;
+    const { history, photo, imageLoaded } = this.props;
+
+    if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
+      http.error(null, 'Photo is required!');
+      return;
+    }
+
+    const post = {
+      ...data,
+      photo
+    };
     try {
-      await addNewPost({
-        title: data.title,
-        photo: data.photo,
-        text: data.text
-      });
+      await addNewPost(post);
       http.success('Post added!');
       history.push('/blog');
     } catch (err) {
@@ -55,88 +55,21 @@ class BlogPostForm extends Form {
     history.goBack();
   };
 
-  uploadPreviewImageHandler = evt => {
-    const { data } = { ...this.state };
-    const selectedImage = evt.target.files[0];
-    if (validateFileType(selectedImage)) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        this.setState({
-          data: {
-            ...data,
-            photo: reader.result,
-            selectedImage
-          }
-        });
-      });
-      reader.readAsDataURL(evt.target.files[0]);
-    } else return http.error(null, 'Wrong file type');
-  };
-
-  imageUploadHandler = async evt => {
-    evt.preventDefault();
-    const { data } = { ...this.state };
-    const { selectedImage } = data;
-    if (!validateFileType(selectedImage)) return;
-    try {
-      const { data: link } = await uploadImage(selectedImage);
-      this.setState({
-        data: {
-          ...data,
-          photo: link
-        }
-      });
-    } catch (err) {
-      http.error(err);
-    }
-  };
-
-  clearImageUploadHandler = () => {
-    const { data } = { ...this.state };
-    this.setState({
-      data: {
-        ...data,
-        photo: '',
-        selectedImage: null
-      }
-    });
-  };
-
   render() {
-    const { data } = this.state;
+    const { photo, imageLoaded } = this.props;
     return (
       <section className="new-post">
-        <form onSubmit={this.imageUploadHandler} className="new-post__form">
-          <div className="new-post__photo-wrapper">
-            <img src={data.photo} alt="" className="new-post__img-preview" />
-          </div>
-          <input
-            type="file"
-            onChange={this.uploadPreviewImageHandler}
-            name="image"
-            className="new-post__file-input"
-          />
-          <div className="new-post__buttons-wrapper">
-            <Button
-              type="submit"
-              label="Upload image"
-              clicked={this.imageUploadHandler}
-              disabled={!validateFileType(data.selectedImage)}
-            />
-            <Button type="reset" label="Clear image" clicked={this.clearImageUploadHandler} />
-          </div>
-        </form>
+        <FileUploadForm />
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">New post</h1>
-          {this.renderInput('photo', 'Photo:', 'Photo link...', 'text', true)}
           {this.renderInput('title', 'Title:', 'Enter title')}
-          {this.renderTextArea('text', 'Text:', 'Enter your exciting story!')}
+          {this.renderTextArea('text', 'Text:', 'Enter your exciting story!', 15)}
           <div className="new-post__buttons-wrapper">
             <Button
               type="submit"
               label="Submit"
               clicked={this.formSubmitHandler}
-              disabled={this.validate()}
+              disabled={this.validate() || !imageLoaded || !photo}
             />
             <Button type="button" label="Cancel" clicked={this.cancelHandler} />
           </div>
@@ -146,4 +79,9 @@ class BlogPostForm extends Form {
   }
 }
 
-export default BlogPostForm;
+const mapStateToProps = state => ({
+  photo: state.uploadImage.photo,
+  imageLoaded: state.uploadImage.imageLoaded
+});
+
+export default connect(mapStateToProps)(BlogPostForm);
