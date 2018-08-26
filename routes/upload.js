@@ -24,7 +24,6 @@ router.post('/', [auth, admin], async (req, res) => {
     const imgName = +new Date() + Math.floor(Math.random() * 100000);
     let error = false;
     bus.on('file', (fieldname, file, filename, encoding, mimetype) => {
-      console.log(mimetype);
       if (/^image\//i.test(mimetype)) {
         const fileExt = filename.split('.').reverse()[0];
         const saveTo = path.join(__dirname, '../public/img', `${imgName}.${fileExt}`);

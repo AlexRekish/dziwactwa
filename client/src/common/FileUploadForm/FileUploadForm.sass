@@ -26,8 +26,7 @@
   background-color: transparent
   background-size: cover
   background-position: center
-  // cursor: pointer
-
+  cursor: pointer
 
 .file-upload__input:focus + label,
 .file-upload__input.file-upload__input--focus + label
@@ -58,10 +57,6 @@
   &:focus
     opacity: 1
 
-.file-upload__input:focus + label > .file-upload__background-decorator,
-.file-upload__input.file-upload__input--focus + label > .file-upload__background-decorator
-  opacity: 1
-
   &:after
     position: absolute
     display: block
@@ -72,3 +67,8 @@
     top: 65%
     left: 50%
     transform: translateX(-50%)
+
+.file-upload__input:focus + label > .file-upload__background-decorator,
+.file-upload__input.file-upload__input--focus + label > .file-upload__background-decorator
+  opacity: 1
+

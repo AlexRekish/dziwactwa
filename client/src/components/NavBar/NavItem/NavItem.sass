@@ -24,8 +24,10 @@
   z-index: 1
 
   &:hover,
-  &:active
+  &:active,
+  &:focus
     color: $main
+    outline: none
 
   &::before
     display: block
@@ -43,9 +45,11 @@
     z-index: -1
 
 
-  &:hover::before
+  &:hover::before,
+  &:focus::before
     transform: scale(1)
     background-color: rgba($orange, 0.7)
+    outline: none
 
   &--active
     color: $orange
