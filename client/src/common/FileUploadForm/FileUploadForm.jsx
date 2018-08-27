@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Actions } from '../../store/actions/actions';
@@ -17,6 +18,32 @@ class FileUploadForm extends Component {
 
   inputBlurHandler = () => {
     this.setState({ focus: false });
+  };
+
+  dragEnterAndOverHandler = evt => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    evt.currentTarget.style.border = '5px solid #DD2C00';
+    evt.currentTarget.style.opacity = '0.8';
+  };
+
+  dragLeaveHandler = evt => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    evt.currentTarget.style.border = '';
+    evt.currentTarget.style.opacity = '';
+  };
+
+  dropHandler = evt => {
+    const { onSelectImage } = this.props;
+    evt.preventDefault();
+    evt.stopPropagation();
+    evt.currentTarget.style.border = '';
+    evt.currentTarget.style.opacity = '';
+
+    const dt = evt.dataTransfer;
+    const file = dt.files[0];
+    onSelectImage(null, file);
   };
 
   render() {
@@ -38,6 +65,7 @@ class FileUploadForm extends Component {
           onFocus={this.inputFocusHandler}
           onBlur={this.inputBlurHandler}
           name="image"
+          accept="image/*"
           className={
             focus
               ? 'visually-hidden file-upload__input file-upload__input--focus'
@@ -50,9 +78,14 @@ class FileUploadForm extends Component {
           style={{
             backgroundImage: `url(${photo || dataURL})`
           }}
+          onDragEnter={this.dragEnterAndOverHandler}
+          onDragOver={this.dragEnterAndOverHandler}
+          onDragLeave={this.dragLeaveHandler}
+          onDrop={this.dropHandler}
         >
           <div className="file-upload__background-decorator">
-            <FontAwesomeIcon icon={['far', `plus-square`]} />
+            <FontAwesomeIcon icon={['far', 'plus-square']} />
+            <FontAwesomeIcon icon={['far', 'clone']} />
           </div>
         </label>
         <div className="file-upload__buttons-wrapper">
@@ -72,15 +105,23 @@ class FileUploadForm extends Component {
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
   selectedImage: state.uploadImage.selectedImage,
-  dataURL: state.uploadImage.dataURL,
-  imageLoaded: state.uploadImage.imageLoaded
+  dataURL: state.uploadImage.dataURL
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelectImage: evt => dispatch(Actions.selectImage(evt)),
+  onSelectImage: (evt, file) => dispatch(Actions.selectImage(evt, file)),
   onUploadImage: (evt, selectedImage) => dispatch(Actions.uploadImage(evt, selectedImage)),
   onClearImage: () => dispatch(Actions.clearImage())
 });
+
+FileUploadForm.propTypes = {
+  selectedImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  photo: PropTypes.string.isRequired,
+  dataURL: PropTypes.string.isRequired,
+  onClearImage: PropTypes.func.isRequired,
+  onSelectImage: PropTypes.func.isRequired,
+  onUploadImage: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

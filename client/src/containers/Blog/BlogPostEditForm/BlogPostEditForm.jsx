@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import http from '../../../services/httpService';
@@ -125,6 +126,14 @@ const mapDispatchToProps = dispatch => ({
   onStartEditPost: photo => dispatch(Actions.startEditPost(photo)),
   onEndEditPost: () => dispatch(Actions.endEditPost())
 });
+
+BlogPostEditForm.propTypes = {
+  history: PropTypes.object.isRequired,
+  photo: PropTypes.string.isRequired,
+  imageLoaded: PropTypes.bool.isRequired,
+  onStartEditPost: PropTypes.func.isRequired,
+  onEndEditPost: PropTypes.func.isRequired
+};
 
 export default connect(
   mapStateToProps,

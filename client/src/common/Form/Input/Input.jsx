@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Input.sass';
 
 const Input = ({ name, label, onChange, value, placeholder, type, error, readonly }) => (
@@ -30,5 +31,21 @@ const Input = ({ name, label, onChange, value, placeholder, type, error, readonl
     )}
   </div>
 );
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
+  readonly: PropTypes.bool
+};
+
+Input.defaultProps = {
+  error: false,
+  readonly: false
+};
 
 export default Input;

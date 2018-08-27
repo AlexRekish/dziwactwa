@@ -24,6 +24,10 @@ function success(message) {
   return toast.success(message);
 }
 
+function info(message) {
+  return toast.info(message);
+}
+
 export default {
   get: axios.get,
   post: axios.post,
@@ -31,5 +35,6 @@ export default {
   delete: axios.delete,
   error,
   success,
+  info,
   setJwt
 };

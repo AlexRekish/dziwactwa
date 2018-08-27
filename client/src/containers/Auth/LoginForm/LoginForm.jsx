@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
 import Form from '../../../common/Form/Form';
@@ -77,6 +78,11 @@ class LoginForm extends Form {
 const mapDispatchToProps = dispatch => ({
   onLogin: user => dispatch(Actions.login(user))
 });
+
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 export default connect(
   null,

@@ -15,14 +15,15 @@
   border-radius: 5px
 
 .file-upload__preview
-  display: block
+  display: flex
+  justify-content: center
   position: relative
   width: 100%
   max-width: 100%
   height: 90%
   max-height: 100%
   border-radius: 5px
-  border: 3px solid $context
+  border: 3px dashed $context
   background-color: transparent
   background-size: cover
   background-position: center
@@ -41,16 +42,18 @@
 
 .file-upload__background-decorator
   display: flex
-  justify-content: center
+  justify-content: space-around
   align-items: center
+  grid-gap: 20px
   position: absolute
   font-size: 150px
   color: rgba($context, 0.7)
   opacity: 0
   top: 0
-  left: 0
-  width: 100%
+  left: 50%
+  width: 50%
   height: 100%
+  transform: translateX(-50%)
   transition: all 0.4s ease
 
   &:hover,
@@ -67,6 +70,7 @@
     top: 65%
     left: 50%
     transform: translateX(-50%)
+    text-align: center
 
 .file-upload__input:focus + label > .file-upload__background-decorator,
 .file-upload__input.file-upload__input--focus + label > .file-upload__background-decorator

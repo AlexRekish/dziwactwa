@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Select.sass';
 
 const Select = ({ options, name, label, error, onChange, value }) => (
@@ -14,5 +15,18 @@ const Select = ({ options, name, label, error, onChange, value }) => (
     {error && <small className="custom-select__error">{error}</small>}
   </div>
 );
+
+Select.propTypes = {
+  options: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+};
+
+Select.defaultProps = {
+  error: false
+};
 
 export default Select;

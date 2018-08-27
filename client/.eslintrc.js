@@ -19,7 +19,8 @@ module.exports = {
     'no-empty': 'off',
     'react/no-unused-state': 'off',
     'no-restricted-syntax': 'off',
-    'react/button-has-type': 'off'
+    'react/button-has-type': 'off',
+    'react/forbid-prop-types': 'off'
   },
   env: {
     jest: true,

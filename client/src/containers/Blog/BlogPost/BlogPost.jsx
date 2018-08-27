@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import http from '../../../services/httpService';
@@ -54,9 +55,14 @@ class BlogPost extends Component {
     }
   };
 
+  backButtonHandler = () => {
+    const { history } = this.props;
+    history.goBack();
+  };
+
   render() {
     const { post } = this.state;
-    const { user, history } = this.props;
+    const { user } = this.props;
     return (
       <section className="blog">
         <article className="post">
@@ -75,7 +81,7 @@ class BlogPost extends Component {
         {
           <ControlPanel>
             <div>
-              <CloseIcon history={history} />
+              <CloseIcon clicked={this.backButtonHandler} />
             </div>
             {user &&
               user.isAdmin && (
@@ -94,5 +100,15 @@ class BlogPost extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user
 });
+
+BlogPost.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  user: PropTypes.object
+};
+
+BlogPost.defaultProps = {
+  user: null
+};
 
 export default connect(mapStateToProps)(BlogPost);

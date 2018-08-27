@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './NavItem.sass';
 
@@ -9,5 +10,10 @@ const NavItem = ({ path, label }) => (
     </NavLink>
   </li>
 );
+
+NavItem.propTypes = {
+  path: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
+};
 
 export default NavItem;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import Form from '../../../common/Form/Form';
@@ -83,5 +84,11 @@ const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
   imageLoaded: state.uploadImage.imageLoaded
 });
+
+BlogPostForm.propTypes = {
+  history: PropTypes.object.isRequired,
+  photo: PropTypes.string.isRequired,
+  imageLoaded: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(BlogPostForm);

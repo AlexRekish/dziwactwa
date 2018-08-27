@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPosts } from '../../services/blogService';
@@ -92,5 +93,14 @@ class Blog extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user
 });
+
+Blog.propTypes = {
+  history: PropTypes.object.isRequired,
+  user: PropTypes.object
+};
+
+Blog.defaultProps = {
+  user: null
+};
 
 export default connect(mapStateToProps)(Blog);

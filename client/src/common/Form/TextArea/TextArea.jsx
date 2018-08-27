@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './TextArea.sass';
 
-const Select = ({ name, label, error, onChange, value, placeholder, rows }) => (
+const TextArea = ({ name, label, error, onChange, value, placeholder, rows }) => (
   <div className="custom-text-area__wrapper">
     <label htmlFor={name} className="custom-text-area__label">
       {label}
@@ -25,4 +26,18 @@ const Select = ({ name, label, error, onChange, value, placeholder, rows }) => (
   </div>
 );
 
-export default Select;
+TextArea.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  rows: PropTypes.number.isRequired
+};
+
+TextArea.defaultProps = {
+  error: false
+};
+
+export default TextArea;

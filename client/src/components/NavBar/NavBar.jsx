@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import NavItem from './NavItem/NavItem';
 import './NavBar.sass';
 
@@ -22,5 +23,13 @@ const NavBar = ({ user }) => (
     </ul>
   </nav>
 );
+
+NavBar.propTypes = {
+  user: PropTypes.object
+};
+
+NavBar.defaultProps = {
+  user: null
+};
 
 export default NavBar;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Header.sass';
 import NavBar from '../../components/NavBar/NavBar';
 
@@ -7,5 +8,13 @@ const Header = ({ user }) => (
     <NavBar user={user} />
   </header>
 );
+
+Header.propTypes = {
+  user: PropTypes.object
+};
+
+Header.defaultProps = {
+  user: null
+};
 
 export default Header;

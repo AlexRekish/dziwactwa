@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SearchBox.sass';
 
 const SearchBox = ({ value, onChange }) => (
@@ -13,5 +14,10 @@ const SearchBox = ({ value, onChange }) => (
     />
   </div>
 );
+
+SearchBox.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default SearchBox;

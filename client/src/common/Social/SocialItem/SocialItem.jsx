@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SocialItem.sass';
 
@@ -10,5 +11,11 @@ const SocialItem = ({ link, content, label }) => (
     </a>
   </li>
 );
+
+SocialItem.propTypes = {
+  link: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
+};
 
 export default SocialItem;
