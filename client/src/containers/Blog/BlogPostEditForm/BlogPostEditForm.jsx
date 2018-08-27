@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import http from '../../../services/httpService';
-import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { editPost, getPost } from '../../../services/blogService';
 import '../BlogForm/BlogPostForm';
 import { Actions } from '../../../store/actions/actions';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
 import Preloader from '../../../common/Preloader/Preloader';
+import withFormBlueprint from '../../../hoc/withFormBlueprint';
 
-class BlogPostEditForm extends Form {
+class BlogPostEditForm extends Component {
   state = {
     data: {
       title: '',
@@ -21,14 +21,6 @@ class BlogPostEditForm extends Form {
     postId: '',
     errors: {}
   };
-
-  async componentDidMount() {
-    const { onStartLoadData, onEndLoadData, onStartEditPost } = this.props;
-    onStartLoadData();
-    await this.populatePostData();
-    onEndLoadData();
-    onStartEditPost(this.state.photo);
-  }
 
   schema = {
     title: Joi.string()
@@ -40,6 +32,17 @@ class BlogPostEditForm extends Form {
       .max(5000)
       .required()
   };
+
+  async componentDidMount() {
+    const { onStartLoadData, onEndLoadData, onStartEditPost } = this.props;
+
+    onStartLoadData();
+    await this.populatePostData();
+    onEndLoadData();
+
+    const { photo } = this.state;
+    onStartEditPost(photo);
+  }
 
   populatePostData = async () => {
     const { history } = this.props;
@@ -61,6 +64,17 @@ class BlogPostEditForm extends Form {
       }
       http.err(err);
     }
+  };
+
+  formSubmitHandler = evt => {
+    evt.preventDefault();
+
+    const { validate } = this.props;
+    const errors = validate(this.state, this.schema);
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+
+    this.onSubmitted();
   };
 
   onSubmitted = async () => {
@@ -91,6 +105,20 @@ class BlogPostEditForm extends Form {
     }
   };
 
+  fieldChangeHandler = ({ currentTarget: field }) => {
+    const { errors, data } = { ...this.state };
+    const { validateProperty } = this.props;
+    const errorMessage = validateProperty(field, this.schema);
+    if (errorMessage) {
+      errors[field.name] = errorMessage;
+    } else {
+      delete errors[field.name];
+    }
+
+    data[field.name] = field.value;
+    this.setState({ data, errors });
+  };
+
   cancelHandler = () => {
     const { history, onEndEditPost } = this.props;
     history.goBack();
@@ -98,7 +126,7 @@ class BlogPostEditForm extends Form {
   };
 
   render() {
-    const { photo, imageLoaded, dataLoading } = this.props;
+    const { photo, imageLoaded, dataLoading, renderInput, validate, renderTextArea } = this.props;
     return dataLoading ? (
       <Preloader />
     ) : (
@@ -106,14 +134,28 @@ class BlogPostEditForm extends Form {
         <FileUploadForm />
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">Edit post</h1>
-          {this.renderInput('title', 'Title:', 'Enter title')}
-          {this.renderTextArea('text', 'Text:', 'Enter your exciting story!', 15)}
+          {renderInput(
+            'title',
+            'Title:',
+            'Enter title',
+            'text',
+            this.fieldChangeHandler,
+            this.state
+          )}
+          {renderTextArea(
+            'text',
+            'Text:',
+            'Enter your exciting story!',
+            15,
+            this.fieldChangeHandler,
+            this.state
+          )}
           <div className="new-post__buttons-wrapper">
             <Button
               type="submit"
               label="Submit"
               clicked={this.formSubmitHandler}
-              disabled={this.validate() || !imageLoaded || !photo}
+              disabled={validate(this.state, this.schema) || !imageLoaded || !photo}
             />
             <Button type="button" label="Cancel" clicked={this.cancelHandler} />
           </div>
@@ -144,10 +186,14 @@ BlogPostEditForm.propTypes = {
   onStartEditPost: PropTypes.func.isRequired,
   onEndEditPost: PropTypes.func.isRequired,
   onStartLoadData: PropTypes.func.isRequired,
-  onEndLoadData: PropTypes.func.isRequired
+  onEndLoadData: PropTypes.func.isRequired,
+  renderInput: PropTypes.func.isRequired,
+  validate: PropTypes.func.isRequired,
+  validateProperty: PropTypes.func.isRequired,
+  renderTextArea: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BlogPostEditForm);
+)(withFormBlueprint(BlogPostEditForm));

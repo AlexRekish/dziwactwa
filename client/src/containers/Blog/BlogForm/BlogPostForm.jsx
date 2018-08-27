@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
-import Form from '../../../common/Form/Form';
 import Button from '../../../common/Button/Button';
 import { addNewPost } from '../../../services/blogService';
 import http from '../../../services/httpService';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
 import './BlogPostFrom.sass';
+import withFormBlueprint from '../../../hoc/withFormBlueprint';
 
-class BlogPostForm extends Form {
+class BlogPostForm extends Component {
   state = {
     data: {
       title: '',
@@ -27,6 +27,17 @@ class BlogPostForm extends Form {
       .min(10)
       .max(5000)
       .required()
+  };
+
+  formSubmitHandler = evt => {
+    evt.preventDefault();
+
+    const { validate } = this.props;
+    const errors = validate(this.state, this.schema);
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+
+    this.onSubmitted();
   };
 
   onSubmitted = async () => {
@@ -51,26 +62,54 @@ class BlogPostForm extends Form {
     }
   };
 
+  fieldChangeHandler = ({ currentTarget: field }) => {
+    const { errors, data } = { ...this.state };
+    const { validateProperty } = this.props;
+    const errorMessage = validateProperty(field, this.schema);
+    if (errorMessage) {
+      errors[field.name] = errorMessage;
+    } else {
+      delete errors[field.name];
+    }
+
+    data[field.name] = field.value;
+    this.setState({ data, errors });
+  };
+
   cancelHandler = () => {
     const { history } = this.props;
     history.goBack();
   };
 
   render() {
-    const { photo, imageLoaded } = this.props;
+    const { photo, imageLoaded, renderInput, validate, renderTextArea } = this.props;
     return (
       <section className="new-post">
         <FileUploadForm />
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
           <h1 className="new-post__header">New post</h1>
-          {this.renderInput('title', 'Title:', 'Enter title')}
-          {this.renderTextArea('text', 'Text:', 'Enter your exciting story!', 15)}
+          {renderInput(
+            'title',
+            'Title:',
+            'Enter title',
+            'text',
+            this.fieldChangeHandler,
+            this.state
+          )}
+          {renderTextArea(
+            'text',
+            'Text:',
+            'Enter your exciting story!',
+            15,
+            this.fieldChangeHandler,
+            this.state
+          )}
           <div className="new-post__buttons-wrapper">
             <Button
               type="submit"
               label="Submit"
               clicked={this.formSubmitHandler}
-              disabled={this.validate() || !imageLoaded || !photo}
+              disabled={validate(this.state, this.schema) || !imageLoaded || !photo}
             />
             <Button type="button" label="Cancel" clicked={this.cancelHandler} />
           </div>
@@ -88,7 +127,11 @@ const mapStateToProps = state => ({
 BlogPostForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
-  imageLoaded: PropTypes.bool.isRequired
+  imageLoaded: PropTypes.bool.isRequired,
+  renderInput: PropTypes.func.isRequired,
+  validate: PropTypes.func.isRequired,
+  validateProperty: PropTypes.func.isRequired,
+  renderTextArea: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps)(BlogPostForm);
+export default connect(mapStateToProps)(withFormBlueprint(BlogPostForm));
