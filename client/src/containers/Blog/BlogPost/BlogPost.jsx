@@ -6,10 +6,12 @@ import http from '../../../services/httpService';
 import { getPost, deletePost } from '../../../services/blogService';
 import Button from '../../../common/Button/Button';
 import ControlPanel from '../../../common/ControlPanel/ControlPanel';
+import { Actions } from '../../../store/actions/actions';
 import parseStringToDate from '../../../utils/date';
+import CloseIcon from '../../../common/CloseIcon/CloseIcon';
 import './BlogPost.sass';
 import '../Blog.sass';
-import CloseIcon from '../../../common/CloseIcon/CloseIcon';
+import Preloader from '../../../common/Preloader/Preloader';
 
 class BlogPost extends Component {
   state = {
@@ -17,10 +19,12 @@ class BlogPost extends Component {
   };
 
   async componentDidMount() {
-    const { match, history } = this.props;
+    const { match, history, onStartLoadData, onEndLoadData } = this.props;
     try {
       if (match.params.id === 'new' || match.params.id === 'edit') return;
+      onStartLoadData();
       const { data: post } = await getPost(match.params.id);
+      onEndLoadData();
       this.setState({ post });
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -62,8 +66,10 @@ class BlogPost extends Component {
 
   render() {
     const { post } = this.state;
-    const { user } = this.props;
-    return (
+    const { user, dataLoading } = this.props;
+    return dataLoading || !post.title ? (
+      <Preloader />
+    ) : (
       <section className="blog">
         <article className="post">
           <div className="post__photo-wrapper">
@@ -98,17 +104,29 @@ class BlogPost extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  dataLoading: state.load.dataLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  onStartLoadData: () => dispatch(Actions.startLoad()),
+  onEndLoadData: () => dispatch(Actions.endLoad())
 });
 
 BlogPost.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  dataLoading: PropTypes.bool.isRequired,
+  onStartLoadData: PropTypes.func.isRequired,
+  onEndLoadData: PropTypes.func.isRequired
 };
 
 BlogPost.defaultProps = {
   user: null
 };
 
-export default connect(mapStateToProps)(BlogPost);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BlogPost);

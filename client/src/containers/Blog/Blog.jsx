@@ -11,6 +11,8 @@ import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
 import Button from '../../common/Button/Button';
 import SearchBox from '../../common/SearchBox/SearchBox';
+import { Actions } from '../../store/actions/actions';
+import Preloader from '../../common/Preloader/Preloader';
 
 class Blog extends Component {
   state = {
@@ -21,8 +23,11 @@ class Blog extends Component {
   };
 
   async componentDidMount() {
+    const { onStartLoadData, onEndLoadData } = this.props;
     try {
+      onStartLoadData();
       const { data: posts } = await getPosts();
+      onEndLoadData();
       this.setState({ posts });
     } catch (err) {
       http.error(err);
@@ -57,9 +62,11 @@ class Blog extends Component {
 
   render() {
     const { pageSize, currentPage, searchString } = this.state;
-    const { user } = this.props;
+    const { user, dataLoading } = this.props;
     const { totalCount, paginatedPosts: posts } = this.getPagedData();
-    return posts ? (
+    return dataLoading || !posts.length ? (
+      <Preloader />
+    ) : (
       <section className="blog">
         {posts.map(post => (
           <Link to={`/blog/${post._id}`} className="blog__post-link" key={post._id}>
@@ -86,21 +93,33 @@ class Blog extends Component {
         </ControlPanel>
         <SearchBox value={searchString} onChange={this.searchHandler} />
       </section>
-    ) : null;
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  dataLoading: state.load.dataLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  onStartLoadData: () => dispatch(Actions.startLoad()),
+  onEndLoadData: () => dispatch(Actions.endLoad())
 });
 
 Blog.propTypes = {
   history: PropTypes.object.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  dataLoading: PropTypes.bool.isRequired,
+  onStartLoadData: PropTypes.func.isRequired,
+  onEndLoadData: PropTypes.func.isRequired
 };
 
 Blog.defaultProps = {
   user: null
 };
 
-export default connect(mapStateToProps)(Blog);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Blog);

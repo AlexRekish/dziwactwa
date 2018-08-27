@@ -9,6 +9,7 @@ import { editPost, getPost } from '../../../services/blogService';
 import '../BlogForm/BlogPostForm';
 import { Actions } from '../../../store/actions/actions';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
+import Preloader from '../../../common/Preloader/Preloader';
 
 class BlogPostEditForm extends Form {
   state = {
@@ -22,8 +23,11 @@ class BlogPostEditForm extends Form {
   };
 
   async componentDidMount() {
+    const { onStartLoadData, onEndLoadData, onStartEditPost } = this.props;
+    onStartLoadData();
     await this.populatePostData();
-    this.props.onStartEditPost(this.state.photo);
+    onEndLoadData();
+    onStartEditPost(this.state.photo);
   }
 
   schema = {
@@ -94,8 +98,10 @@ class BlogPostEditForm extends Form {
   };
 
   render() {
-    const { photo, imageLoaded } = this.props;
-    return (
+    const { photo, imageLoaded, dataLoading } = this.props;
+    return dataLoading ? (
+      <Preloader />
+    ) : (
       <section className="new-post">
         <FileUploadForm />
         <form onSubmit={this.formSubmitHandler} className="new-post__form">
@@ -119,20 +125,26 @@ class BlogPostEditForm extends Form {
 
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
-  imageLoaded: state.uploadImage.imageLoaded
+  imageLoaded: state.uploadImage.imageLoaded,
+  dataLoading: state.load.dataLoading
 });
 
 const mapDispatchToProps = dispatch => ({
   onStartEditPost: photo => dispatch(Actions.startEditPost(photo)),
-  onEndEditPost: () => dispatch(Actions.endEditPost())
+  onEndEditPost: () => dispatch(Actions.endEditPost()),
+  onStartLoadData: () => dispatch(Actions.startLoad()),
+  onEndLoadData: () => dispatch(Actions.endLoad())
 });
 
 BlogPostEditForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
   imageLoaded: PropTypes.bool.isRequired,
+  dataLoading: PropTypes.bool.isRequired,
   onStartEditPost: PropTypes.func.isRequired,
-  onEndEditPost: PropTypes.func.isRequired
+  onEndEditPost: PropTypes.func.isRequired,
+  onStartLoadData: PropTypes.func.isRequired,
+  onEndLoadData: PropTypes.func.isRequired
 };
 
 export default connect(

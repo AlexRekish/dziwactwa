@@ -1,10 +1,13 @@
 import getAuthActions from './auth';
 import getUploadImageActions from './uploadImage';
+import getDataLoadActions from './dataLoad';
 
 const ActionType = {
   GET_USER_FROM_LSTORAGE: 'GET_USER_FROM_LSTORAGE',
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
+  START_LOAD_DATA: 'START_LOAD_DATA',
+  END_LOAD_DATA: 'END_LOAD_DATA',
   SELECT_IMAGE: 'SELECT_IMAGE',
   UPLOAD_IMAGE: 'UPLOAD_IMAGE',
   CLEAR_IMAGE: 'CLEAR_IMAGE',
@@ -14,7 +17,8 @@ const ActionType = {
 
 export const Actions = {
   ...getAuthActions(ActionType),
-  ...getUploadImageActions(ActionType)
+  ...getUploadImageActions(ActionType),
+  ...getDataLoadActions(ActionType)
 };
 
 export default ActionType;

@@ -10,13 +10,15 @@ import registerServiceWorker from './registerServiceWorker';
 import 'react-toastify/dist/ReactToastify.css';
 import authReducer from './store/reducers/auth';
 import uploadImageReducer from './store/reducers/uploadImage';
+import dataLoadReducer from './store/reducers/dataLoad';
 import './index.sass';
 
 randomBackground();
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  uploadImage: uploadImageReducer
+  uploadImage: uploadImageReducer,
+  load: dataLoadReducer
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

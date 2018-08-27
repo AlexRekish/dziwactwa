@@ -11,16 +11,21 @@
   width: 100%
 
 .pagination__link
+  display: flex
+  justify-content: center
+  align-items: center
   width: 50px
   margin: 5px 0
   padding: 10px
   border: none
   border-radius: 5px
   background-color: rgba($context, 0.7)
+  border: 2px solid transparent
   font-weight: bold
   color: $main
   cursor: pointer
   transition: all 0.4s ease
+  text-align: center
 
   &:hover
     background-color: rgba($orange, 0.7)
@@ -28,4 +33,22 @@
   &--active
     background-color: rgba($orange, 0.7)
     cursor: default
+
+  &:disabled
+    cursor: default
+    opacity: 0.7
+
+  &:focus
+    border: 2px solid rgba($orange, 0.7)
+
+.pagination__breadcrumbs
+  display: flex
+  justify-content: center
+  align-items: center
+  text-align: center
+  margin: 0
+  padding: 10px
+  color: rgba($context, 0.7)
+  font-size: 18px
+  font-weight: bold
 

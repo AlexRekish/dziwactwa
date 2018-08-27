@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -20,6 +21,7 @@ import Blog from './containers/Blog/Blog';
 import BlogPost from './containers/Blog/BlogPost/BlogPost';
 import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
 import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
+import Preloader from './common/Preloader/Preloader';
 
 library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft, faPlusSquare, faClone);
 
@@ -55,7 +57,7 @@ class App extends Component {
             {user && user.isAdmin && <Route path="/blog/edit" component={BlogPostEditForm} />}
             <Route path="/blog/:id" component={BlogPost} />
             <Route path="/blog" component={Blog} />
-            <Route path="/gallery" />
+            <Route path="/gallery" component={Preloader} />
             <Route path="/about" component={AboutMe} />
             <Route path="/" exact component={Home} />
             <Redirect to="/" />
@@ -75,6 +77,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onLoginFromLocalStorage: () => dispatch(Actions.getUserFromLocalStorage())
 });
+
+App.propTypes = {
+  logged: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  onLoginFromLocalStorage: PropTypes.func.isRequired
+};
+
+App.defaultProps = {
+  user: null
+};
 
 export default withRouter(
   connect(
