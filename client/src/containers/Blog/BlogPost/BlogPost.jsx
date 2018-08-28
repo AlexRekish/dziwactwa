@@ -2,61 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import http from '../../../services/httpService';
-import { getPost, deletePost } from '../../../services/blogService';
 import Button from '../../../common/Button/Button';
 import ControlPanel from '../../../common/ControlPanel/ControlPanel';
 import { Actions } from '../../../store/actions/actions';
 import parseStringToDate from '../../../utils/date';
 import CloseIcon from '../../../common/CloseIcon/CloseIcon';
+import Preloader from '../../../common/Preloader/Preloader';
 import './BlogPost.sass';
 import '../Blog.sass';
-import Preloader from '../../../common/Preloader/Preloader';
 
 class BlogPost extends Component {
-  state = {
-    post: {}
-  };
+  state = {};
 
   async componentDidMount() {
-    const { match, history, onStartLoadData, onEndLoadData } = this.props;
-    try {
-      if (match.params.id === 'new' || match.params.id === 'edit') return;
-      onStartLoadData();
-      const { data: post } = await getPost(match.params.id);
-      onEndLoadData();
-      this.setState({ post });
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        http.error(err);
-        return history.replace('/blog');
-      }
-      return http.error(err);
-    }
+    const { match, history, onStartLoadPost } = this.props;
+    if (match.params.id === 'new' || match.params.id === 'edit') return;
+    onStartLoadPost(match.params.id, history);
   }
 
   editPostHandler = () => {
-    const { post } = this.state;
-    const { history } = this.props;
+    const { history, post } = this.props;
     history.push('/blog/edit', post);
   };
 
   deletePostHandler = async () => {
-    const { post } = this.state;
-    const { history } = this.props;
-    try {
-      await deletePost(post._id);
-      http.success('Successful deleted');
-      history.replace('/blog');
-    } catch (err) {
-      if (err.response) {
-        if (err.response.status === 404) {
-          http.error(err);
-          return history.replace('/blog');
-        }
-        return http.error(err);
-      }
-    }
+    const { history, post, onStartDeletePost } = this.props;
+    onStartDeletePost(post._id, history);
   };
 
   backButtonHandler = () => {
@@ -65,8 +36,7 @@ class BlogPost extends Component {
   };
 
   render() {
-    const { post } = this.state;
-    const { user, dataLoading } = this.props;
+    const { user, dataLoading, post } = this.props;
     return dataLoading || !post.title ? (
       <Preloader />
     ) : (
@@ -105,25 +75,28 @@ class BlogPost extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  dataLoading: state.load.dataLoading
+  dataLoading: state.load.dataLoading,
+  post: state.blog.post
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartLoadData: () => dispatch(Actions.startLoad()),
-  onEndLoadData: () => dispatch(Actions.endLoad())
+  onStartLoadPost: (id, history) => dispatch(Actions.startLoadPost(id, history)),
+  onStartDeletePost: (id, history) => dispatch(Actions.startDeletePost(id, history))
 });
 
 BlogPost.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   user: PropTypes.object,
+  post: PropTypes.object,
   dataLoading: PropTypes.bool.isRequired,
-  onStartLoadData: PropTypes.func.isRequired,
-  onEndLoadData: PropTypes.func.isRequired
+  onStartLoadPost: PropTypes.func.isRequired,
+  onStartDeletePost: PropTypes.func.isRequired
 };
 
 BlogPost.defaultProps = {
-  user: null
+  user: null,
+  post: {}
 };
 
 export default connect(

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPosts } from '../../services/blogService';
-import http from '../../services/httpService';
+// import { getPosts } from '../../services/blogService';
+// import http from '../../services/httpService';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Pagination from '../../common/Pagination/Pagination';
 import './Blog.sass';
@@ -16,22 +16,14 @@ import Preloader from '../../common/Preloader/Preloader';
 
 class Blog extends Component {
   state = {
-    posts: [],
     pageSize: 5,
     currentPage: 1,
     searchString: ''
   };
 
   async componentDidMount() {
-    const { onStartLoadData, onEndLoadData } = this.props;
-    try {
-      onStartLoadData();
-      const { data: posts } = await getPosts();
-      onEndLoadData();
-      this.setState({ posts });
-    } catch (err) {
-      http.error(err);
-    }
+    const { onStartLoadPosts } = this.props;
+    onStartLoadPosts();
   }
 
   pageChangeHandler = page => {
@@ -39,7 +31,8 @@ class Blog extends Component {
   };
 
   getPagedData = () => {
-    const { posts, pageSize, currentPage, searchString } = this.state;
+    const { pageSize, currentPage, searchString } = this.state;
+    const { posts } = this.props;
     const paginatedPosts = searchString
       ? paginate(this.filterPosts(posts, searchString), currentPage, pageSize)
       : paginate(posts, currentPage, pageSize);
@@ -99,24 +92,25 @@ class Blog extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  dataLoading: state.load.dataLoading
+  dataLoading: state.load.dataLoading,
+  posts: state.blog.posts
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartLoadData: () => dispatch(Actions.startLoad()),
-  onEndLoadData: () => dispatch(Actions.endLoad())
+  onStartLoadPosts: () => dispatch(Actions.startLoadPosts())
 });
 
 Blog.propTypes = {
   history: PropTypes.object.isRequired,
   user: PropTypes.object,
   dataLoading: PropTypes.bool.isRequired,
-  onStartLoadData: PropTypes.func.isRequired,
-  onEndLoadData: PropTypes.func.isRequired
+  posts: PropTypes.arrayOf(PropTypes.object),
+  onStartLoadPosts: PropTypes.func.isRequired
 };
 
 Blog.defaultProps = {
-  user: null
+  user: null,
+  posts: []
 };
 
 export default connect(

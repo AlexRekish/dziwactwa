@@ -11,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import authReducer from './store/reducers/auth';
 import uploadImageReducer from './store/reducers/uploadImage';
 import dataLoadReducer from './store/reducers/dataLoad';
-import { watchAuth, watchUploadImage } from './store/sagas';
+import blogReducer from './store/reducers/blog';
+import { watchAuth, watchUploadImage, watchBlog } from './store/sagas';
 import './index.sass';
 
 randomBackground();
@@ -19,7 +20,8 @@ randomBackground();
 const rootReducer = combineReducers({
   auth: authReducer,
   uploadImage: uploadImageReducer,
-  load: dataLoadReducer
+  load: dataLoadReducer,
+  blog: blogReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -29,6 +31,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMidd
 
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchUploadImage);
+sagaMiddleware.run(watchBlog);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import Button from '../../../common/Button/Button';
-import { addNewPost } from '../../../services/blogService';
 import http from '../../../services/httpService';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
 import './BlogPostFrom.sass';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';
+import { Actions } from '../../../store/actions/actions';
 
 class BlogPostForm extends Component {
   state = {
@@ -40,9 +40,9 @@ class BlogPostForm extends Component {
     this.onSubmitted();
   };
 
-  onSubmitted = async () => {
+  onSubmitted = () => {
     const { data } = this.state;
-    const { history, photo, imageLoaded } = this.props;
+    const { history, photo, imageLoaded, onStartAddPost } = this.props;
 
     if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
@@ -53,13 +53,7 @@ class BlogPostForm extends Component {
       ...data,
       photo
     };
-    try {
-      await addNewPost(post);
-      http.success('Post added!');
-      history.push('/blog');
-    } catch (err) {
-      http.error(err);
-    }
+    onStartAddPost(post, history);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -124,6 +118,10 @@ const mapStateToProps = state => ({
   imageLoaded: state.uploadImage.imageLoaded
 });
 
+const mapDispatchToProps = dispatch => ({
+  onStartAddPost: (post, history) => dispatch(Actions.startAddPost(post, history))
+});
+
 BlogPostForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
@@ -131,7 +129,11 @@ BlogPostForm.propTypes = {
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,
-  renderTextArea: PropTypes.func.isRequired
+  renderTextArea: PropTypes.func.isRequired,
+  onStartAddPost: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps)(withFormBlueprint(BlogPostForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withFormBlueprint(BlogPostForm));

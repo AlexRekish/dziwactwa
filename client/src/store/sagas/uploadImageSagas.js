@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import { Actions } from '../actions/actions';
 import http from '../../services/httpService';
 import uploadImage from '../../services/uploadImageService';
@@ -6,9 +6,9 @@ import uploadImage from '../../services/uploadImageService';
 export default function* initUploadImageSaga(action) {
   const { selectedImage } = yield action;
   try {
-    const { data: link } = yield uploadImage(selectedImage);
+    const { data: link } = yield call(uploadImage, selectedImage);
     yield put(Actions.uploadImage(link));
   } catch (err) {
-    yield http.error(err);
+    yield call([http, 'error'], err);
   }
 }
