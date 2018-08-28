@@ -62,7 +62,7 @@ class BlogPostEditForm extends Component {
         http.error(err);
         return history.replace('/blog');
       }
-      http.err(err);
+      http.error(err);
     }
   };
 

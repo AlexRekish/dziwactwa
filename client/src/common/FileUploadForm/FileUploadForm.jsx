@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Actions } from '../../store/actions/actions';
 import Button from '../Button/Button';
+import http from '../../services/httpService';
 import { validateFileType } from '../../services/uploadImageService';
 import './FileUploadForm.sass';
 
@@ -35,7 +36,6 @@ class FileUploadForm extends Component {
   };
 
   dropHandler = evt => {
-    const { onSelectImage } = this.props;
     evt.preventDefault();
     evt.stopPropagation();
     evt.currentTarget.style.border = '';
@@ -43,25 +43,37 @@ class FileUploadForm extends Component {
 
     const dt = evt.dataTransfer;
     const file = dt.files[0];
-    onSelectImage(null, file);
+    this.changeFileInputHandler(null, file);
+  };
+
+  changeFileInputHandler = (evt, file) => {
+    const { onSelectImage } = this.props;
+    const selectedImage = file || evt.target.files[0];
+    if (validateFileType(selectedImage)) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        onSelectImage(reader.result, selectedImage);
+      });
+      reader.readAsDataURL(selectedImage);
+    } else http.error(null, 'Wrong file type');
+  };
+
+  uploadImageHandler = evt => {
+    evt.preventDefault();
+    const { selectedImage, onUploadImage } = this.props;
+    if (!validateFileType(selectedImage)) return;
+    onUploadImage(selectedImage);
   };
 
   render() {
-    const {
-      selectedImage,
-      photo,
-      dataURL,
-      onClearImage,
-      onSelectImage,
-      onUploadImage
-    } = this.props;
+    const { selectedImage, photo, dataURL, onClearImage } = this.props;
     const { focus } = this.state;
     return (
-      <form onSubmit={evt => onUploadImage(evt, selectedImage)} className="file-upload">
+      <form onSubmit={this.uploadImageHandler} className="file-upload">
         <input
           id="file-upload"
           type="file"
-          onChange={evt => onSelectImage(evt)}
+          onChange={evt => this.changeFileInputHandler(evt)}
           onFocus={this.inputFocusHandler}
           onBlur={this.inputBlurHandler}
           name="image"
@@ -92,7 +104,7 @@ class FileUploadForm extends Component {
           <Button
             type="submit"
             label="Upload image"
-            clicked={evt => onUploadImage(evt, selectedImage)}
+            clicked={this.uploadImageHandler}
             disabled={!validateFileType(selectedImage)}
           />
           <Button type="reset" label="Clear image" clicked={onClearImage} />
@@ -109,8 +121,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelectImage: (evt, file) => dispatch(Actions.selectImage(evt, file)),
-  onUploadImage: (evt, selectedImage) => dispatch(Actions.uploadImage(evt, selectedImage)),
+  onSelectImage: (dataURL, selectedImage) => dispatch(Actions.selectImage(dataURL, selectedImage)),
+  onUploadImage: selectedImage => dispatch(Actions.initUploadImage(selectedImage)),
   onClearImage: () => dispatch(Actions.clearImage())
 });
 

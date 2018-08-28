@@ -75,7 +75,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoginFromLocalStorage: () => dispatch(Actions.getUserFromLocalStorage())
+  onLoginFromLocalStorage: () => dispatch(Actions.initUserFromLocalStorage())
 });
 
 App.propTypes = {
