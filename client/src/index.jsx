@@ -7,12 +7,12 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import randomBackground from './images';
 import registerServiceWorker from './registerServiceWorker';
-import 'react-toastify/dist/ReactToastify.css';
 import authReducer from './store/reducers/auth';
 import uploadImageReducer from './store/reducers/uploadImage';
 import dataLoadReducer from './store/reducers/dataLoad';
 import blogReducer from './store/reducers/blog';
 import { watchAuth, watchUploadImage, watchBlog, watchRegister } from './store/sagas';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.sass';
 
 randomBackground();

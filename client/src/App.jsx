@@ -21,7 +21,7 @@ import Blog from './containers/Blog/Blog';
 import BlogPost from './containers/Blog/BlogPost/BlogPost';
 import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
 import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
-import Preloader from './common/Preloader/Preloader';
+import Gallery from './containers/Gallery/Gallery';
 
 library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft, faPlusSquare, faClone);
 
@@ -57,7 +57,7 @@ class App extends Component {
             {user && user.isAdmin && <Route path="/blog/edit" component={BlogPostEditForm} />}
             <Route path="/blog/:id" component={BlogPost} />
             <Route path="/blog" component={Blog} />
-            <Route path="/gallery" component={Preloader} />
+            <Route path="/gallery" component={Gallery} />
             <Route path="/about" component={AboutMe} />
             <Route path="/" exact component={Home} />
             <Redirect to="/" />
