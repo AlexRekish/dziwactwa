@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
 import Button from '../../../common/Button/Button';
-import register from '../../../services/usersService';
-import { loginWithJwt } from '../../../services/authService';
 import { Actions } from '../../../store/actions/actions';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';
 import '../Auth.sass';
@@ -49,21 +47,10 @@ class RegisterForm extends Component {
     this.onSubmitted();
   };
 
-  onSubmitted = async () => {
-    try {
-      const { data: user } = this.state;
-      const { onLogin, history } = this.props;
-      const res = await register(user);
-      loginWithJwt(res);
-      onLogin(res.data);
-      history.push('/');
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        const { errors } = { ...this.state };
-        errors.username = err.response.data;
-        this.setState({ errors });
-      }
-    }
+  onSubmitted = () => {
+    const { data: user } = this.state;
+    const { onRegister, history } = this.props;
+    onRegister(user, history);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -131,11 +118,11 @@ class RegisterForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: user => dispatch(Actions.login(user))
+  onRegister: (user, history) => dispatch(Actions.register(user, history))
 });
 
 RegisterForm.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+  onRegister: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,

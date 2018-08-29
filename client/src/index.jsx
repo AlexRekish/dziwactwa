@@ -12,7 +12,7 @@ import authReducer from './store/reducers/auth';
 import uploadImageReducer from './store/reducers/uploadImage';
 import dataLoadReducer from './store/reducers/dataLoad';
 import blogReducer from './store/reducers/blog';
-import { watchAuth, watchUploadImage, watchBlog } from './store/sagas';
+import { watchAuth, watchUploadImage, watchBlog, watchRegister } from './store/sagas';
 import './index.sass';
 
 randomBackground();
@@ -32,6 +32,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMidd
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchUploadImage);
 sagaMiddleware.run(watchBlog);
+sagaMiddleware.run(watchRegister);
 
 ReactDOM.render(
   <Provider store={store}>

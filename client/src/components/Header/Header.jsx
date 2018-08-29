@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Header.sass';
-import NavBar from '../../components/NavBar/NavBar';
+import NavBar from '../NavBar/NavBar';
 
 const Header = ({ user }) => (
   <header className="main-header">

@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { Actions } from '../actions/actions';
-import { getPosts, getPost, deletePost, addNewPost } from '../../services/blogService';
+import { getPosts, getPost, deletePost, addNewPost, editPost } from '../../services/blogService';
 import http from '../../services/httpService';
 
 export function* startLoadPostsSaga() {
@@ -60,6 +60,22 @@ export function* startAddPostSaga(action) {
     yield call([http, 'success'], 'Post added!');
     yield call([history, 'push'], '/blog');
   } catch (err) {
+    yield call([http, 'error'], err);
+  }
+}
+
+export function* editPostSaga(action) {
+  const { id, post, history } = action;
+  try {
+    yield editPost(id, post);
+    yield call([http, 'success'], 'Post successfully changed!');
+    yield call([history, 'push'], '/blog');
+    yield put(Actions.endEditPost());
+  } catch (err) {
+    if (err.response && err.response.status === 404) {
+      yield call([http, 'error'], err);
+      return history.replace('/blog');
+    }
     yield call([http, 'error'], err);
   }
 }

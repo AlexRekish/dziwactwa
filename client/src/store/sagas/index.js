@@ -1,16 +1,22 @@
 import { takeEvery, all } from 'redux-saga/effects';
-import initUserSaga from './authSagas';
+import { initUserSaga, initLoginSaga, loginUserWithJwtSaga } from './authSagas';
 import initUploadImageSaga from './uploadImageSagas';
 import ActionType from '../actions/actions';
 import {
   startLoadPostsSaga,
   startLoadPostSaga,
   startDeletePostSaga,
-  startAddPostSaga
+  startAddPostSaga,
+  editPostSaga
 } from './blogSagas';
+import registerSaga from './usersSagas';
 
 export function* watchAuth() {
-  yield all([takeEvery(ActionType.INIT_USER_FROM_LSTORAGE, initUserSaga)]);
+  yield all([
+    takeEvery(ActionType.INIT_USER_FROM_LSTORAGE, initUserSaga),
+    takeEvery(ActionType.INIT_LOGIN, initLoginSaga),
+    takeEvery(ActionType.LOGIN_WITH_JWT, loginUserWithJwtSaga)
+  ]);
 }
 
 export function* watchUploadImage() {
@@ -22,6 +28,11 @@ export function* watchBlog() {
     takeEvery(ActionType.START_LOAD_POSTS, startLoadPostsSaga),
     takeEvery(ActionType.START_LOAD_POST, startLoadPostSaga),
     takeEvery(ActionType.START_DELETE_POST, startDeletePostSaga),
-    takeEvery(ActionType.START_ADD_POST, startAddPostSaga)
+    takeEvery(ActionType.START_ADD_POST, startAddPostSaga),
+    takeEvery(ActionType.EDIT_POST, editPostSaga)
   ]);
+}
+
+export function* watchRegister() {
+  yield all([takeEvery(ActionType.REGISTER, registerSaga)]);
 }

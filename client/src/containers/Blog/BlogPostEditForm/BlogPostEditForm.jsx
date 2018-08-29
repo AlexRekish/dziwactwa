@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Joi from 'joi-browser';
 import http from '../../../services/httpService';
 import Button from '../../../common/Button/Button';
-import { editPost, getPost } from '../../../services/blogService';
 import '../BlogForm/BlogPostForm';
 import { Actions } from '../../../store/actions/actions';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
@@ -33,38 +32,19 @@ class BlogPostEditForm extends Component {
       .required()
   };
 
-  async componentDidMount() {
-    const { onStartLoadData, onEndLoadData, onStartEditPost } = this.props;
-
-    onStartLoadData();
-    await this.populatePostData();
-    onEndLoadData();
-
-    const { photo } = this.state;
-    onStartEditPost(photo);
+  componentDidMount() {
+    const { history, post, onStartEditPost } = this.props;
+    if (!post.title) return history.replace('/blog');
+    this.setState({
+      data: {
+        title: post.title,
+        text: post.text
+      },
+      postId: post._id,
+      photo: post.photo
+    });
+    onStartEditPost(post.photo);
   }
-
-  populatePostData = async () => {
-    const { history } = this.props;
-    try {
-      const postId = history.location.state._id;
-      const { data: post } = await getPost(postId);
-      this.setState({
-        data: {
-          title: post.title,
-          text: post.text
-        },
-        postId,
-        photo: post.photo
-      });
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        http.error(err);
-        return history.replace('/blog');
-      }
-      http.error(err);
-    }
-  };
 
   formSubmitHandler = evt => {
     evt.preventDefault();
@@ -79,7 +59,7 @@ class BlogPostEditForm extends Component {
 
   onSubmitted = async () => {
     const { data, postId } = this.state;
-    const { history, onEndEditPost, photo, imageLoaded } = this.props;
+    const { history, onEditPost, photo, imageLoaded } = this.props;
 
     if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
@@ -91,18 +71,7 @@ class BlogPostEditForm extends Component {
       photo
     };
 
-    try {
-      await editPost(postId, post);
-      http.success('Post successfully changed!');
-      history.push('/blog');
-      onEndEditPost();
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        http.error(err);
-        return history.replace('/blog');
-      }
-      http.error(err);
-    }
+    onEditPost(postId, post, history);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -126,8 +95,9 @@ class BlogPostEditForm extends Component {
   };
 
   render() {
-    const { photo, imageLoaded, dataLoading, renderInput, validate, renderTextArea } = this.props;
-    return dataLoading ? (
+    const { photo, imageLoaded, renderInput, validate, renderTextArea } = this.props;
+    const { data } = this.state;
+    return !data.title ? (
       <Preloader />
     ) : (
       <section className="new-post">
@@ -168,29 +138,32 @@ class BlogPostEditForm extends Component {
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
   imageLoaded: state.uploadImage.imageLoaded,
-  dataLoading: state.load.dataLoading
+  post: state.blog.post
 });
 
 const mapDispatchToProps = dispatch => ({
   onStartEditPost: photo => dispatch(Actions.startEditPost(photo)),
-  onEndEditPost: () => dispatch(Actions.endEditPost()),
-  onStartLoadData: () => dispatch(Actions.startLoad()),
-  onEndLoadData: () => dispatch(Actions.endLoad())
+  onEditPost: (id, post, history) => dispatch(Actions.editPost(id, post, history)),
+  onEndEditPost: () => dispatch(Actions.endEditPost())
 });
 
 BlogPostEditForm.propTypes = {
   history: PropTypes.object.isRequired,
-  photo: PropTypes.string.isRequired,
+  photo: PropTypes.string,
   imageLoaded: PropTypes.bool.isRequired,
-  dataLoading: PropTypes.bool.isRequired,
+  post: PropTypes.object.isRequired,
+
   onStartEditPost: PropTypes.func.isRequired,
+  onEditPost: PropTypes.func.isRequired,
   onEndEditPost: PropTypes.func.isRequired,
-  onStartLoadData: PropTypes.func.isRequired,
-  onEndLoadData: PropTypes.func.isRequired,
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,
   renderTextArea: PropTypes.func.isRequired
+};
+
+BlogPostEditForm.defaultProps = {
+  photo: ''
 };
 
 export default connect(

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
 import Button from '../../../common/Button/Button';
-import { login } from '../../../services/authService';
 import { Actions } from '../../../store/actions/actions';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';
 import '../Auth.sass';
@@ -44,19 +43,8 @@ class LoginForm extends Component {
 
   onSubmitted = async () => {
     const { data } = this.state;
-    const { onLogin, history } = this.props;
-    try {
-      const user = await login(data.email, data.password);
-      onLogin(user);
-      history.push('/');
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        const { errors } = { ...this.state };
-        errors.email = err.response.data;
-        errors.password = err.response.data;
-        this.setState({ errors });
-      }
-    }
+    const { onInitLogin, history } = this.props;
+    onInitLogin(data.email, data.password, history);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -116,11 +104,11 @@ class LoginForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: user => dispatch(Actions.login(user))
+  onInitLogin: (email, password, history) => dispatch(Actions.initLogin(email, password, history))
 });
 
 LoginForm.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+  onInitLogin: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,

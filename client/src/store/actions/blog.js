@@ -8,7 +8,8 @@ const getBlogActions = actionTypes => ({
   startDeletePost: (id, history) => ({ type: actionTypes.START_DELETE_POST, id, history }),
   deletePostSucceed: () => ({ type: actionTypes.DELETE_POST_SUCCEED }),
   deletePostFailed: err => ({ type: actionTypes.START_DELETE_POST, err }),
-  startAddPost: (post, history) => ({ type: actionTypes.START_ADD_POST, post, history })
+  startAddPost: (post, history) => ({ type: actionTypes.START_ADD_POST, post, history }),
+  editPost: (id, post, history) => ({ type: actionTypes.EDIT_POST, id, post, history })
 });
 
 export default getBlogActions;
