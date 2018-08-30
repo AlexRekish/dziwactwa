@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('config');
 const { BlogPost } = require('./models/blogpost');
+const { Photo } = require('./models/photo');
 
 const data = [
   {
@@ -77,15 +78,62 @@ const data = [
   }
 ];
 
+const photos = [
+  {
+    path: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599',
+    title: 'lorem 1'
+  },
+  {
+    path: 'https://source.unsplash.com/Dm-qxdynoEc/800x799',
+    title: 'lorem 2'
+  },
+  {
+    path: 'https://source.unsplash.com/qDkso9nvCg0/600x799',
+    title: 'lorem 3'
+  },
+  {
+    path: 'https://source.unsplash.com/iecJiKe_RNg/600x799',
+    title: 'lorem 4'
+  },
+  {
+    path: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599',
+    title: 'lorem 5'
+  },
+  {
+    path: 'https://source.unsplash.com/Dm-qxdynoEc/800x799',
+    title: 'lorem 6'
+  },
+  {
+    path: 'https://source.unsplash.com/qDkso9nvCg0/600x799',
+    title: 'lorem 7'
+  },
+  {
+    path: 'https://source.unsplash.com/iecJiKe_RNg/600x799',
+    title: 'lorem 8'
+  },
+  {
+    path: 'https://source.unsplash.com/epcsn8Ed8kY/600x799',
+    title: 'lorem 9'
+  },
+  {
+    path: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599',
+    title: 'lorem 10'
+  }
+];
+
 async function seed() {
   await mongoose.connect(config.get('db'));
 
   await BlogPost.deleteMany({});
+  await Photo.deleteMany({});
 
   const posts = data.map(post => ({
     ...post
   }));
   await BlogPost.insertMany(posts);
+
+  const images = photos.map(photo => ({ ...photo }));
+  await Photo.insertMany(images);
 
   mongoose.disconnect();
 

@@ -67,7 +67,7 @@ export function* startAddPostSaga(action) {
 export function* editPostSaga(action) {
   const { id, post, history } = action;
   try {
-    yield editPost(id, post);
+    yield call(editPost, id, post);
     yield call([http, 'success'], 'Post successfully changed!');
     yield call([history, 'push'], '/blog');
     yield put(Actions.endEditPost());

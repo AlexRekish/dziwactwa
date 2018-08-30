@@ -3,6 +3,7 @@ import getUploadImageActions from './uploadImage';
 import getDataLoadActions from './dataLoad';
 import getBlogActions from './blog';
 import getUsersActions from './users';
+import getGalleryActions from './gallery';
 
 const ActionType = {
   INIT_USER_FROM_LSTORAGE: 'INIT_USER_FROM_LSTORAGE',
@@ -17,7 +18,7 @@ const ActionType = {
   START_LOAD_DATA: 'START_LOAD_DATA',
   END_LOAD_DATA: 'END_LOAD_DATA',
 
-  START_LOAD_POSTS: 'START_LOAD_BLOG_POSTS',
+  START_LOAD_POSTS: 'START_LOAD_POSTS',
   LOAD_POSTS_SUCCEED: 'LOAD_POSTS_SUCCEED',
   LOAD_POSTS_FAILED: 'LOAD_POSTS_FAILED',
 
@@ -31,14 +32,24 @@ const ActionType = {
 
   START_ADD_POST: 'START_ADD_POST',
 
+  START_EDIT_POST: 'START_EDIT_POST',
+  EDIT_POST: 'EDIT_POST',
+  END_EDIT_POST: 'END_EDIT_POST',
+
   SELECT_IMAGE: 'SELECT_IMAGE',
   INIT_UPLOAD_IMAGE: 'INIT_UPLOAD_IMAGE',
   UPLOAD_IMAGE: 'UPLOAD_IMAGE',
   CLEAR_IMAGE: 'CLEAR_IMAGE',
 
-  START_EDIT_POST: 'START_EDIT_POST',
-  EDIT_POST: 'EDIT_POST',
-  END_EDIT_POST: 'END_EDIT_POST'
+  START_LOAD_IMAGES: 'START_LOAD_IMAGES',
+  LOAD_IMAGES_SUCCEED: 'LOAD_IMAGES_SUCCEED',
+  LOAD_IMAGES_FAILED: 'LOAD_IMAGES_FAILED',
+
+  START_ADD_IMAGE: 'START_ADD_IMAGE',
+
+  START_DELETE_IMAGE: 'START_DELETE_IMAGE',
+  DELETE_IMAGE_SUCCEED: 'DELETE_IMAGE_SUCCEED',
+  DELETE_IMAGE_FAILED: 'DELETE_IMAGE_FAILED'
 };
 
 export const Actions = {
@@ -46,7 +57,8 @@ export const Actions = {
   ...getUploadImageActions(ActionType),
   ...getDataLoadActions(ActionType),
   ...getBlogActions(ActionType),
-  ...getUsersActions(ActionType)
+  ...getUsersActions(ActionType),
+  ...getGalleryActions(ActionType)
 };
 
 export default ActionType;

@@ -1,0 +1,61 @@
+@import '../../../vars.sass';
+.gallery__photo-item
+  position: relative
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  overflow: hidden
+  height: 100%
+  max-height: 100%
+  list-style: none
+  transition: all 0.4s ease
+
+.gallery__photo-item:nth-child(7n - 6)
+  grid-column: span 2
+  grid-row: span 2
+  position: relative
+  overflow: visible
+  z-index: 10
+
+.gallery__photo
+  display: block
+  height: 100%
+  width: 100%
+  max-width: 100%
+  max-height: 100%
+  object-fit: cover
+
+.gallery__photo-info-wrapper
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  max-height: 100%
+  padding: 20px 20px
+  background-color: rgba($main, 0.4)
+  color: $context
+  transition: all 0.4s ease
+  opacity: 0
+  box-sizing: border-box
+  overflow: hidden
+
+.gallery__photo-title
+  margin: 0
+  padding: 0
+  font-size: 24px
+  text-align: left
+
+.gallery__photo-container
+  cursor: pointer
+
+.gallery__photo-container:hover > .gallery__photo-info-wrapper
+  opacity: 1
+
+.gallery__photo-date
+  margin: 0
+  padding: 0
+  font-weight: bold

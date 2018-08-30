@@ -11,7 +11,8 @@ import authReducer from './store/reducers/auth';
 import uploadImageReducer from './store/reducers/uploadImage';
 import dataLoadReducer from './store/reducers/dataLoad';
 import blogReducer from './store/reducers/blog';
-import { watchAuth, watchUploadImage, watchBlog, watchRegister } from './store/sagas';
+import galleryReducer from './store/reducers/gallery';
+import { watchAuth, watchUploadImage, watchBlog, watchRegister, watchGallery } from './store/sagas';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.sass';
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   uploadImage: uploadImageReducer,
   load: dataLoadReducer,
-  blog: blogReducer
+  blog: blogReducer,
+  gallery: galleryReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -33,6 +35,7 @@ sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchUploadImage);
 sagaMiddleware.run(watchBlog);
 sagaMiddleware.run(watchRegister);
+sagaMiddleware.run(watchGallery);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -4,7 +4,13 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faChevronLeft,
+  faChevronRight,
+  faTimes,
+  faTrashAlt
+} from '@fortawesome/free-solid-svg-icons';
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faPlusSquare, faClone } from '@fortawesome/free-regular-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
@@ -22,8 +28,22 @@ import BlogPost from './containers/Blog/BlogPost/BlogPost';
 import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
 import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
 import Gallery from './containers/Gallery/Gallery';
+import GalleryForm from './containers/Gallery/GalleryForm/GalleryForm';
 
-library.add(fab, faTwitter, faInstagram, faVk, faFacebook, faArrowLeft, faPlusSquare, faClone);
+library.add(
+  fab,
+  faTwitter,
+  faInstagram,
+  faVk,
+  faFacebook,
+  faArrowLeft,
+  faPlusSquare,
+  faClone,
+  faChevronLeft,
+  faChevronRight,
+  faTimes,
+  faTrashAlt
+);
 
 class App extends Component {
   state = {};
@@ -55,6 +75,7 @@ class App extends Component {
             {!user && <Route path="/register" component={RegisterForm} />}
             {user && user.isAdmin && <Route path="/blog/new" component={BlogPostForm} />}
             {user && user.isAdmin && <Route path="/blog/edit" component={BlogPostEditForm} />}
+            {user && user.isAdmin && <Route path="/gallery/new" exact component={GalleryForm} />}
             <Route path="/blog/:id" component={BlogPost} />
             <Route path="/blog" component={Blog} />
             <Route path="/gallery" component={Gallery} />

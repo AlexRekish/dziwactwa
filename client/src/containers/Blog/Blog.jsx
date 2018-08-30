@@ -21,7 +21,7 @@ class Blog extends Component {
     searchString: ''
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { onStartLoadPosts } = this.props;
     onStartLoadPosts();
   }

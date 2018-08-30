@@ -9,6 +9,7 @@ import {
   startAddPostSaga,
   editPostSaga
 } from './blogSagas';
+import { startLoadImagesSaga, startAddImageSaga, startDeleteImageSaga } from './gallerySagas';
 import registerSaga from './usersSagas';
 
 export function* watchAuth() {
@@ -35,4 +36,12 @@ export function* watchBlog() {
 
 export function* watchRegister() {
   yield all([takeEvery(ActionType.REGISTER, registerSaga)]);
+}
+
+export function* watchGallery() {
+  yield all([
+    takeEvery(ActionType.START_LOAD_IMAGES, startLoadImagesSaga),
+    takeEvery(ActionType.START_DELETE_IMAGE, startDeleteImageSaga),
+    takeEvery(ActionType.START_ADD_IMAGE, startAddImageSaga)
+  ]);
 }

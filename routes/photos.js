@@ -8,7 +8,7 @@ const validateObjectId = require('../middleware/validateObjectId');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const photos = await Photo.find().sort('date');
+  const photos = await Photo.find().sort({ date: -1 });
   return res.send(photos);
 });
 
