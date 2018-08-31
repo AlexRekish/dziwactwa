@@ -14,7 +14,7 @@ module.exports = {
     'jsx-a11y/label-has-for': 'off',
     'no-use-before-define': 'off',
     'no-param-reassign': 'off',
-    // 'react/prop-types': 'off',
+    'react/prop-types': 'off',
     'react/no-array-index-key': 'off',
     'no-empty': 'off',
     'react/no-unused-state': 'off',
