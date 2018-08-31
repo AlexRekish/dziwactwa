@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { getPosts } from '../../services/blogService';
-// import http from '../../services/httpService';
-import ControlPanel from '../../common/ControlPanel/ControlPanel';
-import Pagination from '../../common/Pagination/Pagination';
-import './Blog.sass';
+
 import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
+import ControlPanel from '../../common/ControlPanel/ControlPanel';
+import Pagination from '../../common/Pagination/Pagination';
 import Button from '../../common/Button/Button';
 import SearchBox from '../../common/SearchBox/SearchBox';
-import { Actions } from '../../store/actions/actions';
 import Preloader from '../../common/Preloader/Preloader';
+import { Actions } from '../../store/actions/actions';
+import './Blog.sass';
 
 class Blog extends Component {
   state = {

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi-browser';
+
 import Button from '../../../common/Button/Button';
-import http from '../../../services/httpService';
 import FileUploadForm from '../../../common/FileUploadForm/FileUploadForm';
-import './BlogPostFrom.sass';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';
 import { Actions } from '../../../store/actions/actions';
+import http from '../../../services/httpService';
+import './BlogPostFrom.sass';
 
 class BlogPostForm extends Component {
   state = {

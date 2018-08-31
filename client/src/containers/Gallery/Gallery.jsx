@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+
+import parseStringToDate from '../../utils/date';
 import SearchBox from '../../common/SearchBox/SearchBox';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Button from '../../common/Button/Button';
@@ -9,10 +11,9 @@ import LightBox from './LightBox/LightBox';
 import GalleryItem from './GalleryItem/GalleryItem';
 import Preloader from '../../common/Preloader/Preloader';
 import { Actions } from '../../store/actions/actions';
-import parseStringToDate from '../../utils/date';
 import './Gallery.sass';
 
-const keyCode = {
+const KeyCode = {
   ESC: 27,
   RIGHT: 39,
   LEFT: 37
@@ -43,9 +44,9 @@ class Gallery extends Component {
 
   keyDownHandler = evt => {
     const { onCloseLightBox, onNextImage, onPrevImage } = this.props;
-    if (evt.keyCode === keyCode.ESC) return onCloseLightBox();
-    if (evt.keyCode === keyCode.RIGHT) return onNextImage();
-    if (evt.keyCode === keyCode.LEFT) return onPrevImage();
+    if (evt.keyCode === KeyCode.ESC) return onCloseLightBox();
+    if (evt.keyCode === KeyCode.RIGHT) return onNextImage();
+    if (evt.keyCode === KeyCode.LEFT) return onPrevImage();
   };
 
   searchHandler = string => {

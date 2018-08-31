@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+
 import Button from '../../../common/Button/Button';
 import ControlPanel from '../../../common/ControlPanel/ControlPanel';
 import { Actions } from '../../../store/actions/actions';

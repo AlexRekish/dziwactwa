@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import { connect } from 'react-redux';
+
 import Button from '../../../common/Button/Button';
 import { Actions } from '../../../store/actions/actions';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';

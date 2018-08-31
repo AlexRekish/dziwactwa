@@ -9,5 +9,5 @@ For start the server you must to add the environment variable **_dziw_jwtSecret_
 For fast creating blog posts and photos in the gallery you can use:
 
 ```
-$ npm run seed.
+$ npm run seed
 ```
