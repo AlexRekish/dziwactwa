@@ -1,15 +1,35 @@
-const getBlogActions = actionTypes => ({
-  startLoadPosts: () => ({ type: actionTypes.START_LOAD_POSTS }),
-  loadPostsSucceed: posts => ({ type: actionTypes.LOAD_POSTS_SUCCEED, posts }),
-  loadPostsFailed: err => ({ type: actionTypes.LOAD_POSTS_FAILED, err }),
-  startLoadPost: (id, history) => ({ type: actionTypes.START_LOAD_POST, id, history }),
-  loadPostSucceed: post => ({ type: actionTypes.LOAD_POST_SUCCEED, post }),
-  loadPostFailed: err => ({ type: actionTypes.LOAD_POST_FAILED, err }),
-  startDeletePost: (id, history) => ({ type: actionTypes.START_DELETE_POST, id, history }),
-  deletePostSucceed: () => ({ type: actionTypes.DELETE_POST_SUCCEED }),
-  deletePostFailed: err => ({ type: actionTypes.START_DELETE_POST, err }),
-  startAddPost: (post, history) => ({ type: actionTypes.START_ADD_POST, post, history }),
-  editPost: (id, post, history) => ({ type: actionTypes.EDIT_POST, id, post, history })
+export const BlogAction = {
+  START_LOAD_POSTS: 'START_LOAD_POSTS',
+  LOAD_POSTS_SUCCEED: 'LOAD_POSTS_SUCCEED',
+  LOAD_POSTS_FAILED: 'LOAD_POSTS_FAILED',
+
+  START_LOAD_POST: 'START_LOAD_POST',
+  LOAD_POST_SUCCEED: 'LOAD_POST_SUCCEED',
+  LOAD_POST_FAILED: 'LOAD_POST_FAILED',
+
+  START_DELETE_POST: 'START_DELETE_POST',
+  DELETE_POST_SUCCEED: 'DELETE_POST_SUCCEED',
+  DELETE_POST_FAILED: 'DELETE_POST_FAILED',
+
+  START_ADD_POST: 'START_ADD_POST',
+
+  START_EDIT_POST: 'START_EDIT_POST',
+  EDIT_POST: 'EDIT_POST',
+  END_EDIT_POST: 'END_EDIT_POST'
+};
+
+const getBlogActions = () => ({
+  startLoadPosts: () => ({ type: BlogAction.START_LOAD_POSTS }),
+  loadPostsSucceed: posts => ({ type: BlogAction.LOAD_POSTS_SUCCEED, posts }),
+  loadPostsFailed: err => ({ type: BlogAction.LOAD_POSTS_FAILED, err }),
+  startLoadPost: (id, history) => ({ type: BlogAction.START_LOAD_POST, id, history }),
+  loadPostSucceed: post => ({ type: BlogAction.LOAD_POST_SUCCEED, post }),
+  loadPostFailed: err => ({ type: BlogAction.LOAD_POST_FAILED, err }),
+  startDeletePost: (id, history) => ({ type: BlogAction.START_DELETE_POST, id, history }),
+  deletePostSucceed: () => ({ type: BlogAction.DELETE_POST_SUCCEED }),
+  deletePostFailed: err => ({ type: BlogAction.START_DELETE_POST, err }),
+  startAddPost: (post, history) => ({ type: BlogAction.START_ADD_POST, post, history }),
+  editPost: (id, post, history) => ({ type: BlogAction.EDIT_POST, id, post, history })
 });
 
 export default getBlogActions;

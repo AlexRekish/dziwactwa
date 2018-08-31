@@ -1,17 +1,24 @@
-const getUploadImageActions = actionTypes => ({
-  startEditPost: photo => ({ type: actionTypes.START_EDIT_POST, photo }),
-  endEditPost: () => ({ type: actionTypes.END_EDIT_POST }),
+export const UploadImageAction = {
+  SELECT_IMAGE: 'SELECT_IMAGE',
+  INIT_UPLOAD_IMAGE: 'INIT_UPLOAD_IMAGE',
+  UPLOAD_IMAGE: 'UPLOAD_IMAGE',
+  CLEAR_IMAGE: 'CLEAR_IMAGE'
+};
+
+const getUploadImageActions = () => ({
+  startEditPost: photo => ({ type: UploadImageAction.START_EDIT_POST, photo }),
+  endEditPost: () => ({ type: UploadImageAction.END_EDIT_POST }),
   selectImage: (dataURL, selectedImage) => ({
-    type: actionTypes.SELECT_IMAGE,
+    type: UploadImageAction.SELECT_IMAGE,
     dataURL,
     selectedImage
   }),
   initUploadImage: selectedImage => ({
-    type: actionTypes.INIT_UPLOAD_IMAGE,
+    type: UploadImageAction.INIT_UPLOAD_IMAGE,
     selectedImage
   }),
-  uploadImage: photo => ({ type: actionTypes.UPLOAD_IMAGE, photo }),
-  clearImage: () => ({ type: actionTypes.CLEAR_IMAGE })
+  uploadImage: photo => ({ type: UploadImageAction.UPLOAD_IMAGE, photo }),
+  clearImage: () => ({ type: UploadImageAction.CLEAR_IMAGE })
 });
 
 export default getUploadImageActions;

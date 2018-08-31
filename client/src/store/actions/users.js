@@ -1,5 +1,9 @@
-const getUsersActions = actionTypes => ({
-  register: (user, history) => ({ type: actionTypes.REGISTER, user, history })
+export const UsersAction = {
+  REGISTER: 'REGISTER'
+};
+
+const getUsersActions = () => ({
+  register: (user, history) => ({ type: UsersAction.REGISTER, user, history })
 });
 
 export default getUsersActions;

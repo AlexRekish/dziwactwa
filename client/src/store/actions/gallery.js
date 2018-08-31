@@ -1,18 +1,35 @@
-const getGalleryActions = actionTypes => ({
-  startLoadImages: () => ({ type: actionTypes.START_LOAD_IMAGES }),
-  loadImagesSucceed: images => ({ type: actionTypes.LOAD_IMAGES_SUCCEED, images }),
-  loadImagesFailed: err => ({ type: actionTypes.LOAD_IMAGES_FAILED, err }),
+export const GalleryAction = {
+  START_LOAD_IMAGES: 'START_LOAD_IMAGES',
+  LOAD_IMAGES_SUCCEED: 'LOAD_IMAGES_SUCCEED',
+  LOAD_IMAGES_FAILED: 'LOAD_IMAGES_FAILED',
 
-  startDeleteImage: (id, index) => ({ type: actionTypes.START_DELETE_IMAGE, id, index }),
-  deleteImageSucceed: id => ({ type: actionTypes.DELETE_IMAGE_SUCCEED, id }),
-  deleteImageFailed: err => ({ type: actionTypes.START_DELETE_IMAGE, err }),
+  START_ADD_IMAGE: 'START_ADD_IMAGE',
 
-  startAddImage: (image, history) => ({ type: actionTypes.START_ADD_IMAGE, image, history }),
+  START_DELETE_IMAGE: 'START_DELETE_IMAGE',
+  DELETE_IMAGE_SUCCEED: 'DELETE_IMAGE_SUCCEED',
+  DELETE_IMAGE_FAILED: 'DELETE_IMAGE_FAILED',
 
-  openLightBox: index => ({ type: actionTypes.OPEN_LIGHTBOX, index }),
-  closeLightBox: () => ({ type: actionTypes.CLOSE_LIGHTBOX }),
-  nextImage: () => ({ type: actionTypes.NEXT_IMAGE }),
-  prevImage: () => ({ type: actionTypes.PREV_IMAGE })
+  OPEN_LIGHTBOX: 'OPEN_LIGHTBOX',
+  CLOSE_LIGHTBOX: 'CLOSE_LIGHTBOX',
+  NEXT_IMAGE: 'NEXT_IMAGE',
+  PREV_IMAGE: 'PREV_IMAGE'
+};
+
+const getGalleryActions = () => ({
+  startLoadImages: () => ({ type: GalleryAction.START_LOAD_IMAGES }),
+  loadImagesSucceed: images => ({ type: GalleryAction.LOAD_IMAGES_SUCCEED, images }),
+  loadImagesFailed: err => ({ type: GalleryAction.LOAD_IMAGES_FAILED, err }),
+
+  startDeleteImage: (id, index) => ({ type: GalleryAction.START_DELETE_IMAGE, id, index }),
+  deleteImageSucceed: id => ({ type: GalleryAction.DELETE_IMAGE_SUCCEED, id }),
+  deleteImageFailed: err => ({ type: GalleryAction.START_DELETE_IMAGE, err }),
+
+  startAddImage: (image, history) => ({ type: GalleryAction.START_ADD_IMAGE, image, history }),
+
+  openLightBox: index => ({ type: GalleryAction.OPEN_LIGHTBOX, index }),
+  closeLightBox: () => ({ type: GalleryAction.CLOSE_LIGHTBOX }),
+  nextImage: () => ({ type: GalleryAction.NEXT_IMAGE }),
+  prevImage: () => ({ type: GalleryAction.PREV_IMAGE })
 });
 
 export default getGalleryActions;
