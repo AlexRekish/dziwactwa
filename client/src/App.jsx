@@ -14,21 +14,28 @@ import {
 import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faPlusSquare, faClone } from '@fortawesome/free-regular-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
+
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Social from './common/Social/Social';
-import LoginForm from './containers/Auth/LoginForm/LoginForm';
-import RegisterForm from './containers/Auth/RegisterForm/RegisterForm';
 import Logout from './components/Logout/Logout';
 import { Actions } from './store/actions/actions';
 import AboutMe from './components/AboutMe/AboutMe';
-import Blog from './containers/Blog/Blog';
-import BlogPost from './containers/Blog/BlogPost/BlogPost';
-import BlogPostForm from './containers/Blog/BlogForm/BlogPostForm';
-import BlogPostEditForm from './containers/Blog/BlogPostEditForm/BlogPostEditForm';
-import Gallery from './containers/Gallery/Gallery';
-import GalleryForm from './containers/Gallery/GalleryForm/GalleryForm';
+import asyncComponent from './hoc/asyncComponent';
+
+const LoginForm = asyncComponent(() => import('./containers/Auth/LoginForm/LoginForm'));
+const RegisterForm = asyncComponent(() => import('./containers/Auth/RegisterForm/RegisterForm'));
+
+const Blog = asyncComponent(() => import('./containers/Blog/Blog'));
+const BlogPost = asyncComponent(() => import('./containers/Blog/BlogPost/BlogPost'));
+const BlogPostForm = asyncComponent(() => import('./containers/Blog/BlogForm/BlogPostForm'));
+const BlogPostEditForm = asyncComponent(() =>
+  import('./containers/Blog/BlogPostEditForm/BlogPostEditForm')
+);
+
+const Gallery = asyncComponent(() => import('./containers/Gallery/Gallery'));
+const GalleryForm = asyncComponent(() => import('./containers/Gallery/GalleryForm/GalleryForm'));
 
 library.add(
   fab,

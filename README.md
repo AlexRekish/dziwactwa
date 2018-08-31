@@ -6,7 +6,7 @@ Frontend: React ^16
 
 For start the server you must to add the environment variable **_dziw_jwtSecret_**.
 
-For fast creating blog posts and photos in gallery you can use:
+For fast creating blog posts and photos in the gallery you can use:
 
 ```
 $ npm run seed.
