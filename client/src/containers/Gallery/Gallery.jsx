@@ -12,11 +12,14 @@ import { Actions } from '../../store/actions/actions';
 import parseStringToDate from '../../utils/date';
 import './Gallery.sass';
 
+const keyCode = {
+  ESC: 27,
+  RIGHT: 39,
+  LEFT: 37
+};
+
 class Gallery extends Component {
   state = {
-    currentImage: {},
-    currentImageIndex: 0,
-    lightboxIsOpen: false,
     searchString: ''
   };
 
@@ -25,51 +28,24 @@ class Gallery extends Component {
     onStartLoadImages();
   }
 
-  openLightboxHandler = index => {
-    const { images } = this.props;
-    this.setState({
-      currentImage: images[index],
-      currentImageIndex: index,
-      lightboxIsOpen: true
-    });
+  openLightBoxHandler = (evt, index) => {
+    evt.preventDefault();
+    document.addEventListener('keydown', this.keyDownHandler);
+    const { onOpenLightBox } = this.props;
+    onOpenLightBox(index);
   };
 
-  closeLightboxHandler = () => {
-    this.setState({
-      currentImage: {},
-      currentImageIndex: 0,
-      lightboxIsOpen: false
-    });
+  closeLightBoxHandler = () => {
+    const { onCloseLightBox } = this.props;
+    document.removeEventListener('keydown', this.keyDownHandler);
+    onCloseLightBox();
   };
 
-  gotoPreviousHandler = () => {
-    const { images } = this.props;
-    this.setState(prevState => {
-      if (prevState.currentImageIndex === 0)
-        return {
-          currentImage: images[images.length - 1],
-          currentImageIndex: images.length - 1
-        };
-      return {
-        currentImage: images[prevState.currentImageIndex - 1],
-        currentImageIndex: prevState.currentImageIndex - 1
-      };
-    });
-  };
-
-  gotoNextHandler = () => {
-    const { images } = this.props;
-    this.setState(prevState => {
-      if (prevState.currentImageIndex === images.length - 1)
-        return {
-          currentImage: images[0],
-          currentImageIndex: 0
-        };
-      return {
-        currentImage: images[prevState.currentImageIndex + 1],
-        currentImageIndex: prevState.currentImageIndex + 1
-      };
-    });
+  keyDownHandler = evt => {
+    const { onCloseLightBox, onNextImage, onPrevImage } = this.props;
+    if (evt.keyCode === keyCode.ESC) return onCloseLightBox();
+    if (evt.keyCode === keyCode.RIGHT) return onNextImage();
+    if (evt.keyCode === keyCode.LEFT) return onPrevImage();
   };
 
   searchHandler = string => {
@@ -82,10 +58,8 @@ class Gallery extends Component {
   };
 
   deleteImageHandler = () => {
-    const { onStartDeleteImage } = this.props;
-    const { currentImage } = this.state;
-    onStartDeleteImage(currentImage._id);
-    this.gotoNextHandler();
+    const { onStartDeleteImage, currentImage, currentImageIndex } = this.props;
+    onStartDeleteImage(currentImage._id, currentImageIndex);
   };
 
   filterImages = (images, searchString) => {
@@ -94,8 +68,17 @@ class Gallery extends Component {
   };
 
   render() {
-    const { dataLoading, images, user } = this.props;
-    const { currentImage, lightboxIsOpen, currentImageIndex, searchString } = this.state;
+    const {
+      dataLoading,
+      images,
+      user,
+      currentImage,
+      lightboxIsOpen,
+      currentImageIndex,
+      onNextImage,
+      onPrevImage
+    } = this.props;
+    const { searchString } = this.state;
     const photos = searchString ? this.filterImages(images, searchString) : images;
     return dataLoading ? (
       <Preloader />
@@ -107,7 +90,7 @@ class Gallery extends Component {
               <GalleryItem
                 src={photo.path}
                 title={photo.title}
-                clicked={() => this.openLightboxHandler(i)}
+                clicked={evt => this.openLightBoxHandler(evt, i)}
                 key={photo._id}
                 date={parseStringToDate(photo.date)}
               />
@@ -121,9 +104,9 @@ class Gallery extends Component {
           current={currentImageIndex + 1}
           count={photos.length}
           isOpen={lightboxIsOpen}
-          onNext={this.gotoNextHandler}
-          onPrev={this.gotoPreviousHandler}
-          onClose={this.closeLightboxHandler}
+          onNext={onNextImage}
+          onPrev={onPrevImage}
+          onClose={this.closeLightBoxHandler}
           onDelete={this.deleteImageHandler}
           user={user}
         />
@@ -143,12 +126,18 @@ const mapStateToProps = state => ({
   user: state.auth.user,
   dataLoading: state.load.dataLoading,
   images: state.gallery.images,
-  image: state.gallery.image
+  currentImage: state.gallery.currentImage,
+  currentImageIndex: state.gallery.currentImageIndex,
+  lightboxIsOpen: state.gallery.lightboxIsOpen
 });
 
 const mapDispatchToProps = dispatch => ({
   onStartLoadImages: () => dispatch(Actions.startLoadImages()),
-  onStartDeleteImage: id => dispatch(Actions.startDeleteImage(id))
+  onStartDeleteImage: (id, index) => dispatch(Actions.startDeleteImage(id, index)),
+  onOpenLightBox: index => dispatch(Actions.openLightBox(index)),
+  onCloseLightBox: () => dispatch(Actions.closeLightBox()),
+  onNextImage: () => dispatch(Actions.nextImage()),
+  onPrevImage: () => dispatch(Actions.prevImage())
 });
 
 Gallery.propTypes = {
@@ -156,13 +145,22 @@ Gallery.propTypes = {
   user: PropTypes.object,
   dataLoading: PropTypes.bool.isRequired,
   images: PropTypes.arrayOf(PropTypes.object),
+  currentImage: PropTypes.object,
+  currentImageIndex: PropTypes.number.isRequired,
+  lightboxIsOpen: PropTypes.bool.isRequired,
+
   onStartLoadImages: PropTypes.func.isRequired,
-  onStartDeleteImage: PropTypes.func.isRequired
+  onStartDeleteImage: PropTypes.func.isRequired,
+  onOpenLightBox: PropTypes.func.isRequired,
+  onCloseLightBox: PropTypes.func.isRequired,
+  onNextImage: PropTypes.func.isRequired,
+  onPrevImage: PropTypes.func.isRequired
 };
 
 Gallery.defaultProps = {
   user: null,
-  images: []
+  images: [],
+  currentImage: {}
 };
 
 export default connect(

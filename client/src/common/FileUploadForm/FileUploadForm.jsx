@@ -130,6 +130,7 @@ FileUploadForm.propTypes = {
   selectedImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   photo: PropTypes.string.isRequired,
   dataURL: PropTypes.string.isRequired,
+
   onClearImage: PropTypes.func.isRequired,
   onSelectImage: PropTypes.func.isRequired,
   onUploadImage: PropTypes.func.isRequired

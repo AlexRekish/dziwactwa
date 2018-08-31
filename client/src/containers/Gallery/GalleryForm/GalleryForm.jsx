@@ -113,6 +113,7 @@ GalleryForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
   imageLoaded: PropTypes.bool.isRequired,
+
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,

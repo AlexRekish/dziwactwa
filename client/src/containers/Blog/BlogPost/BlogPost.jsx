@@ -90,6 +90,7 @@ BlogPost.propTypes = {
   user: PropTypes.object,
   post: PropTypes.object,
   dataLoading: PropTypes.bool.isRequired,
+
   onStartLoadPost: PropTypes.func.isRequired,
   onStartDeletePost: PropTypes.func.isRequired
 };

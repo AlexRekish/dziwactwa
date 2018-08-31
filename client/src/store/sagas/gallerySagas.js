@@ -17,11 +17,12 @@ export function* startLoadImagesSaga() {
 }
 
 export function* startDeleteImageSaga(action) {
-  const { id } = yield action;
+  const { id, index } = yield action;
   try {
     yield call(deletePhoto, id);
     yield put(Actions.deleteImageSucceed(id));
     yield call([http, 'success'], 'Successful deleted');
+    yield put(Actions.openLightBox(index));
   } catch (err) {
     yield put(Actions.deleteImageFailed(err));
     if (err.response) {

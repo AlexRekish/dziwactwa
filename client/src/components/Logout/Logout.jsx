@@ -24,8 +24,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Logout.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+
+  onLogout: PropTypes.func.isRequired
 };
 
 export default connect(

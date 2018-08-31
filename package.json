@@ -43,7 +43,7 @@
     "eslint": "eslint ./",
     "test": "npm run eslint && jest --watchAll --verbose -i --coverage",
     "start": "nodemon --no-deprecation",
-    "seed": "node seed.js"
+    "seed": "node --no-deprecation seed.js"
   },
   "engines": {
     "node": "^10.9.0"

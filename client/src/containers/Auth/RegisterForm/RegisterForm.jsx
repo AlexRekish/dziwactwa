@@ -122,8 +122,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 RegisterForm.propTypes = {
-  onRegister: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+
+  onRegister: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,
   renderInput: PropTypes.func.isRequired

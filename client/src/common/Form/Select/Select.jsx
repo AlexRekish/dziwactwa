@@ -21,8 +21,9 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+
+  onChange: PropTypes.func.isRequired
 };
 
 Select.defaultProps = {

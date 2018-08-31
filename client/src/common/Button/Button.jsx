@@ -16,9 +16,10 @@ const Button = ({ type, label, clicked, disabled, danger }) => (
 Button.propTypes = {
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  clicked: PropTypes.func.isRequired,
   disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  danger: PropTypes.oneOfType([PropTypes.bool, PropTypes.object])
+  danger: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+
+  clicked: PropTypes.func.isRequired
 };
 
 Button.defaultProps = {

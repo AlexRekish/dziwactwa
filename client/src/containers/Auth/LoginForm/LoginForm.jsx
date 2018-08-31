@@ -108,10 +108,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 LoginForm.propTypes = {
-  onInitLogin: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
+  onInitLogin: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired
 };
 

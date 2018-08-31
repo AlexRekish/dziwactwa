@@ -35,12 +35,13 @@ const Input = ({ name, label, onChange, value, placeholder, type, error, readonl
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
-  readonly: PropTypes.bool
+  readonly: PropTypes.bool,
+
+  onChange: PropTypes.func.isRequired
 };
 
 Input.defaultProps = {

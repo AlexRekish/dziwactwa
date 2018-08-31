@@ -105,6 +105,7 @@ Blog.propTypes = {
   user: PropTypes.object,
   dataLoading: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object),
+
   onStartLoadPosts: PropTypes.func.isRequired
 };
 

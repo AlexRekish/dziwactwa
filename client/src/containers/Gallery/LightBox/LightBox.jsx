@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './LightBox.sass';
 
@@ -55,5 +56,27 @@ const LightBox = ({
     </button>
   </div>
 );
+
+LightBox.propTypes = {
+  src: PropTypes.string,
+  title: PropTypes.string,
+  date: PropTypes.string,
+  user: PropTypes.object,
+  current: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
+
+LightBox.defaultProps = {
+  src: '',
+  title: '',
+  date: '',
+  user: {}
+};
 
 export default LightBox;
