@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 
 import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
@@ -64,7 +65,9 @@ class Blog extends Component {
           <Link to={`/blog/${post._id}`} className="blog__post-link" key={post._id}>
             <article className="blog__post">
               <div className="blog__img-wrapper">
-                <img src={post.photo} alt="" className="blog__img" />
+                <LazyLoad once offset={200} scroll overflow height="100%">
+                  <img src={post.photo} alt={post.title} className="blog__img" />
+                </LazyLoad>
               </div>
               <div className="blog__header-wrapper">
                 <h2 className="blog__title">{post.title}</h2>

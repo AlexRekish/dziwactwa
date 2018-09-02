@@ -40,6 +40,7 @@ export function* startAddImageSaga(action) {
     yield call(addNewPhoto, image);
     yield call([http, 'success'], 'Photo added!');
     yield call([history, 'push'], '/gallery');
+    yield put(Actions.clearImage());
   } catch (err) {
     yield call([http, 'error'], err);
   }
