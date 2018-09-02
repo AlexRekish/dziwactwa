@@ -29,6 +29,8 @@ const getBlogActions = () => ({
   deletePostSucceed: () => ({ type: BlogAction.DELETE_POST_SUCCEED }),
   deletePostFailed: err => ({ type: BlogAction.START_DELETE_POST, err }),
   startAddPost: (post, history) => ({ type: BlogAction.START_ADD_POST, post, history }),
+  startEditPost: photo => ({ type: BlogAction.START_EDIT_POST, photo }),
+  endEditPost: () => ({ type: BlogAction.END_EDIT_POST }),
   editPost: (id, post, history) => ({ type: BlogAction.EDIT_POST, id, post, history })
 });
 

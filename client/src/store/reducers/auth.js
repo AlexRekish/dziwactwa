@@ -10,23 +10,17 @@ const reducer = (state = initialState, action) => {
   const newState = _.cloneDeep(state);
   switch (action.type) {
     case ActionType.GET_USER_FROM_LSTORAGE:
-      return {
-        ...newState,
-        user: action.user,
-        logged: !!action.user
-      };
+      newState.user = action.user;
+      newState.logged = !!action.user;
+      return newState;
     case ActionType.LOGIN:
-      return {
-        ...newState,
-        user: action.user,
-        logged: true
-      };
+      newState.user = action.user;
+      newState.logged = true;
+      return newState;
     case ActionType.LOGOUT:
-      return {
-        ...newState,
-        user: null,
-        logged: false
-      };
+      newState.user = null;
+      newState.logged = false;
+      return newState;
     default:
       return state;
   }

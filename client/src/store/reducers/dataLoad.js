@@ -9,15 +9,11 @@ const reducer = (state = initialState, action) => {
   const newState = _.cloneDeep(state);
   switch (action) {
     case ActionType.START_LOAD_DATA:
-      return {
-        ...newState,
-        dataLoading: true
-      };
+      newState.dataLoading = true;
+      return newState;
     case ActionType.END_LOAD_DATA:
-      return {
-        ...newState,
-        dataLoading: false
-      };
+      newState.dataLoading = false;
+      return newState;
     default:
       return state;
   }

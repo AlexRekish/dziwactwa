@@ -12,30 +12,24 @@ const reducer = (state = initialState, action) => {
   const newState = _.cloneDeep(state);
   switch (action.type) {
     case ActionType.SELECT_IMAGE:
-      return {
-        ...newState,
-        selectedImage: action.selectedImage,
-        dataURL: action.dataURL,
-        imageLoaded: false,
-        photo: ''
-      };
+      newState.selectedImage = action.selectedImage;
+      newState.dataURL = action.dataURL;
+      newState.imageLoaded = false;
+      newState.photo = '';
+      return newState;
     case ActionType.UPLOAD_IMAGE:
-      return {
-        ...newState,
-        dataURL: action.photo,
-        photo: action.photo,
-        imageLoaded: true
-      };
+      newState.photo = action.photo;
+      newState.dataURL = action.photo;
+      newState.imageLoaded = true;
+      return newState;
     case ActionType.CLEAR_IMAGE:
       return {
         ...initialState
       };
     case ActionType.START_EDIT_POST:
-      return {
-        ...newState,
-        photo: action.photo,
-        imageLoaded: true
-      };
+      newState.photo = action.photo;
+      newState.imageLoaded = true;
+      return newState;
     case ActionType.END_EDIT_POST:
       return {
         ...initialState

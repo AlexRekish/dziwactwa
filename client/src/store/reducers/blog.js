@@ -11,40 +11,28 @@ const reducer = (state = initialState, action) => {
   const newState = _.cloneDeep(state);
   switch (action.type) {
     case ActionType.LOAD_POSTS_SUCCEED:
-      return {
-        ...newState,
-        posts: [...action.posts],
-        post: {},
-        error: null
-      };
+      newState.posts = [...action.posts];
+      newState.post = {};
+      newState.error = null;
+      return newState;
     case ActionType.LOAD_POSTS_FAILED:
-      return {
-        ...newState,
-        error: action.err
-      };
+      newState.error = action.err;
+      return newState;
     case ActionType.LOAD_POST_SUCCEED:
-      return {
-        ...newState,
-        post: action.post,
-        error: null
-      };
+      newState.post = action.post;
+      newState.error = null;
+      return newState;
     case ActionType.LOAD_POST_FAILED:
-      return {
-        ...newState,
-        post: {},
-        error: action.err
-      };
+      newState.post = {};
+      newState.error = action.err;
+      return newState;
     case ActionType.DELETE_POST_SUCCEED:
-      return {
-        ...newState,
-        post: {},
-        error: null
-      };
+      newState.post = {};
+      newState.error = null;
+      return newState;
     case ActionType.DELETE_POST_FAILED:
-      return {
-        ...newState,
-        error: action.err
-      };
+      newState.error = action.err;
+      return newState;
     default:
       return state;
   }

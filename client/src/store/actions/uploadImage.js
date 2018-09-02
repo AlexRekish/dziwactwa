@@ -6,8 +6,6 @@ export const UploadImageAction = {
 };
 
 const getUploadImageActions = () => ({
-  startEditPost: photo => ({ type: UploadImageAction.START_EDIT_POST, photo }),
-  endEditPost: () => ({ type: UploadImageAction.END_EDIT_POST }),
   selectImage: (dataURL, selectedImage) => ({
     type: UploadImageAction.SELECT_IMAGE,
     dataURL,
