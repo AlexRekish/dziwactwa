@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import ActionType from '../actions/actions';
 
 const initialState = {
@@ -10,52 +9,69 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = _.cloneDeep(state);
-  const { images, currentImageIndex } = newState;
   switch (action.type) {
     case ActionType.LOAD_IMAGES_SUCCEED:
-      newState.images = [...action.images];
-      newState.error = null;
-      return newState;
+      return {
+        ...state,
+        images: [...action.images],
+        error: null
+      };
     case ActionType.LOAD_IMAGES_FAILED:
-      newState.error = action.err;
-      return newState;
+      return {
+        ...state,
+        error: action.err
+      };
     case ActionType.DELETE_IMAGE_SUCCEED:
-      newState.images = images.filter(image => image._id !== action.id);
-      newState.currentImageIndex = 0;
-      newState.error = null;
-      return newState;
+      return {
+        ...state,
+        images: state.images.filter(image => image._id !== action.id),
+        currentImageIndex: 0,
+        error: null
+      };
     case ActionType.DELETE_IMAGE_FAILED:
-      newState.error = action.err;
-      return newState;
+      return {
+        ...state,
+        error: action.err
+      };
     case ActionType.OPEN_LIGHTBOX:
-      newState.currentImage = images[action.index];
-      newState.currentImageIndex = action.index;
-      newState.lightboxIsOpen = true;
-      return newState;
+      return {
+        ...state,
+        currentImage: { ...state.images[action.index] },
+        currentImageIndex: action.index,
+        lightboxIsOpen: true
+      };
     case ActionType.CLOSE_LIGHTBOX:
-      newState.currentImage = {};
-      newState.currentImageIndex = 0;
-      newState.lightboxIsOpen = false;
-      return newState;
+      return {
+        ...state,
+        currentImage: {},
+        currentImageIndex: 0,
+        lightboxIsOpen: false
+      };
     case ActionType.NEXT_IMAGE:
-      if (currentImageIndex === images.length - 1) {
-        [newState.currentImage] = images;
-        newState.currentImageIndex = 0;
-      } else {
-        newState.currentImage = images[currentImageIndex + 1];
-        newState.currentImageIndex += 1;
-      }
-      return newState;
+      if (state.currentImageIndex === state.images.length - 1)
+        return {
+          ...state,
+          currentImage: { ...state.images[0] },
+          currentImageIndex: 0
+        };
+      return {
+        ...state,
+        currentImage: { ...state.images[state.currentImageIndex + 1] },
+        currentImageIndex: state.currentImageIndex + 1
+      };
     case ActionType.PREV_IMAGE:
-      if (currentImageIndex === 0) {
-        newState.currentImage = images[images.length - 1];
-        newState.currentImageIndex = images.length - 1;
-      } else {
-        newState.currentImage = images[currentImageIndex - 1];
-        newState.currentImageIndex -= 1;
-      }
-      return newState;
+      if (state.currentImageIndex === 0)
+        return {
+          ...state,
+          currentImage: { ...state.images[state.images.length - 1] },
+          currentImageIndex: state.images.length - 1
+        };
+      return {
+        ...state,
+        currentImage: { ...state.images[state.currentImageIndex - 1] },
+        currentImageIndex: state.currentImageIndex - 1
+      };
+
     default:
       return state;
   }

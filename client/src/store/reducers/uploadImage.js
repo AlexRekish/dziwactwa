@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import ActionType from '../actions/actions';
 
 const initialState = {
@@ -9,27 +8,32 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = _.cloneDeep(state);
   switch (action.type) {
     case ActionType.SELECT_IMAGE:
-      newState.selectedImage = action.selectedImage;
-      newState.dataURL = action.dataURL;
-      newState.imageLoaded = false;
-      newState.photo = '';
-      return newState;
+      return {
+        ...state,
+        selectedImage: action.selectedImage,
+        dataURL: action.dataURL,
+        imageLoaded: false,
+        photo: ''
+      };
     case ActionType.UPLOAD_IMAGE:
-      newState.photo = action.photo;
-      newState.dataURL = action.photo;
-      newState.imageLoaded = true;
-      return newState;
+      return {
+        ...state,
+        dataURL: action.photo,
+        photo: action.photo,
+        imageLoaded: true
+      };
     case ActionType.CLEAR_IMAGE:
       return {
         ...initialState
       };
     case ActionType.START_EDIT_POST:
-      newState.photo = action.photo;
-      newState.imageLoaded = true;
-      return newState;
+      return {
+        ...state,
+        photo: action.photo,
+        imageLoaded: true
+      };
     case ActionType.END_EDIT_POST:
       return {
         ...initialState

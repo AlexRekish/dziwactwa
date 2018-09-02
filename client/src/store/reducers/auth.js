@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import ActionType from '../actions/actions';
 
 const initialState = {
@@ -7,20 +6,25 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = _.cloneDeep(state);
   switch (action.type) {
     case ActionType.GET_USER_FROM_LSTORAGE:
-      newState.user = action.user;
-      newState.logged = !!action.user;
-      return newState;
+      return {
+        ...state,
+        user: action.user,
+        logged: !!action.user
+      };
     case ActionType.LOGIN:
-      newState.user = action.user;
-      newState.logged = true;
-      return newState;
+      return {
+        ...state,
+        user: action.user,
+        logged: true
+      };
     case ActionType.LOGOUT:
-      newState.user = null;
-      newState.logged = false;
-      return newState;
+      return {
+        ...state,
+        user: null,
+        logged: false
+      };
     default:
       return state;
   }

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import ActionType from '../actions/actions';
 
 const initialState = {
@@ -6,14 +5,17 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = _.cloneDeep(state);
   switch (action) {
     case ActionType.START_LOAD_DATA:
-      newState.dataLoading = true;
-      return newState;
+      return {
+        ...state,
+        dataLoading: true
+      };
     case ActionType.END_LOAD_DATA:
-      newState.dataLoading = false;
-      return newState;
+      return {
+        ...state,
+        dataLoading: false
+      };
     default:
       return state;
   }
