@@ -46,6 +46,7 @@
 
 .about-me__content
   font-size: 20px
+  overflow: hidden
 
 .photo-wrapper
   position: absolute
@@ -79,9 +80,10 @@
     &::after
       display: none
 
+  .about-me__greetings
+    font-size: 56px
+
 @media (max-width: 1179px)
   .about-me
      grid-template-columns: 2fr 1fr
 
-  .about-me__greetings
-    font-size: 56px

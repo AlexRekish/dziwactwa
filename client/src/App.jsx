@@ -15,7 +15,7 @@ import { fab, faTwitter, faVk, faInstagram, faFacebook } from '@fortawesome/free
 import { faPlusSquare, faClone } from '@fortawesome/free-regular-svg-icons';
 import { AnimatedSwitch } from 'react-router-transition';
 
-import Header from './components/Header/Header';
+import Header from './containers/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Social from './common/Social/Social';

@@ -17,6 +17,7 @@
   padding: 30px
   background-color: rgba($main, 0.7)
   border-radius: 5px
+  overflow: hidden
 
   &::before
     display: block
@@ -56,3 +57,9 @@
 
   .auth__form
     padding: 20px
+
+@media (max-width: 1366px)
+  .auth__form
+    width: 50%
+  .auth__header
+    font-size: 56px
