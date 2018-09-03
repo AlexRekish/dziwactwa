@@ -5,10 +5,26 @@
   justify-content: space-around
   align-items: center
   position: absolute
-  top: 80px
-  bottom: 80px
+  top: 50px
+  bottom: 20px
   left: 10px
   width: 160px
   background-color: rgba($main, 0.4)
   border-radius: 5px
 
+.control-panel__button-wrapper
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+@media (max-width: 1700px)
+  .control-panel
+    top: 80px
+    width: 110px
+
+@media (max-width: 1366px)
+  .control-panel
+    width: 70px
+    top: 60px
+    bottom: 60px

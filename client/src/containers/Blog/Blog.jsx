@@ -84,7 +84,13 @@ class Blog extends Component {
             currentPage={currentPage}
           />
           {user &&
-            user.isAdmin && <Button type="button" label="Add post" clicked={this.addPostHandler} />}
+            user.isAdmin && (
+              <Button
+                type="button"
+                label={window.innerWidth > 1366 ? 'Add post' : '+'}
+                clicked={this.addPostHandler}
+              />
+            )}
         </ControlPanel>
         <SearchBox value={searchString} onChange={this.searchHandler} />
       </section>

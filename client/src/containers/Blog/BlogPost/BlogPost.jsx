@@ -62,7 +62,7 @@ class BlogPost extends Component {
             </div>
             {user &&
               user.isAdmin && (
-                <div>
+                <div className="control-panel__button-wrapper">
                   <Button type="button" label="Edit" clicked={this.editPostHandler} />
                   <Button type="button" label="Delete" clicked={this.deletePostHandler} danger />
                 </div>

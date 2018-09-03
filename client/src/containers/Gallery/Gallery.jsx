@@ -114,7 +114,11 @@ class Gallery extends Component {
         <ControlPanel>
           {user &&
             user.isAdmin && (
-              <Button type="button" label="Add image" clicked={this.addImageHandler} />
+              <Button
+                type="button"
+                label={window.innerWidth > 1366 ? 'Add image' : '+'}
+                clicked={this.addImageHandler}
+              />
             )}
         </ControlPanel>
         <SearchBox value={searchString} onChange={this.searchHandler} />

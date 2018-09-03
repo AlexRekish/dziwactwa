@@ -45,3 +45,27 @@
     width: calc(100% + 120px)
     height: 3px
     background-color: rgba($context, 0.7)
+
+@media (max-width: 1700px)
+  .social__list
+    &::before
+      height: calc(100% + 103px)
+
+    &::after
+      left: -53px
+      width: calc(100% + 100px)
+
+
+@media (max-width: 1366px)
+  .social
+    padding: 10px
+
+  .social__list
+    &::before
+      left: -10px
+      height: calc(100% + 83px)
+
+    &::after
+      bottom: -10px
+      left: -33px
+      width: calc(100% + 80px)
