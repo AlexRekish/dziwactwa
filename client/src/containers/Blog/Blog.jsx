@@ -57,7 +57,7 @@ class Blog extends Component {
     const { pageSize, currentPage, searchString } = this.state;
     const { user, dataLoading } = this.props;
     const { totalCount, paginatedPosts: posts } = this.getPagedData();
-    return dataLoading || !posts.length ? (
+    return dataLoading ? (
       <Preloader />
     ) : (
       <section className="blog">

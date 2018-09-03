@@ -117,7 +117,6 @@ class BlogPostEditForm extends Component {
             'text',
             'Text:',
             'Enter your exciting story!',
-            15,
             this.fieldChangeHandler,
             this.state
           )}

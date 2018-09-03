@@ -57,7 +57,7 @@ const withFormBlueprint = FormComponent =>
       );
     };
 
-    renderTextArea = (name, label, placeholder, rows, changeHandler, state) => {
+    renderTextArea = (name, label, placeholder, changeHandler, state) => {
       const { data, errors } = state;
       return (
         <TextArea
@@ -67,7 +67,6 @@ const withFormBlueprint = FormComponent =>
           onChange={changeHandler}
           value={data[name]}
           error={errors[name]}
-          rows={rows}
         />
       );
     };

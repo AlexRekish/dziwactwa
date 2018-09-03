@@ -13,7 +13,9 @@
   overflow: hidden
 
 .new-post__form
-  display: block
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
   box-sizing: border-box
   overflow: hidden
   position: relative
@@ -34,6 +36,7 @@
 .new-post__buttons-wrapper
   display: flex
   justify-content: space-around
+  margin: 10px
   // padding: 10px
 
 .new-post__photo-wrapper
@@ -65,3 +68,7 @@
   font-size: 14px
   font-weight: bold
   outline: none
+
+@media (max-width: 1700px)
+  .new-post__header
+    font-size: 48px
