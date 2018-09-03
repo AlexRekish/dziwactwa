@@ -1,0 +1,77 @@
+@import "../../vars.sass"
+.burger
+  position: relative
+  text-align: left
+  border: 0
+  background-color: transparent
+  cursor: pointer
+  width: 50px
+  height: 25px
+  padding: 0
+  margin: 0
+  outline: none
+
+  &:focus .burger__line
+    background-color: $orange
+
+    &:nth-child(2):before
+      border-bottom: 5px solid $orange
+      border-left: 5px solid $orange
+
+.burger__line
+  display: block
+  position: absolute
+  left: 0
+  width: 50px
+  height: 5px
+  background-color: $context
+  border-radius: 5px
+  transition: all 0.5s
+
+.burger__line:first-child
+  top: 0
+
+.burger__line:nth-child(2)
+  top: 10px
+
+.burger__line:nth-child(3)
+  top: 20px
+
+.burger__line:nth-child(2):before
+  position: absolute
+  content: ""
+  opacity: 0
+
+.burger--open
+
+  .burger__line:first-child
+    top: 10px
+    left: 15px
+    transform: rotate(-405deg)
+
+  .burger__line:nth-child(2)
+    top: 10px
+    left: 3px
+    width: 22px
+
+  .burger__line:nth-child(2):before
+    content: ""
+    opacity: 1
+    transform: rotate(405deg)
+    background: none
+    border-bottom: 5px solid $context
+    border-left: 5px solid $context
+    height: 15px
+    width: 15px
+    top: -7px
+    right: 0
+
+  .burger__line:nth-child(3)
+    top: 10px
+    left: 15px
+    transform: rotate(405deg)
+
+@media (min-width: 1180px)
+  .burger
+    display: none
+

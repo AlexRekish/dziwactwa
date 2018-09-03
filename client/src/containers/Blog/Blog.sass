@@ -133,7 +133,7 @@
 
 @media (max-width: 1366px)
   .blog
-    padding: 60px 100px
+    padding: 60px 100px 20px 100px
 
   .blog__post-link:nth-child(1)
     &::before
@@ -145,3 +145,9 @@
       top: -50px
       left: -10px
       height: calc(100% + 73px)
+
+@media (max-width: 1179px)
+  .blog__post-link:nth-child(1)
+    &::before,
+    &::after
+      display: none
