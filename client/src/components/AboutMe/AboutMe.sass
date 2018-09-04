@@ -1,42 +1,29 @@
 @import '../../vars.sass';
 .about-me
-  display: grid
+  display: flex
+  flex-direction: column
+  justify-content: center
   background-color: rgba($main, 0.4)
   grid-template-columns: 2fr 2fr
   padding: 50px
-  align-items: center
   overflow: hidden
   height: 100%
+  max-height: 100%
   width: 100vw
-
 
 .about-me__content-wrapper
   display: block
   position: relative
+  width: calc(100%/2)
   padding: 30px
   color: rgba($main, 1)
   background-color: rgba($orange, 0.9)
   border-radius: 5px
-
-  &::before
-    display: block
-    position: absolute
-    content: ""
-    top: -20px
-    left: -50px
-    height: 3px
-    width: calc(100% + 123px)
-    background-color: rgba($context, 0.7)
-
-  &::after
-    display: block
-    position: absolute
-    content: ""
-    top: -70px
-    right: -20px
-    height: calc(100% + 123px)
-    width: 3px
-    background-color: rgba($context, 0.7)
+  min-height: 80%
+  height: 100%
+  max-height: 100%
+  overflow: hidden
+  box-sizing: border-box
 
 .about-me__greetings
   margin: 0
@@ -47,6 +34,10 @@
 .about-me__content
   font-size: 20px
   overflow: hidden
+  height: 100%
+  max-height: 100%
+  width: 100%
+  max-width: 100%
 
 .photo-wrapper
   position: absolute
@@ -63,22 +54,19 @@
   opacity: 0.9
 
 @media (max-width: 1700px)
+  .about-me__content-wrapper
+    padding: 20px
+
   .about-me__greetings
     font-size: 80px
 
   .about-me__content
     font-size: 16px
 
-  .about-me__content-wrapper
-    padding: 20px
-
 @media (max-width: 1366px)
   .about-me__content-wrapper
-    &::before
-      display: none
-
-    &::after
-      display: none
+    width: calc(100% / 3 * 2)
+    overflow: auto
 
   .about-me__greetings
     font-size: 56px
@@ -87,3 +75,11 @@
   .about-me
      grid-template-columns: 2fr 1fr
 
+@media (max-width: 849px)
+  .about-me
+    padding: 0
+    max-height: auto
+
+  .about-me__content-wrapper
+    border-radius: 0%
+    width: 100%

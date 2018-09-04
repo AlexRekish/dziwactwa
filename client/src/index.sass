@@ -31,6 +31,7 @@ body
   display: grid
   height: 100vh
   max-height: 100vh
+  overflow: hidden
   grid-template-rows: 0px 10vh 1fr 5vh
 
 .visually-hidden
@@ -61,3 +62,16 @@ body
 @media (max-width: 1700px)
   body
     font-size: 14px
+
+@media (max-width: 849px)
+  #root
+    min-height: 100vh
+    height: 100%
+    max-height: 100%
+    grid-template-rows: 0px 1fr 5vh
+    padding-top: 10vh
+
+  .root-content
+    width: 100%
+    min-height: 100%
+    overflow-y: auto

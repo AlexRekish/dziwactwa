@@ -10,7 +10,6 @@
   padding: 30px 150px
   overflow: hidden
   box-sizing: border-box
-  overflow: hidden
 
 .new-post__form
   display: flex
@@ -83,3 +82,19 @@
 @media (max-width: 1179px)
   .new-post__header
     font-size: 32px
+
+@media (max-width: 849px)
+  .new-post
+    padding: 0
+    flex-direction: column
+    min-height: 100vh
+    height: 100vh
+    max-height: none
+
+  .new-post__form
+    width: 100%
+    max-width: 100%
+    padding: 10px
+    margin: 2px 0
+    min-height: 50%
+    height: 50%

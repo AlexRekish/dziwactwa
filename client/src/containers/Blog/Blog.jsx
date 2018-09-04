@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LazyLoad from 'react-lazyload';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import paginate from '../../utils/paginate';
 import parseStringToDate from '../../utils/date';
@@ -16,7 +17,7 @@ import './Blog.sass';
 
 class Blog extends Component {
   state = {
-    pageSize: 5,
+    pageSize: 14,
     currentPage: 1,
     searchString: ''
   };
@@ -61,21 +62,25 @@ class Blog extends Component {
       <Preloader />
     ) : (
       <section className="blog">
-        {posts.map(post => (
-          <Link to={`/blog/${post._id}`} className="blog__post-link" key={post._id}>
-            <article className="blog__post">
-              <div className="blog__img-wrapper">
-                <LazyLoad once offset={200} scroll overflow height="100%">
-                  <img src={post.photo} alt={post.title} className="blog__img" />
-                </LazyLoad>
-              </div>
-              <div className="blog__header-wrapper">
-                <h2 className="blog__title">{post.title}</h2>
-                <p className="blog__date">{parseStringToDate(post.date)}</p>
-              </div>
-            </article>
-          </Link>
-        ))}
+        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
+          <div className="blog__posts-wrapper">
+            {posts.map(post => (
+              <Link to={`/blog/${post._id}`} className="blog__post-link" key={post._id}>
+                <article className="blog__post">
+                  <div className="blog__img-wrapper">
+                    <LazyLoad once offset={200} scroll overflow height="100%">
+                      <img src={post.photo} alt={post.title} className="blog__img" />
+                    </LazyLoad>
+                  </div>
+                  <div className="blog__header-wrapper">
+                    <h2 className="blog__title">{post.title}</h2>
+                    <p className="blog__date">{parseStringToDate(post.date)}</p>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </Scrollbars>
         <ControlPanel>
           <Pagination
             itemCount={totalCount}

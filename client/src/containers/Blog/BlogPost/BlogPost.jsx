@@ -9,8 +9,8 @@ import { Actions } from '../../../store/actions/actions';
 import parseStringToDate from '../../../utils/date';
 import CloseIcon from '../../../common/CloseIcon/CloseIcon';
 import Preloader from '../../../common/Preloader/Preloader';
-import './BlogPost.sass';
 import '../Blog.sass';
+import './BlogPost.sass';
 
 class BlogPost extends Component {
   state = {};
@@ -38,10 +38,10 @@ class BlogPost extends Component {
 
   render() {
     const { user, dataLoading, post } = this.props;
-    return dataLoading || !post.title ? (
+    return dataLoading ? (
       <Preloader />
     ) : (
-      <section className="blog">
+      <section className="blog blog--post">
         <article className="post">
           <div className="post__photo-wrapper">
             <img src={post.photo} alt="" className="post__photo" />

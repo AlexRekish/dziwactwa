@@ -97,8 +97,8 @@ class BlogPostEditForm extends Component {
 
   render() {
     const { photo, imageLoaded, renderInput, validate, renderTextArea } = this.props;
-    const { data } = this.state;
-    return !data.title ? (
+    const { postId } = this.state;
+    return !postId ? (
       <Preloader />
     ) : (
       <section className="new-post">

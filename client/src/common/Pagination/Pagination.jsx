@@ -8,7 +8,7 @@ const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
   const pages = new Array(itemCounts).fill().map((page, index) => index + 1);
   return (
     <ul className="pagination">
-      {itemCount > 25 ? (
+      {itemCounts > 7 ? (
         <Fragment>
           <li className="pagination__item">
             <button
@@ -54,7 +54,7 @@ const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
               type="button"
               className="pagination__link"
               onClick={() => onPageChanged(currentPage + 1)}
-              disabled={currentPage === pages.length - 1}
+              disabled={currentPage === pages.length}
             >
               Next
             </button>

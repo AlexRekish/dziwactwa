@@ -70,7 +70,7 @@ class App extends Component {
         />
         <Social />
         <Header user={user} />
-        <section>
+        <section className="root-content">
           <AnimatedSwitch
             atEnter={{ opacity: 0 }}
             atLeave={{ opacity: 0 }}

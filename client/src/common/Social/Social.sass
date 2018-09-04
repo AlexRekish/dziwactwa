@@ -11,7 +11,7 @@
   justify-content: center
   align-items: center
   padding: 20px
-  z-index: 900
+  z-index: 901
 
 .social__list
   margin: 0
@@ -75,3 +75,16 @@
     &::before,
     &::after
       display: none
+
+@media (max-width: 849px)
+  .social
+    padding: 5px
+    top: 5vh
+    right: 100%
+    transform: translate(100%, -50%)
+    height: 50px
+    flex-direction: row
+
+  .social__list
+    flex-direction: row
+    background-color: transparent

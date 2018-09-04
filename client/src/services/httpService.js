@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'http://localhost:3502/api';
+axios.defaults.baseURL = 'http://192.168.1.127:3502/api';
 
 axios.interceptors.response.use(null, err => {
   const expectedError = err.response && err.response.status >= 400 && err.response.status < 500;

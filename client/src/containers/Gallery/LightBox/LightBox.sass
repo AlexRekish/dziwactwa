@@ -9,7 +9,7 @@
   grid-template-columns: 100px 1fr 100px
   align-items: center
   background-color: rgba($main, 0.8)
-  z-index: 900
+  z-index: 999
   color: rgba($context, 0.7)
   box-sizing: border-box
 
@@ -108,3 +108,21 @@
 @media (max-width: 1366px)
   .lightbox__button
     font-size: 30px
+
+@media (max-width: 1179px)
+  .lightbox
+    grid-template-columns: 50px 1fr 50px
+
+  .lightbox__control
+    font-size: 35px
+
+  .lightbox__photo-title
+    margin: 0
+    padding: 5px 10px
+    font-size: 16px
+
+  .lightbox__counter
+    margin: 0
+    padding: 5px 10px
+    font-size: 16px
+    font-weight: bold

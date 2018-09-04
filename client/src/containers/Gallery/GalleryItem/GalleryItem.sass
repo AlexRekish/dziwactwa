@@ -79,3 +79,13 @@
 @media (max-width: 1179px)
   .gallery__photo-item:nth-child(11n)
     grid-row: span 1
+
+@media (max-width: 849px)
+  .gallery__photo-item
+    grid-row: span 2
+
+  .gallery__photo-item:nth-child(7n - 6)
+    grid-column: span 1
+
+  .gallery__photo-item:nth-child(11n)
+    grid-row: span 2
