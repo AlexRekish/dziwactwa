@@ -59,6 +59,7 @@ export function* startAddPostSaga(action) {
     yield call(addNewPost, post);
     yield call([http, 'success'], 'Post added!');
     yield call([history, 'push'], '/blog');
+    yield put(Actions.clearImage());
   } catch (err) {
     yield call([http, 'error'], err);
   }

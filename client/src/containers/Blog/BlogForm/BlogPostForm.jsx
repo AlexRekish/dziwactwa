@@ -72,8 +72,9 @@ class BlogPostForm extends Component {
   };
 
   cancelHandler = () => {
-    const { history } = this.props;
+    const { history, onClearImage } = this.props;
     history.goBack();
+    onClearImage();
   };
 
   render() {
@@ -119,7 +120,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartAddPost: (post, history) => dispatch(Actions.startAddPost(post, history))
+  onStartAddPost: (post, history) => dispatch(Actions.startAddPost(post, history)),
+  onClearImage: () => dispatch(Actions.clearImage())
 });
 
 BlogPostForm.propTypes = {
@@ -131,7 +133,8 @@ BlogPostForm.propTypes = {
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,
   renderTextArea: PropTypes.func.isRequired,
-  onStartAddPost: PropTypes.func.isRequired
+  onStartAddPost: PropTypes.func.isRequired,
+  onClearImage: PropTypes.func.isRequired
 };
 
 export default connect(
