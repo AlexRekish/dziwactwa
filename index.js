@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const helmet = require('helmet');
+const compression = require('compression');
 const Joi = require('joi');
 const winston = require('winston');
 const cors = require('cors');
@@ -68,6 +69,7 @@ app.use(
 );
 app.use(express.static('public'));
 app.use(helmet());
+app.use(compression());
 app.use(cors());
 app.use('/api/users', users);
 app.use('/api/auth', auth);

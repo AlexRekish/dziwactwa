@@ -17,7 +17,7 @@ const LightBox = ({
   onDelete
 }) => (
   <div className="lightbox" style={isOpen ? { display: 'grid' } : { display: 'none' }}>
-    <button type="button" className="lightbox__control" onClick={onPrev}>
+    <button type="button" className="lightbox__control lightbox__control--left" onClick={onPrev}>
       <span className="visually-hidden">prev</span>
       <FontAwesomeIcon icon="chevron-left" />
     </button>
@@ -50,7 +50,7 @@ const LightBox = ({
         <p className="lightbox__counter">{`${current}/${count}`}</p>
       </div>
     </article>
-    <button type="button" className="lightbox__control" onClick={onNext}>
+    <button type="button" className="lightbox__control lightbox__control--right" onClick={onNext}>
       <span className="visually-hidden">next</span>
       <FontAwesomeIcon icon="chevron-right" />
     </button>

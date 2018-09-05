@@ -126,3 +126,50 @@
     padding: 5px 10px
     font-size: 16px
     font-weight: bold
+
+@media (max-width: 849px)
+  .lightbox
+    grid-template-columns: 1fr
+
+  .lightbox__item
+    padding: 50px 0
+
+  .lightbox__control
+    font-size: 30px
+    height: 50px
+    position: fixed
+    top: 50%
+    transform: translateY(-50%)
+    z-index: 1000
+
+    &--right
+      right: 0
+
+    &--left
+      left: 0
+
+  .lightbox__photo
+    object-fit: contain
+    height: auto
+
+  .lightbox__button
+    right: 10px
+    font-size: 24px
+
+    &--close
+      top: -35px
+
+    &--delete
+      bottom: -35px
+
+  .lightbox__photo-info
+    padding: 5px 0
+
+  .lightbox__photo-title
+    padding: 5px
+
+  .lightBox__photo-date
+    padding: 5px
+
+  .lightbox__counter
+    padding: 5px
