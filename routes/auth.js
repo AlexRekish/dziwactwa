@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const express = require('express');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const { User } = require('../models/user');
 const validator = require('../middleware/validate');
 
@@ -34,9 +35,8 @@ router.post('/', validator(validate), async (req, res) => {
   const deviceId = req.header('x-device-id');
 
   if (!deviceId) {
-    const salt = await bcrypt.genSalt(10);
-    const device = await bcrypt.hash(`${+Date.now() + Math.floor(Math.random() * 1000000)}`, salt);
-    user.refreshTokens[device] = refreshToken;
+    const device = await new mongoose.Types.ObjectId().toHexString();
+    user.refreshTokens.set(device, refreshToken);
     await user.save();
     return res
       .header('x-auth-token', token)
@@ -46,9 +46,10 @@ router.post('/', validator(validate), async (req, res) => {
       .send({ _id: user._id, name: user.name, isAdmin: user.isAdmin });
   }
 
-  if (deviceId && !user.refreshTokens[deviceId]) return res.status(400).send('Invalid device ID');
+  if (deviceId && !user.refreshTokens.get(deviceId))
+    return res.status(400).send('Invalid device ID');
 
-  user.refreshTokens[deviceId] = refreshToken;
+  user.refreshTokens.set(deviceId, refreshToken);
   await user.save();
   return res
     .header('x-auth-token', token)

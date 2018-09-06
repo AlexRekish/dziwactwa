@@ -22,6 +22,7 @@ export const login = async (email, password) => {
 export const logout = () => {
   localStorage.removeItem(tokenKey);
   localStorage.removeItem(refreshKey);
+  localStorage.removeItem(device);
   http.setJwt();
 };
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const validator = require('../middleware/validate');
 const { validate, validatePassword, User } = require('../models/user');
 const auth = require('../middleware/auth');
@@ -27,10 +28,10 @@ router.post('/', validator(validate), async (req, res) => {
 
   const refreshToken = user.generateRefreshToken();
   const salt = await bcrypt.genSalt(10);
-  const deviceId = await bcrypt.hash(`${+Date.now() + Math.floor(Math.random() * 1000000)}`, salt);
+  const deviceId = await new mongoose.Types.ObjectId().toHexString();
 
   user.password = await bcrypt.hash(req.body.password, salt);
-  user.refreshTokens[deviceId] = refreshToken;
+  user.refreshTokens.set(deviceId, refreshToken);
   await user.save();
 
   const token = user.generateAuthToken();

@@ -61,7 +61,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  refreshTokens: {}
+  refreshTokens: {
+    type: Map,
+    of: String
+  }
 });
 
 userSchema.methods.generateAuthToken = function() {
