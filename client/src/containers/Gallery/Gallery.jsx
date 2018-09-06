@@ -59,8 +59,8 @@ class Gallery extends Component {
   };
 
   deleteImageHandler = () => {
-    const { onStartDeleteImage, currentImage, currentImageIndex } = this.props;
-    onStartDeleteImage(currentImage._id, currentImageIndex);
+    const { onStartDeleteImage, currentImage, currentImageIndex, user } = this.props;
+    onStartDeleteImage(currentImage._id, currentImageIndex, user);
   };
 
   filterImages = (images, searchString) => {
@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onStartLoadImages: () => dispatch(Actions.startLoadImages()),
-  onStartDeleteImage: (id, index) => dispatch(Actions.startDeleteImage(id, index)),
+  onStartDeleteImage: (id, index, user) => dispatch(Actions.startDeleteImage(id, index, user)),
   onOpenLightBox: index => dispatch(Actions.openLightBox(index)),
   onCloseLightBox: () => dispatch(Actions.closeLightBox()),
   onNextImage: () => dispatch(Actions.nextImage()),

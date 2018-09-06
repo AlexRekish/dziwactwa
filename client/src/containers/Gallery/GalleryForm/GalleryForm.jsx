@@ -38,7 +38,7 @@ class GalleryForm extends Component {
 
   onSubmitted = () => {
     const { data } = this.state;
-    const { history, photo, imageLoaded, onStartAddImage } = this.props;
+    const { history, photo, imageLoaded, onStartAddImage, user } = this.props;
 
     if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
@@ -49,7 +49,7 @@ class GalleryForm extends Component {
       ...data,
       path: photo
     };
-    onStartAddImage(image, history);
+    onStartAddImage(image, history, user);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -103,22 +103,28 @@ class GalleryForm extends Component {
 
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
-  imageLoaded: state.uploadImage.imageLoaded
+  imageLoaded: state.uploadImage.imageLoaded,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartAddImage: (image, history) => dispatch(Actions.startAddImage(image, history))
+  onStartAddImage: (image, history, user) => dispatch(Actions.startAddImage(image, history, user))
 });
 
 GalleryForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
   imageLoaded: PropTypes.bool.isRequired,
+  user: PropTypes.object,
 
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   validateProperty: PropTypes.func.isRequired,
   onStartAddImage: PropTypes.func.isRequired
+};
+
+GalleryForm.defaultProps = {
+  user: null
 };
 
 export default connect(

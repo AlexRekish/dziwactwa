@@ -35,7 +35,8 @@ export function* startLoadPostSaga(action) {
 }
 
 export function* startDeletePostSaga(action) {
-  const { id, history } = yield action;
+  const { id, history, user } = yield action;
+  yield put(Actions.checkExp(user));
   try {
     yield call(deletePost, id);
     yield put(Actions.deletePostSucceed());
@@ -54,7 +55,8 @@ export function* startDeletePostSaga(action) {
 }
 
 export function* startAddPostSaga(action) {
-  const { post, history } = yield action;
+  const { post, history, user } = yield action;
+  yield put(Actions.checkExp(user));
   try {
     yield call(addNewPost, post);
     yield call([http, 'success'], 'Post added!');
@@ -66,7 +68,8 @@ export function* startAddPostSaga(action) {
 }
 
 export function* editPostSaga(action) {
-  const { id, post, history } = action;
+  const { id, post, history, user } = action;
+  yield put(Actions.checkExp(user));
   try {
     yield call(editPost, id, post);
     yield call([http, 'success'], 'Post successfully changed!');

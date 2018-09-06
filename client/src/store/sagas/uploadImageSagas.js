@@ -4,7 +4,8 @@ import http from '../../services/httpService';
 import uploadImage from '../../services/uploadImageService';
 
 export default function* initUploadImageSaga(action) {
-  const { selectedImage } = yield action;
+  const { selectedImage, user } = yield action;
+  yield put(Actions.checkExp(user));
   try {
     const { data: link } = yield call(uploadImage, selectedImage);
     yield put(Actions.uploadImage(link));

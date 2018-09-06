@@ -4,7 +4,8 @@ export const AuthAction = {
   INIT_LOGIN: 'INIT_LOGIN',
   LOGIN: 'LOGIN',
   LOGIN_WITH_JWT: 'LOGIN_WITH_JWT',
-  LOGOUT: 'LOGOUT'
+  LOGOUT: 'LOGOUT',
+  CHECK_EXP: 'CHECK_EXP'
 };
 
 const getAuthActions = () => ({
@@ -18,7 +19,8 @@ const getAuthActions = () => ({
   }),
   login: user => ({ type: AuthAction.LOGIN, user }),
   loginWithJwt: user => ({ type: AuthAction.LOGIN_WITH_JWT, user }),
-  logout: () => ({ type: AuthAction.LOGOUT })
+  logout: () => ({ type: AuthAction.LOGOUT }),
+  checkExp: user => ({ type: AuthAction.CHECK_EXP, user })
 });
 
 export default getAuthActions;

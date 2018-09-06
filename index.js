@@ -12,6 +12,7 @@ const auth = require('./routes/auth');
 const blogposts = require('./routes/blogposts');
 const photos = require('./routes/photos');
 const upload = require('./routes/upload');
+const token = require('./routes/token');
 const error = require('./middleware/error');
 require('express-async-errors');
 
@@ -76,6 +77,7 @@ app.use('/api/auth', auth);
 app.use('/api/blog/posts', blogposts);
 app.use('/api/photos', photos);
 app.use('/api/upload', upload);
+app.use('/api/token', token);
 app.use(error);
 
 const server = app.listen(port, () => {

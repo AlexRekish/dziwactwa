@@ -25,13 +25,18 @@ const getBlogActions = () => ({
   startLoadPost: (id, history) => ({ type: BlogAction.START_LOAD_POST, id, history }),
   loadPostSucceed: post => ({ type: BlogAction.LOAD_POST_SUCCEED, post }),
   loadPostFailed: err => ({ type: BlogAction.LOAD_POST_FAILED, err }),
-  startDeletePost: (id, history) => ({ type: BlogAction.START_DELETE_POST, id, history }),
+  startDeletePost: (id, history, user) => ({
+    type: BlogAction.START_DELETE_POST,
+    id,
+    history,
+    user
+  }),
   deletePostSucceed: () => ({ type: BlogAction.DELETE_POST_SUCCEED }),
   deletePostFailed: err => ({ type: BlogAction.START_DELETE_POST, err }),
-  startAddPost: (post, history) => ({ type: BlogAction.START_ADD_POST, post, history }),
+  startAddPost: (post, history, user) => ({ type: BlogAction.START_ADD_POST, post, history, user }),
   startEditPost: photo => ({ type: BlogAction.START_EDIT_POST, photo }),
   endEditPost: () => ({ type: BlogAction.END_EDIT_POST }),
-  editPost: (id, post, history) => ({ type: BlogAction.EDIT_POST, id, post, history })
+  editPost: (id, post, history, user) => ({ type: BlogAction.EDIT_POST, id, post, history, user })
 });
 
 export default getBlogActions;

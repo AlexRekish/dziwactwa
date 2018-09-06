@@ -43,7 +43,7 @@ class BlogPostForm extends Component {
 
   onSubmitted = () => {
     const { data } = this.state;
-    const { history, photo, imageLoaded, onStartAddPost } = this.props;
+    const { history, photo, imageLoaded, onStartAddPost, user } = this.props;
 
     if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
@@ -54,7 +54,7 @@ class BlogPostForm extends Component {
       ...data,
       photo
     };
-    onStartAddPost(post, history);
+    onStartAddPost(post, history, user);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -116,11 +116,12 @@ class BlogPostForm extends Component {
 
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
-  imageLoaded: state.uploadImage.imageLoaded
+  imageLoaded: state.uploadImage.imageLoaded,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartAddPost: (post, history) => dispatch(Actions.startAddPost(post, history)),
+  onStartAddPost: (post, history, user) => dispatch(Actions.startAddPost(post, history, user)),
   onClearImage: () => dispatch(Actions.clearImage())
 });
 
@@ -128,6 +129,7 @@ BlogPostForm.propTypes = {
   history: PropTypes.object.isRequired,
   photo: PropTypes.string.isRequired,
   imageLoaded: PropTypes.bool.isRequired,
+  user: PropTypes.object,
 
   renderInput: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
@@ -135,6 +137,10 @@ BlogPostForm.propTypes = {
   renderTextArea: PropTypes.func.isRequired,
   onStartAddPost: PropTypes.func.isRequired,
   onClearImage: PropTypes.func.isRequired
+};
+
+BlogPostForm.defaultProps = {
+  user: null
 };
 
 export default connect(

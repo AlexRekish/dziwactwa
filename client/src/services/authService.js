@@ -4,6 +4,7 @@ import http from './httpService';
 const usersEndpoint = `/auth`;
 const tokenKey = 'token';
 const refreshKey = 'refreshToken';
+const tokenEndpoint = '/token';
 
 const getJwt = () => localStorage.getItem(tokenKey);
 http.setJwt(getJwt());
@@ -18,6 +19,7 @@ export const login = async (email, password) => {
 
 export const logout = () => {
   localStorage.removeItem(tokenKey);
+  localStorage.removeItem(refreshKey);
   http.setJwt();
 };
 
@@ -35,3 +37,10 @@ export const getCurrentUser = () => {
     return null;
   }
 };
+
+export const checkJwtExp = exp => exp * 1000 > +Date.now();
+
+export const refreshTokens = async () =>
+  http.get(tokenEndpoint, {
+    headers: { 'x-refresh-token': localStorage.getItem(refreshKey) }
+  });

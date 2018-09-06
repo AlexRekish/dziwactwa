@@ -60,7 +60,7 @@ class BlogPostEditForm extends Component {
 
   onSubmitted = async () => {
     const { data, postId } = this.state;
-    const { history, onEditPost, photo, imageLoaded } = this.props;
+    const { history, onEditPost, photo, imageLoaded, user } = this.props;
 
     if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
@@ -72,7 +72,7 @@ class BlogPostEditForm extends Component {
       photo
     };
 
-    onEditPost(postId, post, history);
+    onEditPost(postId, post, history, user);
   };
 
   fieldChangeHandler = ({ currentTarget: field }) => {
@@ -138,12 +138,13 @@ class BlogPostEditForm extends Component {
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
   imageLoaded: state.uploadImage.imageLoaded,
-  post: state.blog.post
+  post: state.blog.post,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
   onStartEditPost: photo => dispatch(Actions.startEditPost(photo)),
-  onEditPost: (id, post, history) => dispatch(Actions.editPost(id, post, history)),
+  onEditPost: (id, post, history, user) => dispatch(Actions.editPost(id, post, history, user)),
   onEndEditPost: () => dispatch(Actions.endEditPost())
 });
 
@@ -152,6 +153,7 @@ BlogPostEditForm.propTypes = {
   photo: PropTypes.string,
   imageLoaded: PropTypes.bool.isRequired,
   post: PropTypes.object.isRequired,
+  user: PropTypes.object,
 
   onStartEditPost: PropTypes.func.isRequired,
   onEditPost: PropTypes.func.isRequired,
@@ -163,7 +165,8 @@ BlogPostEditForm.propTypes = {
 };
 
 BlogPostEditForm.defaultProps = {
-  photo: ''
+  photo: '',
+  user: null
 };
 
 export default connect(

@@ -1,5 +1,5 @@
 import { takeEvery, all } from 'redux-saga/effects';
-import { initUserSaga, initLoginSaga, loginUserWithJwtSaga } from './authSagas';
+import { checkExpSaga, initUserSaga, initLoginSaga, loginUserWithJwtSaga } from './authSagas';
 import initUploadImageSaga from './uploadImageSagas';
 import ActionType from '../actions/actions';
 import {
@@ -14,6 +14,7 @@ import registerSaga from './usersSagas';
 
 export function* watchAuth() {
   yield all([
+    takeEvery(ActionType.CHECK_EXP, checkExpSaga),
     takeEvery(ActionType.INIT_USER_FROM_LSTORAGE, initUserSaga),
     takeEvery(ActionType.INIT_LOGIN, initLoginSaga),
     takeEvery(ActionType.LOGIN_WITH_JWT, loginUserWithJwtSaga)

@@ -11,9 +11,10 @@ const getUploadImageActions = () => ({
     dataURL,
     selectedImage
   }),
-  initUploadImage: selectedImage => ({
+  initUploadImage: (selectedImage, user) => ({
     type: UploadImageAction.INIT_UPLOAD_IMAGE,
-    selectedImage
+    selectedImage,
+    user
   }),
   uploadImage: photo => ({ type: UploadImageAction.UPLOAD_IMAGE, photo }),
   clearImage: () => ({ type: UploadImageAction.CLEAR_IMAGE })

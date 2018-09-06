@@ -61,14 +61,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  refreshTokens: [String]
+  refreshToken: String
 });
 
 userSchema.methods.generateAuthToken = function() {
   return jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin, name: this.name },
-    config.get('jwtSecret')
-    // { expiresIn: '1h' },
+    config.get('jwtSecret'),
+    { expiresIn: '1h' }
   );
 };
 userSchema.methods.generateRefreshToken = function() {

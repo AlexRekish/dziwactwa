@@ -27,8 +27,8 @@ class BlogPost extends Component {
   };
 
   deletePostHandler = async () => {
-    const { history, post, onStartDeletePost } = this.props;
-    onStartDeletePost(post._id, history);
+    const { history, post, onStartDeletePost, user } = this.props;
+    onStartDeletePost(post._id, history, user);
   };
 
   backButtonHandler = () => {
@@ -82,7 +82,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onStartLoadPost: (id, history) => dispatch(Actions.startLoadPost(id, history)),
-  onStartDeletePost: (id, history) => dispatch(Actions.startDeletePost(id, history))
+  onStartDeletePost: (id, history, user) => dispatch(Actions.startDeletePost(id, history, user))
 });
 
 BlogPost.propTypes = {

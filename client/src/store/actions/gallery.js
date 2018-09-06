@@ -20,11 +20,21 @@ const getGalleryActions = () => ({
   loadImagesSucceed: images => ({ type: GalleryAction.LOAD_IMAGES_SUCCEED, images }),
   loadImagesFailed: err => ({ type: GalleryAction.LOAD_IMAGES_FAILED, err }),
 
-  startDeleteImage: (id, index) => ({ type: GalleryAction.START_DELETE_IMAGE, id, index }),
+  startDeleteImage: (id, index, user) => ({
+    type: GalleryAction.START_DELETE_IMAGE,
+    id,
+    index,
+    user
+  }),
   deleteImageSucceed: id => ({ type: GalleryAction.DELETE_IMAGE_SUCCEED, id }),
   deleteImageFailed: err => ({ type: GalleryAction.START_DELETE_IMAGE, err }),
 
-  startAddImage: (image, history) => ({ type: GalleryAction.START_ADD_IMAGE, image, history }),
+  startAddImage: (image, history, user) => ({
+    type: GalleryAction.START_ADD_IMAGE,
+    image,
+    history,
+    user
+  }),
 
   openLightBox: index => ({ type: GalleryAction.OPEN_LIGHTBOX, index }),
   closeLightBox: () => ({ type: GalleryAction.CLOSE_LIGHTBOX }),

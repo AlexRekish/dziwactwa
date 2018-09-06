@@ -60,9 +60,9 @@ class FileUploadForm extends Component {
 
   uploadImageHandler = evt => {
     evt.preventDefault();
-    const { selectedImage, onUploadImage } = this.props;
+    const { selectedImage, onUploadImage, user } = this.props;
     if (!validateFileType(selectedImage)) return;
-    onUploadImage(selectedImage);
+    onUploadImage(selectedImage, user);
   };
 
   render() {
@@ -117,12 +117,13 @@ class FileUploadForm extends Component {
 const mapStateToProps = state => ({
   photo: state.uploadImage.photo,
   selectedImage: state.uploadImage.selectedImage,
-  dataURL: state.uploadImage.dataURL
+  dataURL: state.uploadImage.dataURL,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
   onSelectImage: (dataURL, selectedImage) => dispatch(Actions.selectImage(dataURL, selectedImage)),
-  onUploadImage: selectedImage => dispatch(Actions.initUploadImage(selectedImage)),
+  onUploadImage: (selectedImage, user) => dispatch(Actions.initUploadImage(selectedImage, user)),
   onClearImage: () => dispatch(Actions.clearImage())
 });
 
@@ -130,10 +131,15 @@ FileUploadForm.propTypes = {
   selectedImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   photo: PropTypes.string.isRequired,
   dataURL: PropTypes.string.isRequired,
+  user: PropTypes.object,
 
   onClearImage: PropTypes.func.isRequired,
   onSelectImage: PropTypes.func.isRequired,
   onUploadImage: PropTypes.func.isRequired
+};
+
+FileUploadForm.defaultProps = {
+  user: null
 };
 
 export default connect(

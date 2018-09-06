@@ -17,7 +17,8 @@ export function* startLoadImagesSaga() {
 }
 
 export function* startDeleteImageSaga(action) {
-  const { id, index } = yield action;
+  const { id, index, user } = yield action;
+  yield put(Actions.checkExp(user));
   try {
     yield call(deletePhoto, id);
     yield put(Actions.deleteImageSucceed(id));
@@ -35,7 +36,8 @@ export function* startDeleteImageSaga(action) {
 }
 
 export function* startAddImageSaga(action) {
-  const { image, history } = yield action;
+  const { image, history, user } = yield action;
+  yield put(Actions.checkExp(user));
   try {
     yield call(addNewPhoto, image);
     yield call([http, 'success'], 'Photo added!');

@@ -1,10 +1,32 @@
 import { put, call } from 'redux-saga/effects';
-import { getCurrentUser, login, loginWithJwt } from '../../services/authService';
+import {
+  getCurrentUser,
+  login,
+  loginWithJwt,
+  checkJwtExp,
+  refreshTokens
+} from '../../services/authService';
 import { Actions } from '../actions/actions';
 import http from '../../services/httpService';
 
+export function* checkExpSaga(action) {
+  const { user } = action;
+  if (user && !checkJwtExp(user.exp)) {
+    try {
+      const tokens = yield call(refreshTokens);
+      yield put(Actions.loginWithJwt(tokens));
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        yield put(Actions.logout());
+        yield call([http, 'info'], 'You need to relogin!');
+      }
+    }
+  }
+}
+
 export function* initUserSaga() {
   const user = yield call(getCurrentUser);
+  yield put(Actions.checkExp(user));
   yield put(Actions.getUserFromLocalStorage(user));
 }
 
