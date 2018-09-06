@@ -4,7 +4,8 @@ import {
   login,
   loginWithJwt,
   checkJwtExp,
-  refreshTokens
+  refreshTokens,
+  logout
 } from '../../services/authService';
 import { Actions } from '../actions/actions';
 import http from '../../services/httpService';
@@ -17,6 +18,7 @@ export function* checkExpSaga(action) {
       yield put(Actions.loginWithJwt(tokens));
     } catch (err) {
       if (err.response && err.response.status === 400) {
+        yield call(logout);
         yield put(Actions.logout());
         yield call([http, 'info'], 'You need to relogin!');
       }

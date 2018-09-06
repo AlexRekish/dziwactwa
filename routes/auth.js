@@ -30,9 +30,26 @@ router.post('/', validator(validate), async (req, res) => {
 
   const token = user.generateAuthToken();
   const refreshToken = user.generateRefreshToken();
-  user.refreshToken = refreshToken;
-  await user.save();
 
+  const deviceId = req.header('x-device-id');
+
+  if (!deviceId) {
+    const salt = await bcrypt.genSalt(10);
+    const device = await bcrypt.hash(`${+Date.now() + Math.floor(Math.random() * 1000000)}`, salt);
+    user.refreshTokens[device] = refreshToken;
+    await user.save();
+    return res
+      .header('x-auth-token', token)
+      .header('x-refresh-token', refreshToken)
+      .header('x-device-id', device)
+      .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token', 'x-device-id'])
+      .send({ _id: user._id, name: user.name, isAdmin: user.isAdmin });
+  }
+
+  if (deviceId && !user.refreshTokens[deviceId]) return res.status(400).send('Invalid device ID');
+
+  user.refreshTokens[deviceId] = refreshToken;
+  await user.save();
   return res
     .header('x-auth-token', token)
     .header('x-refresh-token', refreshToken)

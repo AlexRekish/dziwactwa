@@ -22,14 +22,15 @@ router.post('/', validator(validate), async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    refreshTokens: []
+    refreshTokens: {}
   });
 
   const refreshToken = user.generateRefreshToken();
-  user.refreshTokens.push(refreshToken);
-
   const salt = await bcrypt.genSalt(10);
+  const deviceId = await bcrypt.hash(`${+Date.now() + Math.floor(Math.random() * 1000000)}`, salt);
+
   user.password = await bcrypt.hash(req.body.password, salt);
+  user.refreshTokens[deviceId] = refreshToken;
   await user.save();
 
   const token = user.generateAuthToken();
@@ -42,7 +43,8 @@ router.post('/', validator(validate), async (req, res) => {
   return res
     .header('x-auth-token', token)
     .header('x-refresh-token', refreshToken)
-    .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token'])
+    .header('x-device-id', deviceId)
+    .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token', 'x-device-id'])
     .send(returnedUser);
 });
 

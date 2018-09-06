@@ -4,6 +4,7 @@ import http from './httpService';
 const usersEndpoint = `/auth`;
 const tokenKey = 'token';
 const refreshKey = 'refreshToken';
+const device = 'device';
 const tokenEndpoint = '/token';
 
 const getJwt = () => localStorage.getItem(tokenKey);
@@ -13,6 +14,7 @@ export const login = async (email, password) => {
   const res = await http.post(usersEndpoint, { email, password });
   localStorage.setItem(tokenKey, res.headers['x-auth-token']);
   localStorage.setItem(refreshKey, res.headers['x-refresh-token']);
+  localStorage.setItem(device, res.headers['x-device-id']);
   http.setJwt(getJwt());
   return res.data;
 };
@@ -42,5 +44,8 @@ export const checkJwtExp = exp => exp * 1000 > +Date.now();
 
 export const refreshTokens = async () =>
   http.get(tokenEndpoint, {
-    headers: { 'x-refresh-token': localStorage.getItem(refreshKey) }
+    headers: {
+      'x-refresh-token': localStorage.getItem(refreshKey),
+      'x-device-id': localStorage.getItem(device)
+    }
   });

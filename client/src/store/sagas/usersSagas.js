@@ -7,6 +7,7 @@ export default function* registerSaga(action) {
   const { user, history } = yield action;
   try {
     const registeredUser = yield call(register, user);
+    yield localStorage.setItem('device', registeredUser.headers['x-device-id']);
     yield put(Actions.loginWithJwt(registeredUser));
     yield call([history, 'push'], '/');
   } catch (err) {
