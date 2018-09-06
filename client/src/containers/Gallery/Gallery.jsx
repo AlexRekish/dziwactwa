@@ -111,16 +111,16 @@ class Gallery extends Component {
           onDelete={this.deleteImageHandler}
           user={user}
         />
-        <ControlPanel>
-          {user &&
-            user.isAdmin && (
+        {user &&
+          user.isAdmin && (
+            <ControlPanel>
               <Button
                 type="button"
                 label={window.innerWidth > 1366 ? 'Add image' : '+'}
                 clicked={this.addImageHandler}
               />
-            )}
-        </ControlPanel>
+            </ControlPanel>
+          )}
         <SearchBox value={searchString} onChange={this.searchHandler} />
       </section>
     );

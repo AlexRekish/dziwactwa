@@ -9,22 +9,20 @@
   max-height: 100%
   list-style: none
   transition: all 0.4s ease
+  z-index: 10
 
 .gallery__photo-item:nth-child(7n - 6)
   grid-column: span 2
   grid-row: span 2
-  position: relative
-  overflow: visible
-  z-index: 10
 
 .gallery__photo
-  display: block
   height: 100%
   width: 100%
   max-width: 100%
   max-height: 100%
   object-fit: cover
   background-color: rgba($context, 0.3)
+  transition: all 0.4s ease
 
 .gallery__photo-info-wrapper
   display: flex
@@ -36,6 +34,7 @@
   width: 100%
   height: 100%
   max-height: 100%
+  max-width: 100%
   padding: 20px
   background-color: rgba($main, 0.4)
   color: $context
@@ -51,9 +50,16 @@
   text-align: left
 
 .gallery__photo-container
+  display: block
   cursor: pointer
   text-decoration: none
   color: $main
+  width: 100%
+  height: 100%
+  max-width: 100%
+  max-height: 100%
+  overflow: hidden
+  box-sizing: border-box
 
 .gallery__photo-container:hover > .gallery__photo-info-wrapper
   opacity: 1
