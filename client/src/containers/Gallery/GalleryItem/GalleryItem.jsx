@@ -34,7 +34,7 @@ class GalleryItem extends Component {
             <p className="gallery__photo-date">{date}</p>
           </div>
         </a>
-        <PhotoPreloader />
+        <PhotoPreloader loaded={loaded} />
       </li>
     );
   }

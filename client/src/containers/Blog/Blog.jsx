@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LazyLoad from 'react-lazyload';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import paginate from '../../utils/paginate';
-import parseStringToDate from '../../utils/date';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Pagination from '../../common/Pagination/Pagination';
 import Button from '../../common/Button/Button';
 import SearchBox from '../../common/SearchBox/SearchBox';
 import Preloader from '../../common/Preloader/Preloader';
 import { Actions } from '../../store/actions/actions';
+import BlogItem from './BlogItem/BlogItem';
+
 import './Blog.sass';
 
 class Blog extends Component {
@@ -65,19 +64,7 @@ class Blog extends Component {
         <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
           <div className="blog__posts-wrapper">
             {posts.map(post => (
-              <Link to={`/blog/${post._id}`} className="blog__post-link" key={post._id}>
-                <article className="blog__post">
-                  <div className="blog__img-wrapper">
-                    <LazyLoad once offset={200} scroll overflow height="100%">
-                      <img src={post.photo} alt={post.title} className="blog__img" />
-                    </LazyLoad>
-                  </div>
-                  <div className="blog__header-wrapper">
-                    <h2 className="blog__title">{post.title}</h2>
-                    <p className="blog__date">{parseStringToDate(post.date)}</p>
-                  </div>
-                </article>
-              </Link>
+              <BlogItem post={post} key={post._id} />
             ))}
           </div>
         </Scrollbars>

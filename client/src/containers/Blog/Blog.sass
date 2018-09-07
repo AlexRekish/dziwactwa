@@ -24,83 +24,6 @@
   min-height: 100%
   overflow-x: hidden
 
-.blog__post-link
-  margin: 0
-  padding: 0
-  color: $main
-  text-decoration: none
-  transition: all 0.4s ease
-  background-color: rgba($context, 0.9)
-  box-sizing: border-box
-  border-radius: 5px
-  min-width: 0
-  overflow: hidden
-  height: 100%
-  max-height: 100%
-
-  &:hover
-    background-color: rgba($orange, 0.9)
-
-.blog__post-link:nth-child(7n - 6)
-  grid-column: span 2
-  grid-row: span 2
-  position: relative
-  overflow: visible
-  z-index: 10
-  font-size:
-
-  .blog__title
-    font-size: 30px
-
-  .blog__date
-    font-size: 20px
-
-
-.blog__post
-  display: grid
-  grid-template-rows: repeat(6, 1fr)
-  grid-gap: 20px
-  padding: 20px
-  width: 100%
-  height: 100%
-  box-sizing: border-box
-  overflow: hidden
-
-.blog__header-wrapper
-  display: flex
-  flex-direction: column
-  justify-content: center
-  width: 100%
-  height: 100%
-  grid-row: span 1
-  text-align: left
-  min-width: 0
-
-.blog__title
-  margin: 0
-  padding: 0
-  font-size: 18px
-  line-height: 1.1
-  font-weight: bold
-
-.blog__date
-  font-size: 14px
-  font-weight: bold
-  padding: 0
-  margin: 0
-
-.blog__img-wrapper
-  margin: 0
-  padding: 0
-  grid-row: span 5
-
-.blog__img
-  width: 100%
-  height: 100%
-  max-heigh: 100%
-  object-fit: cover
-  border-radius: 5px
-
 @media (max-width: 1700px)
   .blog
     padding: 80px 150px 20px 150px
@@ -108,33 +31,10 @@
   .blog__posts-wrapper
     grid-auto-rows: 35vh
 
-  .blog__post
-    grid-gap: 10px
-    padding: 15px
-
-  .blog__post-link:nth-child(7n - 6)
-    .blog__title
-      font-size: 20px
-
-    .blog__date
-      font-size: 16px
-
-  .blog__post-link:nth-child(11n)
-    grid-row: span 2
-
-  .blog__title
-    font-size: 16px
-
-  .blog__date
-    font-size: 12px
-
 @media (max-width: 1366px)
   .blog
     padding: 60px 100px 20px 100px
 
-@media (max-width: 1179px)
-   .blog__post-link:nth-child(11n)
-      grid-row: span 1
 
 @media (max-width: 849px)
   .blog
@@ -144,34 +44,3 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
     grid-gap: 5px
 
-  .blog__post-link
-    grid-row: span 2
-    border-radius: 0
-
-  .blog__post
-    padding: 0
-
-  .blog__header-wrapper
-    padding: 10px
-
-  .blog__title
-    font-size: 18px
-
-  .blog__date
-    font-size: 14px
-
-  .blog__post-link:nth-child(7n - 6)
-    grid-column: span 1
-
-    .blog__title
-      font-size: 18px
-
-    .blog__date
-      font-size: 14px
-
-  .blog__post-link:nth-child(11n)
-    grid-row: span 2
-    border-radius: 0
-
-  .blog__img
-    border-radius: 0

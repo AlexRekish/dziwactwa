@@ -13,7 +13,9 @@ import '../Blog.sass';
 import './BlogPost.sass';
 
 class BlogPost extends Component {
-  state = {};
+  state = {
+    loaded: false
+  };
 
   async componentDidMount() {
     const { match, history, onStartLoadPost } = this.props;
@@ -36,15 +38,26 @@ class BlogPost extends Component {
     history.goBack();
   };
 
+  loadImageHandler = () => {
+    this.setState({ loaded: true });
+  };
+
   render() {
     const { user, dataLoading, post } = this.props;
+    const { loaded } = this.state;
     return dataLoading ? (
       <Preloader />
     ) : (
       <section className="blog blog--post">
         <article className="post">
           <div className="post__photo-wrapper">
-            <img src={post.photo} alt="" className="post__photo" />
+            <img
+              src={post.photo}
+              alt={post.title}
+              className="post__photo"
+              onLoad={this.loadImageHandler}
+              style={{ opacity: loaded ? 1 : 0 }}
+            />
           </div>
 
           <div className="post__content-wrapper">
