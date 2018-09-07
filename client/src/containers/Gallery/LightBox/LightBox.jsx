@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import Modal from '../../../common/Modal/Modal';
+
 import './LightBox.sass';
 
 class LightBox extends Component {
   state = {
-    xStart: null
+    xStart: null,
+    modalIsOpen: false
   };
 
   touchStartHandler = evt => {
@@ -38,20 +42,23 @@ class LightBox extends Component {
     }
   };
 
+  modalOpenHandler = () => {
+    this.setState({ modalIsOpen: true });
+  };
+
+  modalConfirmHandler = () => {
+    const { onDelete } = this.props;
+    onDelete();
+    this.setState({ modalIsOpen: false });
+  };
+
+  modalDeclineHandler = () => {
+    this.setState({ modalIsOpen: false });
+  };
+
   render() {
-    const {
-      src,
-      title,
-      date,
-      user,
-      current,
-      count,
-      isOpen,
-      onNext,
-      onPrev,
-      onClose,
-      onDelete
-    } = this.props;
+    const { src, title, date, user, current, count, isOpen, onNext, onPrev, onClose } = this.props;
+    const { modalIsOpen } = this.state;
     return (
       <div
         className="lightbox"
@@ -83,7 +90,7 @@ class LightBox extends Component {
                 <button
                   type="button"
                   className="lightbox__button lightbox__button--delete"
-                  onClick={onDelete}
+                  onClick={this.modalOpenHandler}
                 >
                   <span className="visually-hidden">close</span>
                   <FontAwesomeIcon icon="trash-alt" />
@@ -104,6 +111,11 @@ class LightBox extends Component {
           <span className="visually-hidden">next</span>
           <FontAwesomeIcon icon="chevron-right" />
         </button>
+        <Modal
+          isOpen={modalIsOpen}
+          confirm={this.modalConfirmHandler}
+          decline={this.modalDeclineHandler}
+        />
       </div>
     );
   }

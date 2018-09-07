@@ -9,15 +9,17 @@ import { Actions } from '../../../store/actions/actions';
 import parseStringToDate from '../../../utils/date';
 import CloseIcon from '../../../common/CloseIcon/CloseIcon';
 import Preloader from '../../../common/Preloader/Preloader';
+import Modal from '../../../common/Modal/Modal';
 import '../Blog.sass';
 import './BlogPost.sass';
 
 class BlogPost extends Component {
   state = {
-    loaded: false
+    loaded: false,
+    modalIsOpen: false
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { match, history, onStartLoadPost } = this.props;
     if (match.params.id === 'new' || match.params.id === 'edit') return;
     onStartLoadPost(match.params.id, history);
@@ -26,11 +28,6 @@ class BlogPost extends Component {
   editPostHandler = () => {
     const { history, post } = this.props;
     history.push('/blog/edit', post);
-  };
-
-  deletePostHandler = async () => {
-    const { history, post, onStartDeletePost, user } = this.props;
-    onStartDeletePost(post._id, history, user);
   };
 
   backButtonHandler = () => {
@@ -42,9 +39,23 @@ class BlogPost extends Component {
     this.setState({ loaded: true });
   };
 
+  modalOpenHandler = () => {
+    this.setState({ modalIsOpen: true });
+  };
+
+  modalConfirmHandler = () => {
+    const { history, post, onStartDeletePost, user } = this.props;
+    onStartDeletePost(post._id, history, user);
+    this.setState({ modalIsOpen: false });
+  };
+
+  modalDeclineHandler = () => {
+    this.setState({ modalIsOpen: false });
+  };
+
   render() {
     const { user, dataLoading, post } = this.props;
-    const { loaded } = this.state;
+    const { loaded, modalIsOpen } = this.state;
     return dataLoading ? (
       <Preloader />
     ) : (
@@ -77,11 +88,16 @@ class BlogPost extends Component {
               user.isAdmin && (
                 <div className="control-panel__button-wrapper">
                   <Button type="button" label="Edit" clicked={this.editPostHandler} />
-                  <Button type="button" label="Delete" clicked={this.deletePostHandler} danger />
+                  <Button type="button" label="Delete" clicked={this.modalOpenHandler} danger />
                 </div>
               )}
           </ControlPanel>
         }
+        <Modal
+          isOpen={modalIsOpen}
+          confirm={this.modalConfirmHandler}
+          decline={this.modalDeclineHandler}
+        />
       </section>
     );
   }
