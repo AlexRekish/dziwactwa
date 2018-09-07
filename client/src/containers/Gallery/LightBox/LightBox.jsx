@@ -28,13 +28,13 @@ class LightBox extends Component {
     const xDiff = xStart - xEnd;
     if (Math.abs(xDiff) > 100) {
       if (xDiff < 0) {
-        onNext();
+        onPrev();
         this.setState({
           xStart: null
         });
       }
       if (xDiff > 0) {
-        onPrev();
+        onNext();
         this.setState({
           xStart: null
         });

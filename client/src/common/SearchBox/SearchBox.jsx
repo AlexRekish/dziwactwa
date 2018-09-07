@@ -4,9 +4,13 @@ import './SearchBox.sass';
 
 const SearchBox = ({ value, onChange }) => (
   <div className="custom-search-box">
+    <label htmlFor="search" className="visually-hidden">
+      Search...
+    </label>
     <input
       type="search"
       name="search"
+      id="search"
       value={value}
       placeholder="Search..."
       onChange={evt => onChange(evt.target.value)}
