@@ -74,7 +74,17 @@ class BlogPost extends Component {
           <div className="post__content-wrapper">
             <h1 className="post__title">{post.title}</h1>
             <p className="post__date">{parseStringToDate(post.date)}</p>
-            <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
+            <Scrollbars
+              autoHide
+              autoHideTimeout={1000}
+              autoHideDuration={200}
+              hideTracksWhenNotNeeded
+              style={{
+                width: '100%',
+                height: '100%',
+                maxWidth: '100%'
+              }}
+            >
               <p className="post__content">{post.text}</p>
             </Scrollbars>
           </div>

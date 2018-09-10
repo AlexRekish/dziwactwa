@@ -45,7 +45,8 @@ export const checkJwtExp = exp => {
   const rToken = localStorage.getItem(refreshKey);
   const deviceID = localStorage.getItem(device);
   if (!exp && rToken && deviceID) return false;
-  return exp * 1000 > +Date.now();
+  if (exp) return exp * 1000 > +Date.now();
+  if (!rToken || !deviceID) return true;
 };
 
 export const refreshTokens = async () =>

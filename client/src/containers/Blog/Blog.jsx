@@ -61,7 +61,7 @@ class Blog extends Component {
       <Preloader />
     ) : (
       <section className="blog">
-        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
+        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200} hideTracksWhenNotNeeded>
           <div className="blog__posts-wrapper">
             {posts.map(post => (
               <BlogItem post={post} key={post._id} />

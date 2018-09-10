@@ -62,7 +62,7 @@ class BlogPostEditForm extends Component {
     const { data, postId } = this.state;
     const { history, onEditPost, photo, imageLoaded, user } = this.props;
 
-    if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
+    if (!imageLoaded || !photo) {
       http.error(null, 'Photo is required!');
       return;
     }

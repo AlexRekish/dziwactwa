@@ -13,6 +13,9 @@
   box-sizing: border-box
   overflow: hidden
 
+.post__content-wrapper > div > div
+  overflow: auto !important
+
 .post__photo-wrapper
   grid-column: 1 / 2
   height: 100%
@@ -33,14 +36,14 @@
   flex-direction: column
   grid-column: 2 / 3
   padding: 20px
-  overflow: auto
+  overflow: hidden
   height: 100%
   max-height: 100%
 
 .post__content
   box-sizing: border-box
-  height: 100%
-  max-height: 100%
+  height: auto
+  max-height: none
 
 .post__title
   font-size: 48px
@@ -84,3 +87,4 @@
 
   .post__photo
     border-radius: 0
+
