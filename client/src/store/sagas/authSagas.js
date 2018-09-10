@@ -12,7 +12,8 @@ import http from '../../services/httpService';
 
 export function* checkExpSaga(action) {
   const { user } = action;
-  if (user && !checkJwtExp(user.exp)) {
+  const detector = user ? !checkJwtExp(user.exp) : !checkJwtExp();
+  if (detector) {
     try {
       const tokens = yield call(refreshTokens);
       yield put(Actions.loginWithJwt(tokens));

@@ -31,10 +31,13 @@ router.get('/', async (req, res) => {
       .header('access-control-expose-headers', ['x-auth-token', 'x-refresh-token'])
       .send('token refreshed successfully');
   } catch (err) {
-    if (user.refreshTokens.get(device) === refresh && err.name === 'TokenExpiredError') {
-      delete user.refreshTokens.delete(device);
+    if (
+      user.refreshTokens.get(device) &&
+      user.refreshTokens.get(device) === refresh &&
+      err.name === 'TokenExpiredError'
+    ) {
+      user.refreshTokens.delete(device);
       await user.save();
-      return res.status(400).send('Invalid token');
     }
 
     return res.status(400).send('Invalid token');

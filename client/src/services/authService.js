@@ -41,7 +41,12 @@ export const getCurrentUser = () => {
   }
 };
 
-export const checkJwtExp = exp => exp * 1000 > +Date.now();
+export const checkJwtExp = exp => {
+  const rToken = localStorage.getItem(refreshKey);
+  const deviceID = localStorage.getItem(device);
+  if (!exp && rToken && deviceID) return false;
+  return exp * 1000 > +Date.now();
+};
 
 export const refreshTokens = async () =>
   http.get(tokenEndpoint, {

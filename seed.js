@@ -135,6 +135,18 @@ const data = [
     photo: 'https://source.unsplash.com/Dm-qxdynoEc/800x799',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
+  },
+  {
+    title: 'Lorem ipsum dolor sit amet. 23',
+    photo: 'https://source.unsplash.com/hpXX7cJXleE/800x599',
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
+  },
+  {
+    title: 'Lorem ipsum dolor sit amet. 24',
+    photo: 'https://source.unsplash.com/GlHKd5I4SkY/800x599',
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta sequi sint maiores voluptate recusandae placeat quo natus odio rem qui! Possimus vitae, perferendis, blanditiis voluptatem eum mollitia animi eos ad nihil provident fugit, quae rerum facilis vero aspernatur distinctio. Nemo modi, cumque in inventore ab accusantium dignissimos eius facilis iusto!'
   }
 ];
 
