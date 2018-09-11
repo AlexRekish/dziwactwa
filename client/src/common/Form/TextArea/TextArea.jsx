@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 import './TextArea.sass';
+
+const errorStyle = { visibility: 'hidden' };
+const taErrorStyle = { borderColor: 'rgb(213, 0, 0)', backgroundColor: 'rgba(250, 128, 114, 0.5)' };
 
 const TextArea = ({ name, label, error, onChange, value, placeholder }) => (
   <div className="custom-text-area__wrapper">
@@ -14,16 +18,12 @@ const TextArea = ({ name, label, error, onChange, value, placeholder }) => (
       value={value}
       placeholder={placeholder}
       className="custom-text-area"
-      style={
-        error
-          ? { borderColor: 'rgb(213, 0, 0)', backgroundColor: 'rgba(250, 128, 114, 0.5)' }
-          : null
-      }
+      style={error ? taErrorStyle : null}
     />
     {error ? (
       <small className="custom-text-area__error">{error}</small>
     ) : (
-      <small className="custom-text-area__error" style={{ visibility: 'hidden' }}>
+      <small className="custom-text-area__error" style={errorStyle}>
         No error
       </small>
     )}
@@ -44,4 +44,4 @@ TextArea.defaultProps = {
   error: false
 };
 
-export default TextArea;
+export default onlyUpdateForKeys(['value', 'error'])(TextArea);

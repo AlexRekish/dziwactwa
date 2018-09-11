@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 import './Button.sass';
 
 const Button = ({ type, label, clicked, disabled, danger, confirm }) => {
@@ -33,4 +34,4 @@ Button.defaultProps = {
   danger: false
 };
 
-export default Button;
+export default onlyUpdateForKeys(['disabled', 'label'])(Button);

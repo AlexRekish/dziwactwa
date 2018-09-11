@@ -5,6 +5,9 @@ import LazyLoad from 'react-lazyload';
 import PhotoPreloader from '../../../common/PhotoPreloader/PhotoPreloader';
 import './GalleryItem.sass';
 
+const imgLoadedStyle = { opacity: 1 };
+const imgNotLoadedStyle = { opacity: 0 };
+
 class GalleryItem extends Component {
   state = {
     loaded: false
@@ -26,7 +29,7 @@ class GalleryItem extends Component {
               alt={title}
               className="gallery__photo"
               onLoad={this.loadImageHandler}
-              style={{ opacity: loaded ? 1 : 0 }}
+              style={loaded ? imgLoadedStyle : imgNotLoadedStyle}
             />
           </LazyLoad>
           <div className="gallery__photo-info-wrapper">

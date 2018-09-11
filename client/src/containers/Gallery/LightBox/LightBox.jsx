@@ -6,6 +6,8 @@ import Modal from '../../../common/Modal/Modal';
 
 import './LightBox.sass';
 
+const grid = { display: 'grid' };
+const hidden = { display: 'none' };
 class LightBox extends Component {
   state = {
     xStart: null,
@@ -62,7 +64,7 @@ class LightBox extends Component {
     return (
       <div
         className="lightbox"
-        style={isOpen ? { display: 'grid' } : { display: 'none' }}
+        style={isOpen ? grid : hidden}
         onTouchStart={this.touchStartHandler}
         onTouchEnd={this.touchEndHandler}
       >

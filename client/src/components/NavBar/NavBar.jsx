@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
+
 import NavItem from './NavItem/NavItem';
 import './NavBar.sass';
 
@@ -35,4 +37,4 @@ NavBar.defaultProps = {
   user: null
 };
 
-export default NavBar;
+export default onlyUpdateForKeys(['user', 'open'])(NavBar);

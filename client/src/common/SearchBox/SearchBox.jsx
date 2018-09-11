@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 import './SearchBox.sass';
 
 const SearchBox = ({ value, onChange }) => (
@@ -25,4 +26,4 @@ SearchBox.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-export default SearchBox;
+export default onlyUpdateForKeys(['value'])(SearchBox);

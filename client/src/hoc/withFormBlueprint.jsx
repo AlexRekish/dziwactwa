@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Input from '../common/Form/Input/Input';
-import Select from '../common/Form/Select/Select';
 import TextArea from '../common/Form/TextArea/TextArea';
 
 const withFormBlueprint = FormComponent =>
@@ -39,20 +38,6 @@ const withFormBlueprint = FormComponent =>
           value={data[name]}
           placeholder={placeholder}
           error={errors[name]}
-        />
-      );
-    };
-
-    renderSelect = (name, label, options, changeHandler, state) => {
-      const { data, errors } = state;
-      return (
-        <Select
-          options={options}
-          name={name}
-          label={label}
-          error={errors[name]}
-          onChange={changeHandler}
-          value={data[name]}
         />
       );
     };

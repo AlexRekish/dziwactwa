@@ -1,5 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
+
+import PaginationNormalItem from './PaginationNormalItem/PaginationNormalItem';
+import PaginationControlItem from './PaginationControlItem/PaginationControlItem';
 import './Pagination.sass';
 
 const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
@@ -10,71 +14,43 @@ const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
     <ul className="pagination">
       {itemCounts > 7 ? (
         <Fragment>
-          <li className="pagination__item">
-            <button
-              type="button"
-              className="pagination__link"
-              onClick={() => onPageChanged(currentPage - 1)}
-              disabled={currentPage === pages[0]}
-            >
-              Prev
-            </button>
-          </li>
-          <li className="pagination__item">
-            <button
-              type="button"
-              className={
-                pages[0] === currentPage
-                  ? 'pagination__link pagination__link--active'
-                  : 'pagination__link'
-              }
-              onClick={() => onPageChanged(pages[0])}
-            >
-              {pages[0]}
-            </button>
-          </li>
+          <PaginationControlItem
+            page={pages[0]}
+            label="Prev"
+            currentPage={currentPage}
+            onPageChanged={() => onPageChanged(currentPage - 1)}
+          />
+          <PaginationNormalItem
+            page={pages[0]}
+            label={pages[0]}
+            currentPage={currentPage}
+            onPageChanged={() => onPageChanged(pages[0])}
+          />
           <li className="pagination__item">
             <p className="pagination__breadcrumbs">...</p>
           </li>
-          <li className="pagination__item">
-            <button
-              type="button"
-              className={
-                pages[pages.length - 1] === currentPage
-                  ? 'pagination__link pagination__link--active'
-                  : 'pagination__link'
-              }
-              onClick={() => onPageChanged(pages[pages.length - 1])}
-            >
-              {pages[pages.length - 1]}
-            </button>
-          </li>
-          <li className="pagination__item">
-            <button
-              type="button"
-              className="pagination__link"
-              onClick={() => onPageChanged(currentPage + 1)}
-              disabled={currentPage === pages.length}
-            >
-              Next
-            </button>
-          </li>
+          <PaginationNormalItem
+            page={pages[pages.length - 1]}
+            label={pages[pages.length - 1]}
+            currentPage={currentPage}
+            onPageChanged={() => onPageChanged(pages[pages.length - 1])}
+          />
+          <PaginationControlItem
+            page={pages.length}
+            label="Next"
+            currentPage={currentPage}
+            onPageChanged={() => onPageChanged(currentPage + 1)}
+          />
         </Fragment>
       ) : (
         pages.map(page => (
-          <li className="pagination__item" key={page}>
-            <button
-              type="button"
-              className={
-                page === currentPage
-                  ? 'pagination__link pagination__link--active'
-                  : 'pagination__link'
-              }
-              onClick={() => onPageChanged(page)}
-            >
-              {page}
-            </button>
-          </li>
+          <PaginationNormalItem
+            key={page}
+            page={page}
+            label={page}
+            currentPage={currentPage}
+            onPageChanged={onPageChanged}
+          />
         ))
       )}
     </ul>
@@ -89,4 +65,4 @@ Pagination.propTypes = {
   onPageChanged: PropTypes.func.isRequired
 };
 
-export default Pagination;
+export default onlyUpdateForKeys(['itemCount', 'currentPage'])(Pagination);

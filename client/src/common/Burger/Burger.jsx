@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 import './Burger.sass';
 
 const Burger = ({ clicked, open }) => (
@@ -17,4 +18,4 @@ Burger.propTypes = {
   clicked: PropTypes.func.isRequired
 };
 
-export default Burger;
+export default onlyUpdateForKeys(['open'])(Burger);

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './Header.sass';
 import NavBar from '../../components/NavBar/NavBar';
 import Burger from '../../common/Burger/Burger';
 
-class Header extends Component {
+class Header extends PureComponent {
   state = {
     menuIsOpen: false
   };

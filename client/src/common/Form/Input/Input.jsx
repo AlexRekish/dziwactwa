@@ -1,36 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 import './Input.sass';
 
-const Input = ({ name, label, onChange, value, placeholder, type, error, readonly }) => (
-  <div className="custom-input__wrapper">
-    <label htmlFor={name} className="custom-input__label">
-      {label}
-    </label>
-    <input
-      type={type}
-      className="custom-input"
-      id={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      name={name}
-      style={
-        error
-          ? { borderColor: 'rgb(213, 0, 0)', backgroundColor: 'rgba(250, 128, 114, 0.5)' }
-          : null
-      }
-      readOnly={readonly}
-    />
-    {error ? (
-      <small className="custom-input__error">{error}</small>
-    ) : (
-      <small className="custom-input__error" style={{ visibility: 'hidden' }}>
-        No error :)
-      </small>
-    )}
-  </div>
-);
+const errorStyle = { visibility: 'hidden' };
+const inputErrorStyle = {
+  borderColor: 'rgb(213, 0, 0)',
+  backgroundColor: 'rgba(250, 128, 114, 0.5)'
+};
+
+const Input = ({ name, label, onChange, value, placeholder, type, error, readonly }) => {
+  const inputStyle = error ? inputErrorStyle : null;
+  return (
+    <div className="custom-input__wrapper">
+      <label htmlFor={name} className="custom-input__label">
+        {label}
+      </label>
+      <input
+        type={type}
+        className="custom-input"
+        id={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        name={name}
+        style={inputStyle}
+        readOnly={readonly}
+      />
+      {error ? (
+        <small className="custom-input__error">{error}</small>
+      ) : (
+        <small className="custom-input__error" style={errorStyle}>
+          No error :)
+        </small>
+      )}
+    </div>
+  );
+};
 
 Input.propTypes = {
   name: PropTypes.string.isRequired,
@@ -49,4 +55,4 @@ Input.defaultProps = {
   readonly: false
 };
 
-export default Input;
+export default onlyUpdateForKeys(['value', 'error'])(Input);

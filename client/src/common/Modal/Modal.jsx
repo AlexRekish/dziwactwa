@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { onlyUpdateForKeys } from 'recompose';
 
 import Button from '../Button/Button';
 import './Modal.sass';
 
+const visible = { visibility: 'visible', opacity: 1 };
+const hidden = { visibility: 'hidden', opacity: 0 };
+
 const Modal = ({ isOpen, confirm, decline }) => (
-  <div
-    className="modal"
-    style={{ visibility: isOpen ? 'visible' : 'hidden', opacity: isOpen ? '1' : '0' }}
-  >
+  <div className="modal" style={isOpen ? visible : hidden}>
     <div className="modal__content">
       <p className="modal__message">Are you want to continue?</p>
       <div className="modal__button-wrapper">
@@ -26,4 +27,4 @@ Modal.propTypes = {
   decline: PropTypes.func.isRequired
 };
 
-export default Modal;
+export default onlyUpdateForKeys(['isOpen'])(Modal);

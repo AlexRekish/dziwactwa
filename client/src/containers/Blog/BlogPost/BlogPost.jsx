@@ -13,6 +13,11 @@ import Modal from '../../../common/Modal/Modal';
 import '../Blog.sass';
 import './BlogPost.sass';
 
+const scrollbarsStyle = {
+  width: '100%',
+  height: '100%',
+  maxWidth: '100%'
+};
 class BlogPost extends Component {
   state = {
     loaded: false,
@@ -79,11 +84,7 @@ class BlogPost extends Component {
               autoHideTimeout={1000}
               autoHideDuration={200}
               hideTracksWhenNotNeeded
-              style={{
-                width: '100%',
-                height: '100%',
-                maxWidth: '100%'
-              }}
+              style={scrollbarsStyle}
             >
               <p className="post__content">{post.text}</p>
             </Scrollbars>
