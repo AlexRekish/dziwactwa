@@ -85,7 +85,7 @@ class Gallery extends Component {
       <Preloader />
     ) : (
       <section className="gallery">
-        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
+        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200} hideTracksWhenNotNeeded>
           <ul className="gallery__photo-list">
             {photos.map((photo, i) => (
               <GalleryItem

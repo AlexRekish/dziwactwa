@@ -28,6 +28,7 @@ class Blog extends Component {
 
   pageChangeHandler = page => {
     this.setState({ currentPage: page });
+    this.scrollbars.scrollTop();
   };
 
   getPagedData = () => {
@@ -61,7 +62,16 @@ class Blog extends Component {
       <Preloader />
     ) : (
       <section className="blog">
-        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200} hideTracksWhenNotNeeded>
+        <Scrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+          hideTracksWhenNotNeeded
+          ref={scrollbar => {
+            this.scrollbars = scrollbar;
+            return this.scrollbars;
+          }}
+        >
           <div className="blog__posts-wrapper">
             {posts.map(post => (
               <BlogItem post={post} key={post._id} />
