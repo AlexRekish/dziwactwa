@@ -12,7 +12,7 @@ const Modal = ({ isOpen, confirm, decline }) => (
     <div className="modal__content">
       <p className="modal__message">Are you want to continue?</p>
       <div className="modal__button-wrapper">
-        <Button type="button" label="Yes" clicked={confirm} />
+        <Button type="button" label="Yes" clicked={confirm} confirm />
         <Button type="button" label="Cancel" clicked={decline} danger />
       </div>
     </div>
