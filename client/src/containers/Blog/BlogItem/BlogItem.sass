@@ -11,7 +11,7 @@
   border-radius: 5px
   min-width: 0
   overflow: hidden
-  height: 100%
+  height: auto
   z-index: 10
 
   &:hover
@@ -20,10 +20,6 @@
 .blog__post-link:nth-child(7n - 6)
   grid-column: span 2
   grid-row: span 2
-  position: relative
-  overflow: visible
-
-  font-size:
 
   .blog__title
     font-size: 30px
@@ -66,13 +62,19 @@
   margin: 0
 
 .blog__img-wrapper
+  display: flex
+  justify-content: center
+  align-items: center
   position: relative
   margin: 0
   padding: 0
   grid-row: span 5
+  width: 100%
+  min-width: 0
 
 .blog__img
   width: 100%
+  max-width: 100%
   height: 100%
   max-heigh: 100%
   object-fit: cover

@@ -8,6 +8,9 @@ import PhotoPreloader from '../../../common/PhotoPreloader/PhotoPreloader';
 
 import './BlogItem.sass';
 
+const visible = { opacity: 1 };
+const hidden = { opacity: 0 };
+
 class BlogItem extends Component {
   state = {
     loaded: false
@@ -30,7 +33,7 @@ class BlogItem extends Component {
                 alt={post.title}
                 className="blog__img"
                 onLoad={this.loadImageHandler}
-                style={{ opacity: loaded ? 1 : 0 }}
+                style={loaded ? visible : hidden}
               />
             </LazyLoad>
             <PhotoPreloader loaded={loaded} />

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { pure } from 'recompose';
 import './PhotoPreloader.sass';
 
-const visible = { opacity: 1 };
-const hidden = { opacity: 0 };
+const visible = { opacity: 1, visibility: 'visible' };
+const hidden = { opacity: 0, visibility: 'hidden' };
 
 const PhotoPreloader = ({ loaded }) => (
   <div className="photo-preloader" style={loaded ? hidden : visible}>

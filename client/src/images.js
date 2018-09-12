@@ -1,6 +1,6 @@
 const images = new Array(15)
   .fill()
-  .map((image, index) => `http://localhost:3502/backgrounds/${index + 1}.jpg`);
+  .map((image, index) => `http://localhost:3502/img/backgrounds/${index + 1}.jpg`);
 
 const randomBackground = () => {
   const body = document.querySelector('body');
