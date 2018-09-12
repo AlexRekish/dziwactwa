@@ -52,6 +52,10 @@ library.add(
   faTrashAlt
 );
 
+const toastStyle = { fontFamily: 'Ubuntu', fontWeight: 'bold', fontSize: '20px' };
+const visible = { opacity: 1 };
+const hidden = { opacity: 0 };
+
 class App extends Component {
   state = {};
 
@@ -64,17 +68,14 @@ class App extends Component {
     const { user } = this.props;
     return (
       <Fragment>
-        <ToastContainer
-          position="top-left"
-          style={{ fontFamily: 'Ubuntu', fontWeight: 'bold', fontSize: '20px' }}
-        />
+        <ToastContainer position="top-left" style={toastStyle} />
         <Social />
         <Header user={user} />
         <section className="root-content">
           <AnimatedSwitch
-            atEnter={{ opacity: 0 }}
-            atLeave={{ opacity: 0 }}
-            atActive={{ opacity: 1 }}
+            atEnter={hidden}
+            atLeave={hidden}
+            atActive={visible}
             className="switch-wrapper"
           >
             {user && <Route path="/logout" component={Logout} />}

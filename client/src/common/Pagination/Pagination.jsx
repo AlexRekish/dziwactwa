@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { onlyUpdateForKeys } from 'recompose';
 
-import PaginationNormalItem from './PaginationNormalItem/PaginationNormalItem';
-import PaginationControlItem from './PaginationControlItem/PaginationControlItem';
+import SimplePagination from './SimplePagination/SimplePagination';
+import ComplexPagination from './ComplexPagination/ComplexPagination';
 import './Pagination.sass';
 
 const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
@@ -13,45 +13,9 @@ const Pagination = ({ itemCount, pageSize, onPageChanged, currentPage }) => {
   return (
     <ul className="pagination">
       {itemCounts > 7 ? (
-        <Fragment>
-          <PaginationControlItem
-            page={pages[0]}
-            label="Prev"
-            currentPage={currentPage}
-            onPageChanged={() => onPageChanged(currentPage - 1)}
-          />
-          <PaginationNormalItem
-            page={pages[0]}
-            label={pages[0]}
-            currentPage={currentPage}
-            onPageChanged={() => onPageChanged(pages[0])}
-          />
-          <li className="pagination__item">
-            <p className="pagination__breadcrumbs">...</p>
-          </li>
-          <PaginationNormalItem
-            page={pages[pages.length - 1]}
-            label={pages[pages.length - 1]}
-            currentPage={currentPage}
-            onPageChanged={() => onPageChanged(pages[pages.length - 1])}
-          />
-          <PaginationControlItem
-            page={pages.length}
-            label="Next"
-            currentPage={currentPage}
-            onPageChanged={() => onPageChanged(currentPage + 1)}
-          />
-        </Fragment>
+        <ComplexPagination pages={pages} currentPage={currentPage} onPageChanged={onPageChanged} />
       ) : (
-        pages.map(page => (
-          <PaginationNormalItem
-            key={page}
-            page={page}
-            label={page}
-            currentPage={currentPage}
-            onPageChanged={onPageChanged}
-          />
-        ))
+        <SimplePagination pages={pages} currentPage={currentPage} onPageChanged={onPageChanged} />
       )}
     </ul>
   );
