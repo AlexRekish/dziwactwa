@@ -18,9 +18,15 @@ const ComplexPagination = ({ pages, currentPage, onPageChanged }) => (
       currentPage={currentPage}
       onPageChanged={() => onPageChanged(pages[0])}
     />
-    <li className="pagination__item">
-      <p className="pagination__breadcrumbs">...</p>
-    </li>
+    {currentPage > pages[0] && currentPage < pages[pages.length - 1] ? (
+      <li className="pagination__item">
+        <p className="pagination__current">{currentPage}</p>
+      </li>
+    ) : (
+      <li className="pagination__item">
+        <p className="pagination__current">...</p>
+      </li>
+    )}
     <PaginationNormalItem
       page={pages[pages.length - 1]}
       label={pages[pages.length - 1]}
