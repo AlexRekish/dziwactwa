@@ -25,13 +25,15 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   danger: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  confirm: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 
   clicked: PropTypes.func.isRequired
 };
 
 Button.defaultProps = {
   disabled: false,
-  danger: false
+  danger: false,
+  confirm: false
 };
 
 export default onlyUpdateForKeys(['disabled', 'label'])(Button);
