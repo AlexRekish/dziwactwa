@@ -24,7 +24,7 @@ const TextArea = ({ name, label, error, onChange, value, placeholder }) => (
       <small className="custom-text-area__error">{error}</small>
     ) : (
       <small className="custom-text-area__error" style={errorStyle}>
-        No error
+        No error :)
       </small>
     )}
   </div>
