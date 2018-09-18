@@ -18,7 +18,11 @@ const scrollbarsStyle = {
   height: '100%',
   maxWidth: '100%'
 };
-class BlogPost extends Component {
+
+const visible = { opacity: 1 };
+const hidden = { opacity: 0 };
+
+export class BlogPost extends Component {
   state = {
     loaded: false,
     modalIsOpen: false
@@ -72,7 +76,7 @@ class BlogPost extends Component {
               alt={post.title}
               className="post__photo"
               onLoad={this.loadImageHandler}
-              style={{ opacity: loaded ? 1 : 0 }}
+              style={loaded ? visible : hidden}
             />
           </div>
 

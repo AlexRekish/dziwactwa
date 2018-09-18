@@ -62,7 +62,6 @@ const withFormBlueprint = FormComponent =>
           validate={this.validate}
           validateProperty={this.validateProperty}
           renderInput={this.renderInput}
-          renderSelect={this.renderSelect}
           renderTextArea={this.renderTextArea}
           {...this.props}
         />

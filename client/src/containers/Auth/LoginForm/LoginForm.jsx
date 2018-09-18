@@ -8,7 +8,7 @@ import { Actions } from '../../../store/actions/actions';
 import withFormBlueprint from '../../../hoc/withFormBlueprint';
 import '../Auth.sass';
 
-class LoginForm extends Component {
+export class LoginForm extends Component {
   state = {
     data: {
       email: '',
