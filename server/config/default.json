@@ -1,5 +1,7 @@
 {
   "db": "mongodb://localhost:27017/dziwactwa",
   "host": "http://localhost:3502",
-  "jwtSecret": ""
+  "jwtSecret": "",
+  "firebasePrivateKey": "",
+  "firebaseClientEmail": ""
 }

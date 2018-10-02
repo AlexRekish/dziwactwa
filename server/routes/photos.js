@@ -1,8 +1,6 @@
 const express = require('express');
 const winston = require('winston');
-const fs = require('fs');
-const { promisify } = require('util');
-const path = require('path');
+const { firebaseAdmin } = require('./upload');
 const validator = require('../middleware/validate');
 const { Photo, validate } = require('../models/photo');
 const auth = require('../middleware/auth');
@@ -10,6 +8,8 @@ const admin = require('../middleware/admin');
 const validateObjectId = require('../middleware/validateObjectId');
 
 const router = express.Router();
+
+const bucket = firebaseAdmin.storage().bucket();
 
 router.get('/', async (req, res) => {
   const photos = await Photo.find().sort({ date: -1 });
@@ -51,10 +51,9 @@ router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
   if (!photo) return res.status(404).send('Photo with passed id not found');
 
   try {
-    const unlink = promisify(fs.unlink);
-    const imgNumber = photo.path.split('img/');
+    const imgName = photo.path.split('dziwactwa-b0813.appspot.com/');
     const samePhotos = await Photo.find({ path: photo.path });
-    if (!samePhotos.length) await unlink(path.join(__dirname, `../public/img/${imgNumber[1]}`));
+    if (!samePhotos.length) await bucket.file(imgName[1]).delete();
   } catch (err) {
     winston.error(err);
   }

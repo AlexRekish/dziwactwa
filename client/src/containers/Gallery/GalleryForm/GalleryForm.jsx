@@ -40,7 +40,7 @@ class GalleryForm extends Component {
     const { data } = this.state;
     const { history, photo, imageLoaded, onStartAddImage, user } = this.props;
 
-    if (!imageLoaded || !photo || !/.*localhost:3502\/img\/.*/i.test(photo)) {
+    if (!imageLoaded || !photo || !/.*dziwactwa-b0813.*/i.test(photo)) {
       http.error(null, 'Photo is required!');
       return;
     }

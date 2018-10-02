@@ -1,15 +1,15 @@
 const express = require('express');
 const winston = require('winston');
-const fs = require('fs');
-const { promisify } = require('util');
-const path = require('path');
 const validator = require('../middleware/validate');
 const { BlogPost, validate } = require('../models/blogpost');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const validateObjectId = require('../middleware/validateObjectId');
+const { firebaseAdmin } = require('./upload');
 
 const router = express.Router();
+
+const bucket = firebaseAdmin.storage().bucket();
 
 router.get('/', async (req, res) => {
   const blogposts = await BlogPost.find().sort({ date: -1 });
@@ -58,10 +58,9 @@ router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
   if (!blogpost) return res.status(404).send('Blog post with passed id not found');
 
   try {
-    const unlink = promisify(fs.unlink);
-    const imgNumber = blogpost.photo.split('img/');
+    const imgName = blogpost.path.split('dziwactwa-b0813.appspot.com/');
     const samePhotos = await BlogPost.find({ photo: blogpost.photo });
-    if (!samePhotos.length) await unlink(path.join(__dirname, `../public/img/${imgNumber[1]}`));
+    if (!samePhotos.length) await bucket.file(imgName[1]).delete();
   } catch (err) {
     winston.error(err);
   }

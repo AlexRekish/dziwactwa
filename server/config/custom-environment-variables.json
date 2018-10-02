@@ -1,0 +1,6 @@
+{
+  "db": "dziw_db",
+  "jwtSecret": "dziw_jwtSecret",
+  "firebasePrivateKey": "dziw_firebasePrivateKey",
+  "firebaseClientEmail": "dziw_firebaseClientEmail"
+}

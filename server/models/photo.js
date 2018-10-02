@@ -13,7 +13,7 @@ const photoSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 255
+    maxlength: 1024
   },
   date: {
     type: Date,
@@ -32,7 +32,7 @@ const validate = photo => {
       .max(10),
     path: Joi.string()
       .min(5)
-      .max(255)
+      .max(1024)
       .required()
   };
   return Joi.validate(photo, schema);

@@ -11,13 +11,13 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const blogposts = require('./routes/blogposts');
 const photos = require('./routes/photos');
-const upload = require('./routes/upload');
+const { upload } = require('./routes/upload');
 const token = require('./routes/token');
 const error = require('./middleware/error');
 require('express-async-errors');
 
 const app = express();
-const port = 3502;
+const port = process.env.PORT || 3502;
 const db = config.get('db');
 // const origin = new RegExp('^http://localhost', 'i');
 // const corsOptions = {
