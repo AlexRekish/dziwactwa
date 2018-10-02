@@ -1,6 +1,6 @@
 const images = new Array(15)
   .fill(1)
-  .map((image, index) => `http://localhost:3502/img/backgrounds/${index + 1}.jpg`);
+  .map((image, index) => `https://dziwactwa.herokuapp.com/img/backgrounds/${index + 1}.jpg`);
 
 const randomBackground = () => {
   const body = document.querySelector('body');
