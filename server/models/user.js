@@ -31,7 +31,7 @@ const validatePassword = password => {
     upperCase: 1,
     numeric: 1,
     symbol: 1,
-    requirementCount: 4
+    requirementCount: 2
   };
 
   return Joi.validate(password, new PasswordComplexity(complexityOptions));
