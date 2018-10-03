@@ -41,7 +41,10 @@ class LightBox extends Component {
           xStart: null
         });
       }
-    }
+    } else
+      this.setState({
+        xStart: null
+      });
   };
 
   modalOpenHandler = () => {

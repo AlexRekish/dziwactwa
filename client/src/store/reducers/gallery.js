@@ -36,8 +36,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.OPEN_LIGHTBOX:
       return {
         ...state,
-        currentImage: { ...state.images[action.index] },
-        currentImageIndex: action.index,
+        currentImage:
+          action.index >= state.images.length
+            ? { ...state.images[state.images.length - 1] }
+            : { ...state.images[action.index] },
+        currentImageIndex:
+          action.index >= state.images.length ? state.images.length - 1 : action.index,
         lightboxIsOpen: true
       };
     case ActionType.CLOSE_LIGHTBOX:

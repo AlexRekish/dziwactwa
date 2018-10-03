@@ -22,8 +22,8 @@ export function* startDeleteImageSaga(action) {
   try {
     yield call(deletePhoto, id);
     yield put(Actions.deleteImageSucceed(id));
-    yield call([http, 'success'], 'Successful deleted');
     yield put(Actions.openLightBox(index));
+    yield call([http, 'success'], 'Successful deleted');
   } catch (err) {
     yield put(Actions.deleteImageFailed(err));
     if (err.response) {
