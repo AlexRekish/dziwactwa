@@ -9,7 +9,7 @@ const SearchBox = ({ value, onChange }) => (
       Search...
     </label>
     <input
-      type="search"
+      type="text"
       name="search"
       id="search"
       value={value}
