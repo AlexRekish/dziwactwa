@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import paginate from '../../utils/paginate';
+import filterData from '../../utils/filterData';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Pagination from '../../common/Pagination/Pagination';
 import Button from '../../common/Button/Button';
@@ -35,7 +36,7 @@ class Blog extends Component {
     const { pageSize, currentPage, searchString } = this.state;
     const { posts } = this.props;
     const paginatedPosts = searchString
-      ? paginate(this.filterPosts(posts, searchString), currentPage, pageSize)
+      ? paginate(filterData(posts, searchString, 'title'), currentPage, pageSize)
       : paginate(posts, currentPage, pageSize);
     return { totalCount: posts.length, paginatedPosts };
   };
@@ -47,11 +48,6 @@ class Blog extends Component {
 
   searchHandler = string => {
     this.setState({ searchString: string, currentPage: 1 });
-  };
-
-  filterPosts = (posts, searchString) => {
-    const reg = new RegExp(`^${searchString}`, 'i');
-    return posts.filter(post => reg.test(post.title));
   };
 
   render() {

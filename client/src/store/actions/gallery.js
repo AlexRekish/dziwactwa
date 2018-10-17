@@ -12,7 +12,9 @@ export const GalleryAction = {
   OPEN_LIGHTBOX: 'OPEN_LIGHTBOX',
   CLOSE_LIGHTBOX: 'CLOSE_LIGHTBOX',
   NEXT_IMAGE: 'NEXT_IMAGE',
-  PREV_IMAGE: 'PREV_IMAGE'
+  PREV_IMAGE: 'PREV_IMAGE',
+
+  FILTER_IMAGE: 'FILTER_IMAGE'
 };
 
 const getGalleryActions = () => ({
@@ -36,10 +38,14 @@ const getGalleryActions = () => ({
     user
   }),
 
-  openLightBox: index => ({ type: GalleryAction.OPEN_LIGHTBOX, index }),
+  openLightBox: index => ({
+    type: GalleryAction.OPEN_LIGHTBOX,
+    index
+  }),
   closeLightBox: () => ({ type: GalleryAction.CLOSE_LIGHTBOX }),
   nextImage: () => ({ type: GalleryAction.NEXT_IMAGE }),
-  prevImage: () => ({ type: GalleryAction.PREV_IMAGE })
+  prevImage: () => ({ type: GalleryAction.PREV_IMAGE }),
+  filterImage: filteredImages => ({ type: GalleryAction.FILTER_IMAGE, filteredImages })
 });
 
 export default getGalleryActions;

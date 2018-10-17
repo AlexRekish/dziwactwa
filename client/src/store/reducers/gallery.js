@@ -5,10 +5,12 @@ const initialState = {
   currentImage: {},
   currentImageIndex: 0,
   lightboxIsOpen: false,
+  filteredImages: null,
   error: null
 };
 
 const reducer = (state = initialState, action) => {
+  const images = state.filteredImages ? state.filteredImages : state.images;
   switch (action.type) {
     case ActionType.LOAD_IMAGES_SUCCEED:
       return {
@@ -26,6 +28,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         images: state.images.filter(image => image._id !== action.id),
         currentImageIndex: 0,
+        filteredImages: state.filteredImages
+          ? images.filter(image => image._id !== action.id)
+          : null,
         error: null
       };
     case ActionType.DELETE_IMAGE_FAILED:
@@ -34,14 +39,20 @@ const reducer = (state = initialState, action) => {
         error: action.err
       };
     case ActionType.OPEN_LIGHTBOX:
+      if (!images.length)
+        return {
+          ...state,
+          currentImage: {},
+          currentImageIndex: 0,
+          lightboxIsOpen: false
+        };
       return {
         ...state,
         currentImage:
-          action.index >= state.images.length
-            ? { ...state.images[state.images.length - 1] }
-            : { ...state.images[action.index] },
-        currentImageIndex:
-          action.index >= state.images.length ? state.images.length - 1 : action.index,
+          action.index >= images.length
+            ? { ...images[images.length - 1] }
+            : { ...images[action.index] },
+        currentImageIndex: action.index >= images.length ? images.length - 1 : action.index,
         lightboxIsOpen: true
       };
     case ActionType.CLOSE_LIGHTBOX:
@@ -52,30 +63,34 @@ const reducer = (state = initialState, action) => {
         lightboxIsOpen: false
       };
     case ActionType.NEXT_IMAGE:
-      if (state.currentImageIndex === state.images.length - 1)
+      if (state.currentImageIndex === images.length - 1)
         return {
           ...state,
-          currentImage: { ...state.images[0] },
+          currentImage: { ...images[0] },
           currentImageIndex: 0
         };
       return {
         ...state,
-        currentImage: { ...state.images[state.currentImageIndex + 1] },
+        currentImage: { ...images[state.currentImageIndex + 1] },
         currentImageIndex: state.currentImageIndex + 1
       };
     case ActionType.PREV_IMAGE:
       if (state.currentImageIndex === 0)
         return {
           ...state,
-          currentImage: { ...state.images[state.images.length - 1] },
-          currentImageIndex: state.images.length - 1
+          currentImage: { ...images[state.images.length - 1] },
+          currentImageIndex: images.length - 1
         };
       return {
         ...state,
-        currentImage: { ...state.images[state.currentImageIndex - 1] },
+        currentImage: { ...images[state.currentImageIndex - 1] },
         currentImageIndex: state.currentImageIndex - 1
       };
-
+    case ActionType.FILTER_IMAGE:
+      return {
+        ...state,
+        filteredImages: action.filteredImages
+      };
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import parseStringToDate from '../../utils/date';
+import filterData from '../../utils/filterData';
 import SearchBox from '../../common/SearchBox/SearchBox';
 import ControlPanel from '../../common/ControlPanel/ControlPanel';
 import Button from '../../common/Button/Button';
@@ -50,7 +51,9 @@ class Gallery extends Component {
   };
 
   searchHandler = string => {
+    const { images, onSearchImage } = this.props;
     this.setState({ searchString: string });
+    onSearchImage(string ? filterData(images, string, 'title') : null);
   };
 
   addImageHandler = () => {
@@ -63,11 +66,6 @@ class Gallery extends Component {
     onStartDeleteImage(currentImage._id, currentImageIndex, user);
   };
 
-  filterImages = (images, searchString) => {
-    const reg = new RegExp(`^${searchString}`, 'i');
-    return images.filter(image => reg.test(image.title));
-  };
-
   render() {
     const {
       dataLoading,
@@ -77,10 +75,11 @@ class Gallery extends Component {
       lightboxIsOpen,
       currentImageIndex,
       onNextImage,
-      onPrevImage
+      onPrevImage,
+      filteredImages
     } = this.props;
     const { searchString } = this.state;
-    const photos = searchString ? this.filterImages(images, searchString) : images;
+    const photos = searchString ? filteredImages : images;
     return dataLoading ? (
       <Preloader />
     ) : (
@@ -133,7 +132,8 @@ const mapStateToProps = state => ({
   images: state.gallery.images,
   currentImage: state.gallery.currentImage,
   currentImageIndex: state.gallery.currentImageIndex,
-  lightboxIsOpen: state.gallery.lightboxIsOpen
+  lightboxIsOpen: state.gallery.lightboxIsOpen,
+  filteredImages: state.gallery.filteredImages
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -142,7 +142,8 @@ const mapDispatchToProps = dispatch => ({
   onOpenLightBox: index => dispatch(Actions.openLightBox(index)),
   onCloseLightBox: () => dispatch(Actions.closeLightBox()),
   onNextImage: () => dispatch(Actions.nextImage()),
-  onPrevImage: () => dispatch(Actions.prevImage())
+  onPrevImage: () => dispatch(Actions.prevImage()),
+  onSearchImage: filteredImages => dispatch(Actions.filterImage(filteredImages))
 });
 
 Gallery.propTypes = {
@@ -153,19 +154,22 @@ Gallery.propTypes = {
   currentImage: PropTypes.object,
   currentImageIndex: PropTypes.number.isRequired,
   lightboxIsOpen: PropTypes.bool.isRequired,
+  filteredImages: PropTypes.array,
 
   onStartLoadImages: PropTypes.func.isRequired,
   onStartDeleteImage: PropTypes.func.isRequired,
   onOpenLightBox: PropTypes.func.isRequired,
   onCloseLightBox: PropTypes.func.isRequired,
   onNextImage: PropTypes.func.isRequired,
-  onPrevImage: PropTypes.func.isRequired
+  onPrevImage: PropTypes.func.isRequired,
+  onSearchImage: PropTypes.func.isRequired
 };
 
 Gallery.defaultProps = {
   user: null,
   images: [],
-  currentImage: {}
+  currentImage: {},
+  filteredImages: null
 };
 
 export default connect(
